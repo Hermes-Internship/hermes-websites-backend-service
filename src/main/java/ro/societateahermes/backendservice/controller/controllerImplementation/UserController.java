@@ -14,10 +14,12 @@ import java.util.List;
 public class UserController implements UserControllerInterface {
 
     private UserServiceInterface userService;
-    private SubmissionServiceInterface submitionService;
+    private SubmissionServiceInterface submissionService;
 
-    public UserController(UserServiceInterface userService) {
+    public UserController(UserServiceInterface userService,SubmissionServiceInterface submissionService) {
+
         this.userService = userService;
+        this.submissionService=submissionService;
     }
 
     @GetMapping
@@ -27,7 +29,7 @@ public class UserController implements UserControllerInterface {
 
     @PostMapping
     public void submit(@RequestBody MySubmissionDTO submission){
-        submitionService.savefromDTO(submission);
+        submissionService.savefromDTO(submission);
         userService.saveUserFromDTO(submission);
     }
 
