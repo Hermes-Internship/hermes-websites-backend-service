@@ -5,18 +5,15 @@ import ro.societateahermes.backendservice.entities.form.Form;
 import ro.societateahermes.backendservice.entities.form.Option;
 import ro.societateahermes.backendservice.entities.form.Question;
 import ro.societateahermes.backendservice.repository.FormRepository;
-import ro.societateahermes.backendservice.repository.QuestionRepository;
 
 import java.util.List;
 
 @Service
 public class FormService {
     private final FormRepository formRepository;
-    private final QuestionRepository questionRepository;
 
-    public FormService(FormRepository formRepository, QuestionRepository questionRepository) {
+    public FormService(FormRepository formRepository) {
         this.formRepository = formRepository;
-        this.questionRepository = questionRepository;
     }
 
     public List<Form> getAll() {
@@ -33,5 +30,9 @@ public class FormService {
         }
 
         formRepository.save(form);
+    }
+
+    public void delete(Long formId) {
+        formRepository.delete(formRepository.findById(formId).get());
     }
 }

@@ -24,4 +24,9 @@ public class FormController {
     public void save(@RequestBody Form form) {
         formService.save(form);
     }
+
+    @DeleteMapping("/{formId}")
+    public void delete(@PathVariable("formId") Long formId) {
+        formService.delete(formId);
+    }
 }
