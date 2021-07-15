@@ -23,15 +23,13 @@ public class EventServiceImplementation {
         if (eventOptional.isPresent()) {
             Event event = eventOptional.get();
             if (event.getEventStartDate().isAfter(LocalDateTime.now())) {
-                // has not started yet
                 return new NotificationSwitchDTO("Event has not started yet", false);
             } else if (event.getEventEndDate().isAfter(LocalDateTime.now())) {
-                //is in progress
                 return new NotificationSwitchDTO("Event has started", true);
             } else {
-                //is done
                 return new NotificationSwitchDTO("Event has finished", false);
             }
+
         }
         return new NotificationSwitchDTO("Event not found", false);
     }
