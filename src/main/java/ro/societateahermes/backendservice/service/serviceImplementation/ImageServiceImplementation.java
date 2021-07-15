@@ -1,27 +1,19 @@
-package ro.societateahermes.backendservice.service;
+package ro.societateahermes.backendservice.service.serviceImplementation;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
+import ro.societateahermes.backendservice.service.ImageServiceInterface;
 
 @Service
-public class FileService {
+public class ImageServiceImplementation implements ImageServiceInterface {
 
+    /*
     @Value("${upload.path}")
     private String uploadPath;
 
@@ -80,5 +72,16 @@ public class FileService {
         } catch (IOException e) {
             throw new RuntimeException("Could not list the files!");
         }
+    }*/
+
+    @Override
+    public void convertMultiPartToFile(MultipartFile file) throws IOException {
+        UUID name = UUID.randomUUID();
+        String imageName = name.toString();
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        File convFile = new File("src/main/resources/images/" + imageName + "." + extension);
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
     }
 }

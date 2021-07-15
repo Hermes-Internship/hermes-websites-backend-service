@@ -1,46 +1,34 @@
-package ro.societateahermes.backendservice.controller;
+package ro.societateahermes.backendservice.controller.controllerImplementation;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-import java.util.stream.Collectors;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import ro.societateahermes.backendservice.entities.FileData;
-import ro.societateahermes.backendservice.entities.UploadResponseMessage;
-import ro.societateahermes.backendservice.service.FileService;
+import ro.societateahermes.backendservice.controller.ImageControllerInterface;
+import ro.societateahermes.backendservice.service.serviceImplementation.ImageServiceImplementation;
 
 
 @RestController
-@RequestMapping("files")
-public class FilesController {
+@RequestMapping("/files")
+public class ImageControllerImplementation implements ImageControllerInterface {
 
-    private final FileService fileService;
+    private final ImageServiceImplementation imageService;
 
     @Autowired
-    public FilesController(FileService fileService) {
-        this.fileService = fileService;
+    public ImageControllerImplementation(ImageServiceImplementation imageService) {
+        this.imageService = imageService;
     }
 
+    /*
     @PostMapping
     public ResponseEntity<UploadResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
-            fileService.save(file);
+            imageService.save(file);
 
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new UploadResponseMessage("Uploaded the file successfully: " + file.getOriginalFilename()));
@@ -52,7 +40,7 @@ public class FilesController {
 
     @GetMapping
     public ResponseEntity<List<FileData>> getListFiles() {
-        List<FileData> fileInfos = fileService.loadAll()
+        List<FileData> fileInfos = imageService.loadAll()
                 .stream()
                 .map(this::pathToFileData)
                 .collect(Collectors.toList());
@@ -63,7 +51,7 @@ public class FilesController {
 
     @DeleteMapping
     public void delete() {
-        fileService.deleteAll();
+        imageService.deleteAll();
     }
 
     private FileData pathToFileData(Path path) {
@@ -82,14 +70,15 @@ public class FilesController {
         }
 
         return fileData;
+    }*/
+
+
+    @PostMapping("/cd")
+    public void savePhoto(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+        imageService.convertMultiPartToFile(multipartFile);
     }
 
-    @GetMapping("{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
-        Resource file = fileService.load(filename);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
-                .body(file);
-    }
+
+    // TO DO
+    /// get request for an image by path
 }
