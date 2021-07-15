@@ -2,6 +2,7 @@ package ro.societateahermes.backendservice.service.serviceImplementation;
 
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.form.Form;
+import ro.societateahermes.backendservice.entities.form.Option;
 import ro.societateahermes.backendservice.entities.form.Question;
 import ro.societateahermes.backendservice.repository.FormRepository;
 import ro.societateahermes.backendservice.repository.QuestionRepository;
@@ -24,7 +25,11 @@ public class FormService {
 
     public void save(Form form) {
         for (Question question : form.getQuestions()) {
-            questionRepository.save(question);
+            question.setForm(form);
+
+            for (Option option : question.getOptions()) {
+                option.setQuestion(question);
+            }
         }
 
         formRepository.save(form);

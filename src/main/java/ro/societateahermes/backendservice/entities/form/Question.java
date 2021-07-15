@@ -20,8 +20,8 @@ public class Question {
 
     private Integer questionTypeId;
 
-    @ElementCollection
-    private List<String> options;
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    private List<Option> options;
 
     public QuestionType getQuestionType() {
         return QuestionType.getType(questionTypeId);
