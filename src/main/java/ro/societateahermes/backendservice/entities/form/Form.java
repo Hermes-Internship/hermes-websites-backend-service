@@ -1,5 +1,6 @@
 package ro.societateahermes.backendservice.entities.form;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ public class Form {
     @GeneratedValue
     private Long id;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "form", cascade = CascadeType.ALL)
     private List<Question> questions;
 }

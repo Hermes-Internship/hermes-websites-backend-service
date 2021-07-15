@@ -1,5 +1,7 @@
 package ro.societateahermes.backendservice.entities.form;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,6 +14,7 @@ public class Question {
     @GeneratedValue
     private Long id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "form_id")
     private Form form;
@@ -20,6 +23,7 @@ public class Question {
 
     private Integer questionTypeId;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Option> options;
 
