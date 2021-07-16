@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import exceptions.ImageException;
+import ro.societateahermes.backendservice.exceptions.ImageException;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

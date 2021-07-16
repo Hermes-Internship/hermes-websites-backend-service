@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-import exceptions.ImageException;
+import ro.societateahermes.backendservice.exceptions.ImageException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

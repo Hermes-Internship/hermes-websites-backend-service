@@ -1,6 +1,6 @@
 package ro.societateahermes.backendservice.service;
 
-import exceptions.ImageException;
+import ro.societateahermes.backendservice.exceptions.ImageException;
 import org.springframework.web.multipart.MultipartFile;
 import ro.societateahermes.backendservice.entities.Image;
 
