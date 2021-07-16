@@ -3,6 +3,9 @@
 # Compiled class file
 *.class
 
+# resources folder
+src/main/resources/edition
+
 # Log file
 *.log
 
