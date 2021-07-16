@@ -18,8 +18,9 @@ public class CDMemberServiceImplementation implements CDMemberServiceInterface {
     }
 
     @Override
-    public void save(CDMember CDMember) {
+    public CDMember save(CDMember CDMember) {
         CDMemberRepository.save(CDMember);
+        return CDMember;
     }
 
     @Override
@@ -35,12 +36,13 @@ public class CDMemberServiceImplementation implements CDMemberServiceInterface {
     }
 
     @Override
-    public void update(Long CDMemberID, CDMemberDTO cdMemberDTO) {
+    public CDMember update(Long CDMemberID, CDMemberDTO cdMemberDTO) {
         CDMember updatedCDMember = CDMemberRepository.getOne(CDMemberID);
         updatedCDMember.setDescription(cdMemberDTO.getDescription());
         updatedCDMember.setName(cdMemberDTO.getName());
         updatedCDMember.setImagePath(cdMemberDTO.getImagePath());
         updatedCDMember.setPosition(cdMemberDTO.getPosition());
         CDMemberRepository.save(updatedCDMember);
+        return updatedCDMember;
     }
 }

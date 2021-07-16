@@ -6,11 +6,11 @@ import ro.societateahermes.backendservice.entities.DTO.CDMemberDTO;
 import java.util.List;
 
 public interface CDMemberServiceInterface {
-    void save(CDMember CDMember);
+    CDMember save(CDMember CDMember);
 
     void delete(Long CDMemberID);
 
-    void update(Long CDMemberID, CDMemberDTO cdMemberDTO);
+    CDMember update(Long CDMemberID, CDMemberDTO cdMemberDTO);
 
     List<CDMember> getAllCDMembers();
 }

@@ -3,79 +3,28 @@ package ro.societateahermes.backendservice.service.serviceImplementation;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
+import exceptions.ImageException;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ro.societateahermes.backendservice.entities.Image;
+import ro.societateahermes.backendservice.repository.ImageRepositoryInterface;
 import ro.societateahermes.backendservice.service.ImageServiceInterface;
 
 @Service
 public class ImageServiceImplementation implements ImageServiceInterface {
 
-    /*
-    @Value("${upload.path}")
-    private String uploadPath;
+    private final ImageRepositoryInterface imageRepository;
 
-    @PostConstruct
-    public void init() {
-        try {
-            Files.createDirectories(Paths.get(uploadPath));
-        } catch (IOException e) {
-            throw new RuntimeException("Could not create upload folder!");
-        }
+    public ImageServiceImplementation(ImageRepositoryInterface imageRepository) {
+        this.imageRepository = imageRepository;
     }
-
-    public void save(MultipartFile file) {
-        try {
-            Path root = Paths.get(uploadPath);
-            if (!Files.exists(root)) {
-                init();
-            }
-            Files.copy(file.getInputStream(), root.resolve(Objects.requireNonNull(file.getOriginalFilename())));
-        } catch (Exception e) {
-            throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
-        }
-    }
-
-    public Resource load(String filename) {
-        try {
-            Path file = Paths.get(uploadPath)
-                    .resolve(filename);
-            Resource resource = new UrlResource(file.toUri());
-
-            if (resource.exists() || resource.isReadable()) {
-                return resource;
-            } else {
-                throw new RuntimeException("Could not read the file!");
-            }
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Error: " + e.getMessage());
-        }
-    }
-
-    public void deleteAll() {
-        FileSystemUtils.deleteRecursively(Paths.get(uploadPath)
-                .toFile());
-    }
-
-    public List<Path> loadAll() {
-        try {
-            Path root = Paths.get(uploadPath);
-            if (Files.exists(root)) {
-                return Files.walk(root, 1)
-                        .filter(path -> !path.equals(root))
-                        .collect(Collectors.toList());
-            }
-
-            return Collections.emptyList();
-        } catch (IOException e) {
-            throw new RuntimeException("Could not list the files!");
-        }
-    }*/
 
     @Override
-    public void convertMultiPartToFile(MultipartFile file) throws IOException {
+    public File convertMultiPartToFile(MultipartFile file) throws IOException {
         UUID name = UUID.randomUUID();
         String imageName = name.toString();
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
@@ -83,5 +32,22 @@ public class ImageServiceImplementation implements ImageServiceInterface {
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
         fos.close();
+        Image image = new Image();
+        image.setCanonicalImagePath(convFile.getPath());
+        imageRepository.save(image);
+        return convFile;
+    }
+
+    @Override
+    public Image getImageByPath(String canonicalImagePath) throws ImageException {
+        for (Image image : getAll())
+            if (image.getCanonicalImagePath().equals(canonicalImagePath))
+                return image;
+        throw new ImageException("There is no image with this path!");
+    }
+
+    @Override
+    public List<Image> getAll() {
+        return imageRepository.findAll();
     }
 }
