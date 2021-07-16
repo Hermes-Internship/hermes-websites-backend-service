@@ -13,14 +13,12 @@ import java.util.List;
 public class ActivityController implements ActivityControllerInterface{
     private ActivityServiceInterface activityService;
 
-    public ActivityController() {}
-
     public ActivityController(ActivityServiceImplementation activityService){
         this.activityService = activityService;
     }
 
     @PostMapping
-    public void save(Activity activity) {
+    public void save(@RequestBody Activity activity) {
         activityService.save(activity);
     }
 
@@ -35,7 +33,7 @@ public class ActivityController implements ActivityControllerInterface{
     }
 
     @PutMapping("/update")
-    public void put(ActivityDTO activityDTO) {
+    public void put(@RequestBody ActivityDTO activityDTO) {
         activityService.update(activityDTO);
     }
 }

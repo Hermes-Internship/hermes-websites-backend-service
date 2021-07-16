@@ -1,5 +1,6 @@
 package ro.societateahermes.backendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Entity;

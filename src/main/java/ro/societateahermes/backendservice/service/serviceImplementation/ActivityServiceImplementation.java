@@ -1,13 +1,18 @@
 package ro.societateahermes.backendservice.service.serviceImplementation;
 
+import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.Activity;
 import ro.societateahermes.backendservice.entities.DTO.ActivityDTO;
 import ro.societateahermes.backendservice.entities.User;
 import ro.societateahermes.backendservice.repository.ActivityRepositoryInterface;
 import ro.societateahermes.backendservice.service.ActivityServiceInterface;
 
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+@Service
 public class ActivityServiceImplementation implements ActivityServiceInterface {
     private final ActivityRepositoryInterface activityRepository;
 

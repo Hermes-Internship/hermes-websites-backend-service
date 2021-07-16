@@ -1,5 +1,6 @@
 package ro.societateahermes.backendservice.entities.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,8 +15,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ActivityDTO {
     private Long IdActivity;
-    @ManyToOne
-    @JoinColumn(name = "event_id")
     private Event event;
     private String activityName;
     private String activityDescription;
