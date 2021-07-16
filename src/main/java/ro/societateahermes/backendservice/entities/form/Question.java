@@ -32,11 +32,7 @@ public class Question {
     }
 
     public void setQuestionType(QuestionType questionType) {
-        if (questionType == null) {
-            this.questionTypeId = null;
-        } else {
-            this.questionTypeId = questionType.getId();
-        }
+        this.questionTypeId = questionType == null ? null : questionType.getId();
     }
 
     public enum QuestionType {
