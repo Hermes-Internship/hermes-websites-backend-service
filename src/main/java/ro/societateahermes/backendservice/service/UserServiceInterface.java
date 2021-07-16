@@ -6,10 +6,10 @@ import ro.societateahermes.backendservice.entities.User;
 import java.util.List;
 
 public interface UserServiceInterface {
+
     void save(User user);
 
-    void saveUserFromDTO(MySubmissionDTO user);
-
+    User saveUserFromDTO(MySubmissionDTO user);
 
     List<User> getAllUsers();
 }

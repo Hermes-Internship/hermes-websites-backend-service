@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import ro.societateahermes.backendservice.controller.UserControllerInterface;
 import ro.societateahermes.backendservice.entities.DTO.MySubmissionDTO;
 import ro.societateahermes.backendservice.entities.User;
+import ro.societateahermes.backendservice.service.ParticipationServiceInterface;
 import ro.societateahermes.backendservice.service.SubmissionServiceInterface;
 import ro.societateahermes.backendservice.service.UserServiceInterface;
 
@@ -15,11 +16,12 @@ public class UserController implements UserControllerInterface {
 
     private UserServiceInterface userService;
     private SubmissionServiceInterface submissionService;
+    private ParticipationServiceInterface participationService;
 
-    public UserController(UserServiceInterface userService,SubmissionServiceInterface submissionService) {
-
+    public UserController(UserServiceInterface userService,SubmissionServiceInterface submissionService,ParticipationServiceInterface participationService) {
         this.userService = userService;
         this.submissionService=submissionService;
+        this.participationService=participationService;
     }
 
     @GetMapping
@@ -27,11 +29,19 @@ public class UserController implements UserControllerInterface {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/{eventId}")
+    public List<User> getAllEventParticipants(@PathVariable("eventId") long eventId) {
+        return participationService.getAllUsersFromEvent(eventId);
+    }
+
     @PostMapping
     public void submit(@RequestBody MySubmissionDTO submission){
         submissionService.savefromDTO(submission);
-        userService.saveUserFromDTO(submission);
+        User user=userService.saveUserFromDTO(submission);
+        participationService.savefromDTO(user,submission);
+
     }
+
 
 
 }

@@ -1,6 +1,8 @@
 package ro.societateahermes.backendservice.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,8 @@ import java.util.List;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Event {
     @Id
     @GeneratedValue
@@ -21,7 +25,16 @@ public class Event {
     private String eventEstimatedTime;
     private LocalDateTime eventEndDate;
     private String eventLink;
+
     @OneToMany(mappedBy = "event")
     private List<Activity> listOfActivities;
+
+    @OneToMany(mappedBy = "user")
+    private List<Participation> listOfParticipation;
+
+    public void addParticipation(Participation participation)
+    {
+        listOfParticipation.add(participation);
+    }
 
 }

@@ -24,10 +24,10 @@ public class UserServiceImplementation implements UserServiceInterface {
     }
 
     @Override
-    public void saveUserFromDTO(MySubmissionDTO submissionDTO) {
+    public User saveUserFromDTO(MySubmissionDTO submissionDTO) {
 
         User user =new User(submissionDTO.getFirstName(),submissionDTO.getLastName(),submissionDTO.getEmail(),submissionDTO.getUsername(),submissionDTO.getPassword(),submissionDTO.getUniversity());
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override

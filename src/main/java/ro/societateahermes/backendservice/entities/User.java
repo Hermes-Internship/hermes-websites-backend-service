@@ -8,6 +8,8 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,6 +30,9 @@ public class User {
     private String field;
     private String language;
 
+    @OneToMany(mappedBy = "user")
+    private List<Participation> listOfParticipation;
+
 
     public User(String firstName,String lastName,String email,String username,String password,String university)
     {
@@ -37,6 +42,11 @@ public class User {
         this.username=username;
         this.password=password;
         this.university=university;
+    }
+
+    public void addParticipation(Participation participation)
+    {
+        listOfParticipation.add(participation);
     }
 
 

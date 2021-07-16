@@ -24,11 +24,7 @@ public class MySubmissionDTO {
     private long formId;
     private List<Answer> answers;
 
-    /*
-    in DTO I can also have the eventID to know whose form the event belongs to, but I think it would be better if
-    it were a one to one relationship between form-event and form-activity....
-    this way I can know each form to which the event belongs
-     */
+    //fields related to the event
     private long eventId;
 
 
