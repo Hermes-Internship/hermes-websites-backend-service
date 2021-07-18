@@ -1,19 +1,22 @@
 package ro.societateahermes.backendservice.service;
 
 import ro.societateahermes.backendservice.entities.Event;
-import ro.societateahermes.backendservice.entities.EventDTO;
+import ro.societateahermes.backendservice.entities.DTO.EventDTO;
 
 import java.util.List;
 
+//@Mapper(componentModel = "spring")
 public interface EventServiceInterface {
 
     void save(Event event);
 
     List<Event> getAll();
 
-    EventDTO convertToEventDTO(Event event);
+    EventDTO eventToEventDTO(Event event);
 
-    List<EventDTO> getAllEventsDTO();
+    Event eventDTOToEvent(EventDTO eventDTO);
+
+    List<EventDTO> eventsToEventDTOS(List<Event> events);
 
     List<EventDTO> eventIsOngoing(Event event);
 }
