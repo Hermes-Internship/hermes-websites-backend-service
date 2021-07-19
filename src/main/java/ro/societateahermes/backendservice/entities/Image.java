@@ -2,13 +2,16 @@ package ro.societateahermes.backendservice.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Image {
-    public Image() {
+    public Image(String path) {
+        this.path = path;
     }
 
     public Image(Edition edition, String path) {
