@@ -20,8 +20,18 @@ public class UserServiceImplementation implements UserServiceInterface {
     }
 
     @Override
-    public void save(User user) {
-        userRepository.save(user);
+    public void save(UserDTO user) {
+        User updatedUser =  new User();
+        updatedUser.setEmail(user.getEmail());
+        updatedUser.setField(user.getField());
+        updatedUser.setFirstName(user.getFirstName());
+        updatedUser.setUsername(user.getUsername());
+        updatedUser.setLanguage(user.getLanguage());
+        updatedUser.setLastName(user.getLastName());
+        updatedUser.setPassword(user.getPassword());
+        updatedUser.setUniversity(user.getUniversity());
+        updatedUser.setYearOfStudy(user.getYearOfStudy());
+        userRepository.save(updatedUser);
     }
 
     @Override

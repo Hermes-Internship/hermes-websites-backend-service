@@ -21,8 +21,18 @@ public class ActivityServiceImplementation implements ActivityServiceInterface {
     }
 
     @Override
-    public void save(Activity activity) {
-        activityRepository.save(activity);
+    public void save(ActivityDTO activity) {
+
+        Activity updatedActivity = new Activity();
+        updatedActivity.setActivityLink(activity.getActivityLink());
+        updatedActivity.setActivityName(activity.getActivityName());
+        updatedActivity.setActivityDescription(activity.getActivityDescription());
+        updatedActivity.setActivityEndDate(activity.getActivityEndDate());
+        updatedActivity.setActivityStartDate(activity.getActivityStartDate());
+        updatedActivity.setActivityEstimatedTime(activity.getActivityEstimatedTime());
+        updatedActivity.setMaximumNumberOfParticipants(activity.getMaximumNumberOfParticipants());
+        updatedActivity.setEvent(activity.getEvent());
+        activityRepository.save(updatedActivity);
     }
 
     @Override

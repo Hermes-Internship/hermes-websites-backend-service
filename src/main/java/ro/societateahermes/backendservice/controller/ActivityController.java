@@ -18,8 +18,8 @@ public class ActivityController implements ActivityControllerInterface{
     }
 
     @PostMapping
-    public void save(@RequestBody Activity activity) {
-        activityService.save(activity);
+    public void save(@RequestBody ActivityDTO activityDTO) {
+        activityService.save(activityDTO);
     }
 
     @GetMapping

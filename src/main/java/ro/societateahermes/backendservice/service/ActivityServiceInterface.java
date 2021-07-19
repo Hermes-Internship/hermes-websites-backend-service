@@ -8,7 +8,7 @@ import ro.societateahermes.backendservice.entities.User;
 import java.util.List;
 
 public interface ActivityServiceInterface {
-    void save(Activity activity);
+    void save(ActivityDTO activity);
 
     List<Activity> getAllActivities();
 

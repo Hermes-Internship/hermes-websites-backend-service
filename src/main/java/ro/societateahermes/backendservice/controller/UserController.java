@@ -16,7 +16,7 @@ public class  UserController implements UserControllerInterface {
     public UserController(UserServiceImplementation service) { this.service = service; }
 
     @PostMapping
-    public void save(@RequestBody User user){
+    public void save(@RequestBody UserDTO user){
         service.save(user);
     }
 
