@@ -5,11 +5,12 @@ import ro.societateahermes.backendservice.entities.form.Form;
 import ro.societateahermes.backendservice.entities.form.Option;
 import ro.societateahermes.backendservice.entities.form.Question;
 import ro.societateahermes.backendservice.repository.FormRepository;
+import ro.societateahermes.backendservice.service.FormServiceInterface;
 
 import java.util.List;
 
 @Service
-public class FormService {
+public class FormService implements FormServiceInterface {
     private final FormRepository formRepository;
 
     public FormService(FormRepository formRepository) {
