@@ -2,20 +2,19 @@ package ro.societateahermes.backendservice.service.serviceImplementation;
 
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.form.Form;
+import ro.societateahermes.backendservice.entities.form.Option;
 import ro.societateahermes.backendservice.entities.form.Question;
 import ro.societateahermes.backendservice.repository.FormRepository;
-import ro.societateahermes.backendservice.repository.QuestionRepository;
+import ro.societateahermes.backendservice.service.FormServiceInterface;
 
 import java.util.List;
 
 @Service
-public class FormService {
+public class FormService implements FormServiceInterface {
     private final FormRepository formRepository;
-    private final QuestionRepository questionRepository;
 
-    public FormService(FormRepository formRepository, QuestionRepository questionRepository) {
+    public FormService(FormRepository formRepository) {
         this.formRepository = formRepository;
-        this.questionRepository = questionRepository;
     }
 
     public List<Form> getAll() {
@@ -24,9 +23,17 @@ public class FormService {
 
     public void save(Form form) {
         for (Question question : form.getQuestions()) {
-            questionRepository.save(question);
+            question.setForm(form);
+
+            for (Option option : question.getOptions()) {
+                option.setQuestion(question);
+            }
         }
 
         formRepository.save(form);
+    }
+
+    public void delete(Long formId) {
+        formRepository.delete(formRepository.findById(formId).orElseThrow());
     }
 }
