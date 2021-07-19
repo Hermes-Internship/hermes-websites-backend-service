@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -27,10 +28,10 @@ public class Event {
     private String eventLink;
 
     @OneToMany(mappedBy = "event")
-    private List<Activity> listOfActivities;
+    private List<Activity> listOfActivities=new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    private List<Participation> listOfParticipation;
+    private List<Participation> listOfParticipation=new ArrayList<>();
 
 
 

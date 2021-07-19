@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -31,7 +32,7 @@ public class User {
     private String language;
 
     @OneToMany(mappedBy = "user")
-    private List<Participation> listOfParticipation;
+    private List<Participation> listOfParticipation=new ArrayList<>();
 
 
 }
