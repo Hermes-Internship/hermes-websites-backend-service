@@ -3,6 +3,9 @@ package ro.societateahermes.backendservice.service.serviceImplementation;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -49,5 +52,15 @@ public class ImageServiceImplementation implements ImageServiceInterface {
     @Override
     public List<Image> getAll() {
         return imageRepository.findAll();
+    }
+
+    @Override
+    public void deleteImage(String canonicalImagePath) throws IOException {
+        for (Image image : getAll())
+            if (image.getCanonicalImagePath().equals(canonicalImagePath)) {
+                imageRepository.delete(image);
+                Path path = Paths.get(canonicalImagePath);
+                Files.delete(path);
+            }
     }
 }

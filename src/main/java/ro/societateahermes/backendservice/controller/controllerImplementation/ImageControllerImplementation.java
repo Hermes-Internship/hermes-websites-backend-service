@@ -1,7 +1,6 @@
 package ro.societateahermes.backendservice.controller.controllerImplementation;
 
 import java.io.IOException;
-import java.util.List;
 
 
 import ro.societateahermes.backendservice.exceptions.ImageException;
@@ -16,7 +15,7 @@ import ro.societateahermes.backendservice.service.serviceImplementation.ImageSer
 
 
 @RestController
-@RequestMapping("/files")
+@RequestMapping("/images")
 public class ImageControllerImplementation implements ImageControllerInterface {
 
     private final ImageServiceImplementation imageService;
@@ -27,19 +26,13 @@ public class ImageControllerImplementation implements ImageControllerInterface {
     }
 
     @Override
-    @PostMapping("/cd")
-    public void savePhoto(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+    @PostMapping
+    public void saveImage(@RequestParam("file") MultipartFile multipartFile) throws IOException {
         imageService.convertMultiPartToFile(multipartFile);
     }
 
     @Override
-    @GetMapping("/all")
-    public List<Image> getAll() {
-        return imageService.getAll();
-    }
-
-    @Override
-    @GetMapping("/path")
+    @GetMapping
     public ResponseEntity<?> getImageByPath(@RequestParam("path") String canonicalImagePath) {
         try {
             return new ResponseEntity<Image>(imageService.getImageByPath(canonicalImagePath), HttpStatus.OK);
@@ -47,5 +40,10 @@ public class ImageControllerImplementation implements ImageControllerInterface {
         } catch (ImageException imageException) {
             return new ResponseEntity<String>(imageException.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @DeleteMapping
+    void deleteImage(@RequestParam("path") String canonicalImagePath) throws IOException {
+        imageService.deleteImage(canonicalImagePath);
     }
 }

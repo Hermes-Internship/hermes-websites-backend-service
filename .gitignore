@@ -111,3 +111,6 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 .idea
+/src/main/resources/images/*
+!/src/main/resources/images/.gitkeep
+

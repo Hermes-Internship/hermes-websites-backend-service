@@ -1,8 +1,8 @@
 package ro.societateahermes.backendservice.exceptions;
 
 public class ImageException extends Exception {
-    ImageException(Exception e) {
-        super(e);
+    ImageException(Exception exception) {
+        super(exception);
     }
 
 

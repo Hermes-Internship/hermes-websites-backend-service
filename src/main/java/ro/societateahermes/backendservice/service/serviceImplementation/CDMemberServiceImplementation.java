@@ -10,39 +10,39 @@ import java.util.List;
 
 @Service
 public class CDMemberServiceImplementation implements CDMemberServiceInterface {
-    private final CDMemberRepositoryInterface CDMemberRepository;
+    private final CDMemberRepositoryInterface cdMemberRepository;
 
 
-    CDMemberServiceImplementation(CDMemberRepositoryInterface CDMemberRepo) {
-        CDMemberRepository = CDMemberRepo;
+    CDMemberServiceImplementation(CDMemberRepositoryInterface cdMemberRepository) {
+        this.cdMemberRepository = cdMemberRepository;
     }
 
     @Override
-    public CDMember save(CDMember CDMember) {
-        CDMemberRepository.save(CDMember);
-        return CDMember;
+    public void save(CDMember CDMember) {
+        cdMemberRepository.save(CDMember);
     }
 
     @Override
     public List<CDMember> getAllCDMembers() {
-        return CDMemberRepository.findAll();
+        return cdMemberRepository.findAll();
     }
 
     @Override
     public void delete(Long CDMemberID) {
         for (CDMember cdMember : getAllCDMembers())
             if (CDMemberID.equals(cdMember.getCDMemberID()))
-                CDMemberRepository.delete(cdMember);
+                cdMemberRepository.delete(cdMember);
     }
 
     @Override
-    public CDMember update(Long CDMemberID, CDMemberDTO cdMemberDTO) {
-        CDMember updatedCDMember = CDMemberRepository.getOne(CDMemberID);
-        updatedCDMember.setDescription(cdMemberDTO.getDescription());
-        updatedCDMember.setName(cdMemberDTO.getName());
-        updatedCDMember.setImagePath(cdMemberDTO.getImagePath());
-        updatedCDMember.setPosition(cdMemberDTO.getPosition());
-        CDMemberRepository.save(updatedCDMember);
-        return updatedCDMember;
+    public void update(Long CDMemberID, CDMember cdMember) {
+        CDMember updatedCDMember = cdMemberRepository.getOne(CDMemberID);
+        updatedCDMember.setImagePath(cdMember.getImagePath());
+        updatedCDMember.setFacebookLink(cdMember.getFacebookLink());
+        updatedCDMember.setDescription(cdMember.getDescription());
+        updatedCDMember.setName(cdMember.getName());
+        updatedCDMember.setPosition(cdMember.getPosition());
+        cdMemberRepository.save(updatedCDMember);
     }
+
 }

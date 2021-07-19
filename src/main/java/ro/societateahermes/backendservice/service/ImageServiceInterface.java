@@ -13,5 +13,7 @@ public interface ImageServiceInterface {
 
     Image getImageByPath(String canonicalImagePath) throws ImageException;
 
+    void deleteImage(String canonicalImagePath) throws IOException;
+
     List<Image> getAll();
 }
