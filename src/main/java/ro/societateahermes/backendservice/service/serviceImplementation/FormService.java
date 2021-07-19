@@ -34,6 +34,6 @@ public class FormService implements FormServiceInterface {
     }
 
     public void delete(Long formId) {
-        formRepository.delete(formRepository.findById(formId).get());
+        formRepository.delete(formRepository.findById(formId).orElseThrow());
     }
 }
