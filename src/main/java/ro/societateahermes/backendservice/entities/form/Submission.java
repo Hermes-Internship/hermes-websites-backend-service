@@ -17,12 +17,6 @@ public class Submission {
     @GeneratedValue
     private long id;
 
-    public Submission(Form form, List<Answer> answers)
-    {
-        this.form=form;
-        this.answers=answers;
-    }
-
     @OneToOne
     @JoinColumn(name = "form_id")
     private Form form;

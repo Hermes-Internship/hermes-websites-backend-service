@@ -24,7 +24,9 @@ public class SubmissionServiceImplementation implements SubmissionServiceInterfa
     public void savefromDTO(MySubmissionDTO submissionDTO) {
 
         Form form=formRepository.getOne(submissionDTO.getFormId());
-        Submission submission =new Submission(form,submissionDTO.getAnswers());
+        Submission submission =new Submission();
+        submission.setForm(form);
+        submission.setAnswers(submissionDTO.getAnswers());
         submitionRepository.save(submission);
     }
 }

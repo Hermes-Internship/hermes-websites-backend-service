@@ -28,13 +28,14 @@ public class ParticipationServiceImplementation implements ParticipationServiceI
     }
 
     @Override
-    public void savefromDTO(User user, MySubmissionDTO submissionDTO) {
+    public Participation savefromDTO(User user, MySubmissionDTO submissionDTO) {
 
         Event event = eventRepository.getOne(submissionDTO.getEventId());
-        Participation participation = new Participation(event, user);
-        participationRepository.save(participation);
-        event.addParticipation(participation);
-        user.addParticipation(participation);
+        Participation participation = new Participation();
+        participation.setEvent(event);
+        participation.setUser(user);
+
+        return participationRepository.save(participation);
 
 
     }

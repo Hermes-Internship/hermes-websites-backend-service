@@ -32,9 +32,6 @@ public class Event {
     @OneToMany(mappedBy = "user")
     private List<Participation> listOfParticipation;
 
-    public void addParticipation(Participation participation)
-    {
-        listOfParticipation.add(participation);
-    }
+
 
 }

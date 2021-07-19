@@ -9,7 +9,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ro.societateahermes.backendservice.controller.UserControllerInterface;
 import ro.societateahermes.backendservice.entities.DTO.MySubmissionDTO;
+import ro.societateahermes.backendservice.entities.Participation;
 import ro.societateahermes.backendservice.entities.User;
+import ro.societateahermes.backendservice.service.EventServiceInterface;
 import ro.societateahermes.backendservice.service.ParticipationServiceInterface;
 import ro.societateahermes.backendservice.service.SubmissionServiceInterface;
 import ro.societateahermes.backendservice.service.UserServiceInterface;
@@ -27,11 +29,13 @@ public class UserController implements UserControllerInterface {
     private UserServiceInterface userService;
     private SubmissionServiceInterface submissionService;
     private ParticipationServiceInterface participationService;
+    private EventServiceInterface eventService;
 
-    public UserController(UserServiceInterface userService, SubmissionServiceInterface submissionService, ParticipationServiceInterface participationService) {
+    public UserController(UserServiceInterface userService, SubmissionServiceInterface submissionService, ParticipationServiceInterface participationService,EventServiceInterface eventService) {
         this.userService = userService;
         this.submissionService = submissionService;
         this.participationService = participationService;
+        this.eventService=eventService;
     }
 
     @GetMapping
@@ -50,24 +54,11 @@ public class UserController implements UserControllerInterface {
     public void submit(@RequestBody @Valid MySubmissionDTO submission) {
         submissionService.savefromDTO(submission);
         User user = userService.saveUserFromDTO(submission);
-        participationService.savefromDTO(user, submission);
+        Participation participation=participationService.savefromDTO(user, submission);
+        userService.addParticipation(user,participation);
+        eventService.addParticipation(submission.getEventId(),participation);
+
 
     }
-
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseBody
-    public Map<String, String> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return errors;
-    }
-
-
 
 }

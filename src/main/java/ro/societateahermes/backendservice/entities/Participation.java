@@ -29,9 +29,4 @@ public class Participation {
     private Event event;
 
 
-    public Participation(Event event,User user)
-    {
-        this.event=event;
-        this.user=user;
-    }
 }

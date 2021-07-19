@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ParticipationServiceInterface {
 
-    void savefromDTO(User user, MySubmissionDTO submissionDTO);
+    Participation savefromDTO(User user, MySubmissionDTO submissionDTO);
 
     List<User> getAllUsersFromEvent(Long eventId);
 }

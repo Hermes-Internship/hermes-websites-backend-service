@@ -34,20 +34,4 @@ public class User {
     private List<Participation> listOfParticipation;
 
 
-    public User(String firstName,String lastName,String email,String username,String password,String university)
-    {
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.email=email;
-        this.username=username;
-        this.password=password;
-        this.university=university;
-    }
-
-    public void addParticipation(Participation participation)
-    {
-        listOfParticipation.add(participation);
-    }
-
-
 }
