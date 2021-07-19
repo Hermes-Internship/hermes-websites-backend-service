@@ -41,9 +41,9 @@ public class ImageControllerImplementation implements ImageControllerInterface {
             return new ResponseEntity<String>(imageException.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
+    @Override
     @DeleteMapping
-    void deleteImage(@RequestParam("path") String canonicalImagePath) throws IOException {
+    public void deleteImage(@RequestParam("path") String canonicalImagePath) throws IOException {
         imageService.deleteImage(canonicalImagePath);
     }
 }
