@@ -1,4 +1,4 @@
-package ro.societateahermes.backendservice.entities.dto;
+package ro.societateahermes.backendservice.entities.DTO;
 
 import lombok.Data;
 import ro.societateahermes.backendservice.entities.form.Question;

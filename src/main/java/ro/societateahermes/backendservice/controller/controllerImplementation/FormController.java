@@ -1,7 +1,7 @@
-package ro.societateahermes.backendservice.controller;
+package ro.societateahermes.backendservice.controller.controllerImplementation;
 
 import org.springframework.web.bind.annotation.*;
-import ro.societateahermes.backendservice.entities.dto.FormDto;
+import ro.societateahermes.backendservice.entities.DTO.FormDto;
 import ro.societateahermes.backendservice.entities.form.Form;
 import ro.societateahermes.backendservice.service.serviceImplementation.FormService;
 

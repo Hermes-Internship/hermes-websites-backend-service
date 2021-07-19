@@ -1,6 +1,7 @@
 package ro.societateahermes.backendservice.service;
 
 import ro.societateahermes.backendservice.entities.DTO.MySubmissionDTO;
+import ro.societateahermes.backendservice.entities.DTO.UserDTO;
 import ro.societateahermes.backendservice.entities.Participation;
 import ro.societateahermes.backendservice.entities.User;
 

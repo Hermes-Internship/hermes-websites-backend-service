@@ -1,5 +1,7 @@
 package ro.societateahermes.backendservice.controller.controllerImplementation;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ro.societateahermes.backendservice.controller.UserControllerInterface;
 import ro.societateahermes.backendservice.entities.DTO.MySubmissionDTO;
+import ro.societateahermes.backendservice.entities.DTO.UserDTO;
 import ro.societateahermes.backendservice.entities.Participation;
 import ro.societateahermes.backendservice.entities.User;
 import ro.societateahermes.backendservice.service.EventServiceInterface;
@@ -21,32 +24,40 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
 public class UserController implements UserControllerInterface {
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     private UserServiceInterface userService;
     private SubmissionServiceInterface submissionService;
     private ParticipationServiceInterface participationService;
     private EventServiceInterface eventService;
 
-    public UserController(UserServiceInterface userService, SubmissionServiceInterface submissionService, ParticipationServiceInterface participationService,EventServiceInterface eventService) {
+    public UserController(UserServiceInterface userService, SubmissionServiceInterface submissionService, ParticipationServiceInterface participationService, EventServiceInterface eventService) {
         this.userService = userService;
         this.submissionService = submissionService;
         this.participationService = participationService;
-        this.eventService=eventService;
+        this.eventService = eventService;
     }
 
     @GetMapping
-    public List<User> getAll() {
-        return userService.getAllUsers();
+    public List<UserDTO> getAll() {
+
+        return userService.getAllUsers().stream().map(user -> modelMapper.map(user, UserDTO.class))
+                .collect(Collectors.toList());
     }
 
 
     @GetMapping("/{eventId}")
-    public List<User> getAllEventParticipants(@PathVariable("eventId") long eventId) {
-        return participationService.getAllUsersFromEvent(eventId);
+    public List<UserDTO> getAllEventParticipants(@PathVariable("eventId") long eventId) {
+        return participationService.getAllUsersFromEvent(eventId).
+                stream().map(user -> modelMapper.map(user, UserDTO.class))
+                .collect(Collectors.toList());
     }
 
 
@@ -54,9 +65,9 @@ public class UserController implements UserControllerInterface {
     public void submit(@RequestBody @Valid MySubmissionDTO submission) {
         submissionService.savefromDTO(submission);
         User user = userService.saveUserFromDTO(submission);
-        Participation participation=participationService.savefromDTO(user, submission);
-        userService.addParticipation(user,participation);
-        eventService.addParticipation(submission.getEventId(),participation);
+        Participation participation = participationService.savefromDTO(user, submission);
+        userService.addParticipation(user, participation);
+        eventService.addParticipation(submission.getEventId(), participation);
 
 
     }

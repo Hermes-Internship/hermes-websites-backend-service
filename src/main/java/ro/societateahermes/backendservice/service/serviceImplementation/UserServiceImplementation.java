@@ -2,6 +2,7 @@ package ro.societateahermes.backendservice.service.serviceImplementation;
 
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.DTO.MySubmissionDTO;
+import ro.societateahermes.backendservice.entities.DTO.UserDTO;
 import ro.societateahermes.backendservice.entities.Participation;
 import ro.societateahermes.backendservice.entities.User;
 import ro.societateahermes.backendservice.repository.UserRepositoryInterface;
