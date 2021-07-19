@@ -1,6 +1,7 @@
 package ro.societateahermes.backendservice.service.serviceImplementation;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.DTO.MySubmissionDTO;
 import ro.societateahermes.backendservice.entities.form.Form;
@@ -12,13 +13,12 @@ import ro.societateahermes.backendservice.service.SubmissionServiceInterface;
 @Service
 public class SubmissionServiceImplementation implements SubmissionServiceInterface {
 
-    private final SubmissionRepositoryInterface submitionRepository;
-    private final FormRepository formRepository;
+    @Autowired
+    private SubmissionRepositoryInterface submitionRepository;
 
-    public SubmissionServiceImplementation(SubmissionRepositoryInterface submitionRepository, FormRepository formRepo) {
-        this.submitionRepository = submitionRepository;
-        this.formRepository=formRepo;
-    }
+    @Autowired
+    private FormRepository formRepository;
+
 
     @Override
     public void savefromDTO(MySubmissionDTO submissionDTO) {

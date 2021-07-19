@@ -9,11 +9,9 @@ import java.util.List;
 
 public interface UserServiceInterface {
 
-    void save(User user);
-
     User saveUserFromDTO(MySubmissionDTO user);
 
     void addParticipation(User user, Participation participation);
 
-    List<User> getAllUsers();
+    List<UserDTO> getAllUsers();
 }

@@ -1,5 +1,7 @@
 package ro.societateahermes.backendservice.service.serviceImplementation;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.DTO.MySubmissionDTO;
 import ro.societateahermes.backendservice.entities.DTO.UserDTO;
@@ -9,19 +11,18 @@ import ro.societateahermes.backendservice.repository.UserRepositoryInterface;
 import ro.societateahermes.backendservice.service.UserServiceInterface;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImplementation implements UserServiceInterface {
-    private final UserRepositoryInterface userRepository;
 
-    UserServiceImplementation(UserRepositoryInterface userRepo) {
-        userRepository = userRepo;
-    }
+    @Autowired
+    private UserRepositoryInterface userRepository;
 
-    @Override
-    public void save(User user) {
-        userRepository.save(user);
-    }
+    @Autowired
+    private ModelMapper modelMapper;
+
+
 
     @Override
     public User saveUserFromDTO(MySubmissionDTO submissionDTO) {
@@ -48,8 +49,9 @@ public class UserServiceImplementation implements UserServiceInterface {
 
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        return userRepository.findAll().stream().map(user -> modelMapper.map(user, UserDTO.class))
+                .collect(Collectors.toList());
     }
 
 }

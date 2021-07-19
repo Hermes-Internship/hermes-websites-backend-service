@@ -11,5 +11,5 @@ public interface ParticipationServiceInterface {
 
     Participation savefromDTO(User user, MySubmissionDTO submissionDTO);
 
-    List<User> getAllUsersFromEvent(Long eventId);
+    List<UserDTO> getAllUsersFromEvent(Long eventId);
 }

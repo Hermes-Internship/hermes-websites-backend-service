@@ -1,5 +1,7 @@
 package ro.societateahermes.backendservice.service.serviceImplementation;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.DTO.MySubmissionDTO;
 import ro.societateahermes.backendservice.entities.DTO.UserDTO;
@@ -14,20 +16,23 @@ import ro.societateahermes.backendservice.service.ParticipationServiceInterface;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ParticipationServiceImplementation implements ParticipationServiceInterface {
 
-    private final UserRepositoryInterface userRepository;
-    private final EventRepositoryInterface eventRepository;
-    private final ParticipationRepositoryInterface participationRepository;
+    @Autowired
+    private UserRepositoryInterface userRepository;
 
-    public ParticipationServiceImplementation(UserRepositoryInterface userRepo, EventRepositoryInterface eventRepository, ParticipationRepositoryInterface participationRepository) {
+    @Autowired
+    private EventRepositoryInterface eventRepository;
 
-        this.userRepository = userRepo;
-        this.eventRepository = eventRepository;
-        this.participationRepository = participationRepository;
-    }
+    @Autowired
+    private ParticipationRepositoryInterface participationRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
 
     @Override
     public Participation savefromDTO(User user, MySubmissionDTO submissionDTO) {
@@ -43,12 +48,12 @@ public class ParticipationServiceImplementation implements ParticipationServiceI
     }
 
     @Override
-    public List<User> getAllUsersFromEvent(Long eventId) {
-        List<User> users = new ArrayList<>();
+    public List<UserDTO> getAllUsersFromEvent(Long eventId) {
+        List<UserDTO> users = new ArrayList<>();
 
         for (Participation participation : participationRepository.findAll()) {
             if (participation.getEvent().getIdEvent() == eventId)
-                users.add(participation.getUser());
+                users.add(modelMapper.map(participation.getUser(), UserDTO.class));
 
         }
         return users;

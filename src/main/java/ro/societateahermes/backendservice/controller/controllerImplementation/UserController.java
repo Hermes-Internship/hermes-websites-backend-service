@@ -31,33 +31,27 @@ import java.util.stream.Collectors;
 public class UserController implements UserControllerInterface {
 
     @Autowired
-    private ModelMapper modelMapper;
-
     private UserServiceInterface userService;
+
+    @Autowired
     private SubmissionServiceInterface submissionService;
+
+    @Autowired
     private ParticipationServiceInterface participationService;
+
+    @Autowired
     private EventServiceInterface eventService;
 
-    public UserController(UserServiceInterface userService, SubmissionServiceInterface submissionService, ParticipationServiceInterface participationService, EventServiceInterface eventService) {
-        this.userService = userService;
-        this.submissionService = submissionService;
-        this.participationService = participationService;
-        this.eventService = eventService;
-    }
 
     @GetMapping
     public List<UserDTO> getAll() {
-
-        return userService.getAllUsers().stream().map(user -> modelMapper.map(user, UserDTO.class))
-                .collect(Collectors.toList());
+        return userService.getAllUsers();
     }
 
 
     @GetMapping("/{eventId}")
     public List<UserDTO> getAllEventParticipants(@PathVariable("eventId") long eventId) {
-        return participationService.getAllUsersFromEvent(eventId).
-                stream().map(user -> modelMapper.map(user, UserDTO.class))
-                .collect(Collectors.toList());
+        return participationService.getAllUsersFromEvent(eventId);
     }
 
 
