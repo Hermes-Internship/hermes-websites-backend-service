@@ -1,6 +1,6 @@
 package ro.societateahermes.backendservice.entities.form;
 
-enum QuestionType {
+public enum QuestionType {
     SHORT_ANSWER(1),
     LONG_ANSWER(2),
     SINGLE_CHOICE(3),
