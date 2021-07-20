@@ -2,7 +2,6 @@ package ro.societateahermes.backendservice.entities.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import ro.societateahermes.backendservice.entities.form.Question;
 
 import java.util.List;
 
@@ -11,5 +10,5 @@ import java.util.List;
 public class FormDto {
     private Long id;
 
-    private List<Question> questions;
+    private List<QuestionDto> questions;
 }

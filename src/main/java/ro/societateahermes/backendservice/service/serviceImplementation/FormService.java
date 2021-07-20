@@ -28,7 +28,7 @@ public class FormService implements FormServiceInterface {
     }
 
     public void save(FormDto formDto) {
-        Form form = FormMapper.convertToForm(formDto);
+        Form form = FormMapper.convertToEntity(formDto);
         for (Question question : form.getQuestions()) {
             question.setForm(form);
 
