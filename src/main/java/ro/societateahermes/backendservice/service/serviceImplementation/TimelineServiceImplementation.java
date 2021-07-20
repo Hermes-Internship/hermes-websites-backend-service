@@ -1,8 +1,7 @@
 package ro.societateahermes.backendservice.service.serviceImplementation;
 
 import org.springframework.stereotype.Service;
-import ro.societateahermes.backendservice.entities.DTO.EventDTO;
-import ro.societateahermes.backendservice.entities.Event;
+import ro.societateahermes.backendservice.entities.dto.EventDTO;
 import ro.societateahermes.backendservice.entities.Timeline;
 import ro.societateahermes.backendservice.repository.TimelineRepositoryInterface;
 import ro.societateahermes.backendservice.service.TimelineServiceInterface;

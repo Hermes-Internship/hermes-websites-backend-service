@@ -3,7 +3,7 @@ package ro.societateahermes.backendservice.controller.controllerImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.societateahermes.backendservice.controller.TimelineControllerInterface;
-import ro.societateahermes.backendservice.entities.DTO.EventDTO;
+import ro.societateahermes.backendservice.entities.dto.EventDTO;
 import ro.societateahermes.backendservice.entities.Timeline;
 import ro.societateahermes.backendservice.service.TimelineServiceInterface;
 import ro.societateahermes.backendservice.service.serviceImplementation.TimelineServiceImplementation;

@@ -1,7 +1,7 @@
 package ro.societateahermes.backendservice.entities;
 
 import lombok.Data;
-import ro.societateahermes.backendservice.entities.DTO.EventDTO;
+import ro.societateahermes.backendservice.entities.dto.EventDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

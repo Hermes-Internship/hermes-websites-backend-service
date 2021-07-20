@@ -1,7 +1,7 @@
 package ro.societateahermes.backendservice.service;
 
 import ro.societateahermes.backendservice.entities.Event;
-import ro.societateahermes.backendservice.entities.DTO.EventDTO;
+import ro.societateahermes.backendservice.entities.dto.EventDTO;
 
 import java.util.List;
 

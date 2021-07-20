@@ -1,6 +1,6 @@
 package ro.societateahermes.backendservice.controller;
 
-import ro.societateahermes.backendservice.entities.DTO.EventDTO;
+import ro.societateahermes.backendservice.entities.dto.EventDTO;
 import ro.societateahermes.backendservice.entities.Timeline;
 
 import java.util.List;
