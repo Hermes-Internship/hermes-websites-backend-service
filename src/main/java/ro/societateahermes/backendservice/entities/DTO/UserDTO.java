@@ -1,4 +1,4 @@
-package ro.societateahermes.backendservice.entities.DTO;
+package ro.societateahermes.backendservice.entities.dto;
 
 
 import lombok.AllArgsConstructor;

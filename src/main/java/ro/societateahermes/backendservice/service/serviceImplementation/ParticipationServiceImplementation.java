@@ -3,8 +3,8 @@ package ro.societateahermes.backendservice.service.serviceImplementation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.societateahermes.backendservice.entities.DTO.MySubmissionDTO;
-import ro.societateahermes.backendservice.entities.DTO.UserDTO;
+import ro.societateahermes.backendservice.entities.dto.MySubmissionDTO;
+import ro.societateahermes.backendservice.entities.dto.UserDTO;
 import ro.societateahermes.backendservice.entities.Event;
 import ro.societateahermes.backendservice.entities.Participation;
 import ro.societateahermes.backendservice.entities.User;
@@ -16,7 +16,6 @@ import ro.societateahermes.backendservice.service.ParticipationServiceInterface;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ParticipationServiceImplementation implements ParticipationServiceInterface {

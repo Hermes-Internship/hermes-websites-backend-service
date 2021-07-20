@@ -1,9 +1,8 @@
 package ro.societateahermes.backendservice.controller;
 
 
-import org.springframework.web.bind.annotation.PathVariable;
-import ro.societateahermes.backendservice.entities.DTO.MySubmissionDTO;
-import ro.societateahermes.backendservice.entities.DTO.UserDTO;
+import ro.societateahermes.backendservice.entities.dto.MySubmissionDTO;
+import ro.societateahermes.backendservice.entities.dto.UserDTO;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package ro.societateahermes.backendservice.service;
 
-import ro.societateahermes.backendservice.entities.DTO.MySubmissionDTO;
+import ro.societateahermes.backendservice.entities.dto.MySubmissionDTO;
 
 public interface SubmissionServiceInterface {
 

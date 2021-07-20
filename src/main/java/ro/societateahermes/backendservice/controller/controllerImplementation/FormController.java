@@ -18,6 +18,7 @@ public class FormController {
     @GetMapping
     public List<FormDto> getAll() {
         return formService.getAll();
+    }
 
 
     @PostMapping
