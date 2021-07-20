@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import ro.societateahermes.backendservice.controller.CDMemberControllerInterface;
 import ro.societateahermes.backendservice.controller.converters.CDMemberConverter;
-import ro.societateahermes.backendservice.entities.DTO.CDMemberDTO;
+import ro.societateahermes.backendservice.entities.dto.CDMemberDTO;
 import ro.societateahermes.backendservice.service.serviceImplementation.CDMemberServiceImplementation;
 
 import javax.validation.Valid;

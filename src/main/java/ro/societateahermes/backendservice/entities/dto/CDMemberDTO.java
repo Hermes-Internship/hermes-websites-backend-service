@@ -1,23 +1,17 @@
-package ro.societateahermes.backendservice.entities.DTO;
+package ro.societateahermes.backendservice.entities.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CDMemberDTO {
-    @Id
-    @GeneratedValue
     private Long id;
     @NotEmpty(message = "Image path cannot be null!")
     private String imagePath;

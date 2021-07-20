@@ -2,7 +2,6 @@ package ro.societateahermes.backendservice.service.serviceImplementation;
 
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.CDMember;
-import ro.societateahermes.backendservice.entities.DTO.CDMemberDTO;
 import ro.societateahermes.backendservice.repository.CDMemberRepositoryInterface;
 import ro.societateahermes.backendservice.service.CDMemberServiceInterface;
 
@@ -44,5 +43,4 @@ public class CDMemberServiceImplementation implements CDMemberServiceInterface {
         updatedCDMember.setPosition(cdMember.getPosition());
         cdMemberRepository.save(updatedCDMember);
     }
-
 }

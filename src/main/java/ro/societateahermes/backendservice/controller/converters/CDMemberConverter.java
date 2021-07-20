@@ -1,7 +1,7 @@
 package ro.societateahermes.backendservice.controller.converters;
 
 import ro.societateahermes.backendservice.entities.CDMember;
-import ro.societateahermes.backendservice.entities.DTO.CDMemberDTO;
+import ro.societateahermes.backendservice.entities.dto.CDMemberDTO;
 
 public class CDMemberConverter {
     public static CDMemberDTO cdMemberToCDMemberDTO(CDMember cdMember) {

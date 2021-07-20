@@ -1,7 +1,7 @@
 package ro.societateahermes.backendservice.controller;
 
 
-import ro.societateahermes.backendservice.entities.DTO.CDMemberDTO;
+import ro.societateahermes.backendservice.entities.dto.CDMemberDTO;
 
 import java.util.List;
 
