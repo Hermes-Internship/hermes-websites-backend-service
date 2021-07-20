@@ -9,7 +9,10 @@ import ro.societateahermes.backendservice.entities.Participation;
 import ro.societateahermes.backendservice.entities.User;
 import ro.societateahermes.backendservice.repository.UserRepositoryInterface;
 import ro.societateahermes.backendservice.service.UserServiceInterface;
+import ro.societateahermes.backendservice.utils.mapper.SubmissionMapper;
 
+import javax.transaction.Transactional;
+import java.beans.Transient;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,22 +27,17 @@ public class UserServiceImplementation implements UserServiceInterface {
 
 
 
+
     @Override
     public User saveUserFromDTO(MySubmissionDTO submissionDTO) {
 
-        User user = new User();
-
-        user.setFirstName(submissionDTO.getFirstName());
-        user.setLastName(submissionDTO.getLastName());
-        user.setEmail(submissionDTO.getEmail());
-        user.setUsername(submissionDTO.getUsername());
-        user.setPassword(submissionDTO.getPassword());
-        user.setUniversity(submissionDTO.getUniversity());
-
+        SubmissionMapper submissionMapper=new SubmissionMapper();
+        User user = submissionMapper.convertToUser(submissionDTO);
         return userRepository.save(user);
     }
 
     @Override
+    @Transactional
     public void addParticipation(User user, Participation participation) {
         List<Participation> participationList = user.getListOfParticipation();
         participationList.add(participation);

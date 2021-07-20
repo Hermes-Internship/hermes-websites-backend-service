@@ -34,7 +34,7 @@ public class MySubmissionDTO {
     //fields related to the submission of the form
     private long formId;
 
-    private List<Answer> answers;
+    private List<AnswerDTO> answers;
 
     //fields related to the event
     private long eventId;

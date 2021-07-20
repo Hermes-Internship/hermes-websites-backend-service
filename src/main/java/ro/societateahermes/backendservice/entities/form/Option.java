@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
+@Table(name="options")
 public class Option {
     @Id
     @GeneratedValue
