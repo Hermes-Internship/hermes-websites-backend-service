@@ -22,16 +22,21 @@ public class EditionController {
     }
 
     @PostMapping
-    public void save(@RequestParam("image") List<MultipartFile> images,
-                     @RequestParam("video") List<MultipartFile> videos) {
-        editionService.saveMediaToNewEdition(images, videos);
+    public void saveNewEditionWithMedia(@RequestParam(value = "image", required = false) List<MultipartFile> images,
+                                        @RequestParam(value = "video", required = false) List<MultipartFile> videos) {
+        // todo: test all 4 cases: 2 nulls, 0 null, 2 x 1 null
+        if (images != null) {
+            editionService.saveImagesToNewEdition(images);
+        }
+        if (videos != null) {
+            editionService.saveVideosToNewEdition(videos);
+        }
     }
 
     @PostMapping("/{editionId}")
-    public void uploadFile(@PathVariable("editionId") Long editionId,
-                           @RequestParam("file") List<MultipartFile> files) {
-        for (MultipartFile file : files) {
-            editionService.saveImageToEdition(editionId, file);
-        }
+    public void addMediaToEdition(@PathVariable("editionId") Long editionId,
+                                  @RequestParam(value = "image", required = false) List<MultipartFile> images,
+                                  @RequestParam(value = "video", required = false) List<MultipartFile> videos) {
+        editionService.addMediaToEdition(editionId, images, videos);
     }
 }

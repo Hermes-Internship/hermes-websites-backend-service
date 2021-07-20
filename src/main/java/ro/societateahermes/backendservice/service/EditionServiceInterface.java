@@ -8,7 +8,7 @@ import java.util.List;
 public interface EditionServiceInterface {
     List<EditionDto> getAll();
 
-    void saveImageToEdition(Long editionId, MultipartFile file);
-
     void saveMediaToNewEdition(List<MultipartFile> images, List<MultipartFile> videos);
+
+    void addMediaToEdition(Long editionId, List<MultipartFile> images, List<MultipartFile> videos);
 }

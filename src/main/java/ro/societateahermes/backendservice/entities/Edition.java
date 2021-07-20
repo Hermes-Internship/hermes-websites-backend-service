@@ -37,4 +37,8 @@ public class Edition {
     public void addImage(Image image) {
         images.add(image);
     }
+
+    public void addVideo(Video video) {
+        videos.add(video);
+    }
 }
