@@ -7,15 +7,11 @@ import java.util.List;
 
 public interface TimelineServiceInterface {
 
-    void save(Timeline timeLine);
-
     List<Timeline> getAll();
-
-    void delete(Long idTimeLine);
 
     Timeline createEvenFromTimeline(Long IdTimeLine, EventDTO eventDTO);
 
-    void deleteEvenFromTimeline(Long IdTimeLine, Long IdEvent);
+    void deleteEvenFromTimeline(Long IdTimeLine, EventDTO eventDTO);
 
     List<EventDTO> orderByDateAndTime(Timeline timeLine);
 }

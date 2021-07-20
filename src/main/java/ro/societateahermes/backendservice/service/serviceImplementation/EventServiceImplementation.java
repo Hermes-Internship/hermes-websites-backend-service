@@ -1,25 +1,29 @@
 package ro.societateahermes.backendservice.service.serviceImplementation;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.Event;
 import ro.societateahermes.backendservice.entities.dto.EventDTO;
+import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
+import ro.societateahermes.backendservice.mappers.EventMapperInterface;
 import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
 import ro.societateahermes.backendservice.service.EventServiceInterface;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-@Component
 @Service
 public class EventServiceImplementation implements EventServiceInterface {
 
     private final EventRepositoryInterface eventRepository;
+    private final EventMapperInterface eventMapper;
 
-    public EventServiceImplementation(EventRepositoryInterface eventRepository) {
+    public EventServiceImplementation(EventRepositoryInterface eventRepository, EventMapperInterface eventMapper) {
         this.eventRepository = eventRepository;
+        this.eventMapper = eventMapper;
     }
 
     @Override
@@ -27,52 +31,21 @@ public class EventServiceImplementation implements EventServiceInterface {
         return eventRepository.findAll();
     }
 
-    @Override
-    public void save(Event event) {
-        eventRepository.save(event);
-    }
 
     @Override
-    public EventDTO eventToEventDTO(Event event) {
-        if(event == null)
-            return null;
-
-        EventDTO eventDTO = new EventDTO();
-
-        eventDTO.setIdEvent(event.getIdEvent());
-        eventDTO.setEventName(event.getEventName());
-        eventDTO.setEventStartDate(event.getEventStartDate());
-        eventDTO.setLocation(event.getLocation());
-
-        return eventDTO;
-    }
-
-    @Override
-    public Event eventDTOToEvent(EventDTO eventDTO) {
-        if(eventDTO == null)
-            return null;
-
-        Event event = new Event();
-
-        event.setIdEvent(eventDTO.getIdEvent());
-        event.setEventName(eventDTO.getEventName());
-        event.setEventStartDate(eventDTO.getEventStartDate());
-        event.setLocation(eventDTO.getLocation());
-
-        return event;
-    }
-
-    @Override
-    public List<EventDTO> eventsToEventDTOS(List<Event> events) {
-        if (events == null )
-            return null;
-
-        List<EventDTO> eventDTOS = new ArrayList<EventDTO>(events.size());
-        for (Event event : events ) {
-            eventDTOS.add(eventToEventDTO(event));
+    public NotificationSwitchDTO getEventStatusByEventName(String eventName) {
+        Optional<Event> eventOptional = eventRepository.findByEventName(eventName);
+        if (eventOptional.isPresent()) {
+            Event event = eventOptional.get();
+            if (event.getEventStartDate().isAfter(LocalDateTime.now())) {
+                return new NotificationSwitchDTO("Event has not started yet", false);
+            }
+            if (event.getEventEndDate().isAfter(LocalDateTime.now())) {
+                return new NotificationSwitchDTO("Event has started", true);
+            }
+            return new NotificationSwitchDTO("Event has finished", false);
         }
-
-        return eventDTOS;
+        return new NotificationSwitchDTO("Event not found", false);
     }
 
     @Override
@@ -82,15 +55,14 @@ public class EventServiceImplementation implements EventServiceInterface {
         LocalDate startDate = LocalDate.from(event.getEventStartDate());
         LocalTime startTime = LocalTime.from(event.getEventStartDate());
 
-        LocalDate endDate = LocalDate.from(event.getEventEndTime());
-        LocalTime endTime = LocalTime.from(event.getEventEndTime());
+        LocalDate endDate = LocalDate.from(event.getEventEndDate());
+        LocalTime endTime = LocalTime.from(event.getEventEndDate());
 
         if (startDate.equals(LocalDate.now()) || LocalDate.now().isBefore(endDate)) {
             if (startTime.equals(LocalTime.now()) || LocalTime.now().isBefore(endTime))
-                events = eventsToEventDTOS(getAll());
+               events = eventMapper.eventsToEventDTOS(getAll());
         }
 
         return events;
     }
-
 }

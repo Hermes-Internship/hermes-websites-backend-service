@@ -9,7 +9,7 @@ public interface TimelineControllerInterface {
 
     Timeline createEvenFromTimeline(Long IdTimeline, EventDTO eventDTO);
 
-    List<Timeline> getAll();
+    List<EventDTO> getAllEvenFromTimeline(Timeline timeline);
 
-    void deleteEvenFromTimeline(Long IdTimeline, Long IdEvent);
+    void deleteEvenFromTimeline(Long IdTimeline, EventDTO IdEvent);
 }

@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 public class Activity {
-
     @Id
     @GeneratedValue
     private Long IdActivity;
@@ -19,7 +18,7 @@ public class Activity {
     private String activityDescription;
     private LocalDateTime activityStartDate;
     private String activityEstimatedTime;
-    private LocalDateTime activityEndTime;
+    private LocalDateTime activityEndDate;
     private int maximumNumberOfParticipants;
     private String activityLink;
 }

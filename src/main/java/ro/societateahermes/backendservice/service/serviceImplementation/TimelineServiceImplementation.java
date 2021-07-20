@@ -14,27 +14,14 @@ public class TimelineServiceImplementation implements TimelineServiceInterface {
 
     private final TimelineRepositoryInterface timelineRepository;
 
-
     public TimelineServiceImplementation(TimelineRepositoryInterface timeLineRepository) {
         this.timelineRepository = timeLineRepository;
-    }
-
-    @Override
-    public void save(Timeline timeLine) {
-        timelineRepository.save(timeLine);
     }
 
     @Override
     public List<Timeline> getAll() {
 
         return timelineRepository.findAll();
-    }
-
-    @Override
-    public void delete(Long id) {
-        for (Timeline timeLine : getAll())
-            if (timeLine.getIdTimeline().equals(id))
-                timelineRepository.delete(timeLine);
     }
 
     @Override
@@ -46,20 +33,15 @@ public class TimelineServiceImplementation implements TimelineServiceInterface {
     }
 
     @Override
-    public void deleteEvenFromTimeline(Long IdTimeLine, Long IdEvent) {
+    public void deleteEvenFromTimeline(Long IdTimeLine, EventDTO eventDTO) {
         Timeline timeLine = timelineRepository.getOne(IdTimeLine);
-        timeLine.getListOfEvents().remove(IdEvent);
+        timeLine.getListOfEvents().remove(eventDTO);
     }
 
     @Override
     public List<EventDTO> orderByDateAndTime(Timeline timeLine){
 
-        timeLine.getListOfEvents().sort(new Comparator<EventDTO>() {
-            @Override
-            public int compare(EventDTO o1, EventDTO o2) {
-                return o1.getEventStartDate().compareTo(o2.getEventStartDate());
-            }
-        });
+        timeLine.getListOfEvents().sort(Comparator.comparing(EventDTO::getEventStartDate));
         return timeLine.getListOfEvents();
     }
 }

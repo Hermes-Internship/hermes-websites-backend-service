@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import ro.societateahermes.backendservice.controller.TimelineControllerInterface;
 import ro.societateahermes.backendservice.entities.dto.EventDTO;
 import ro.societateahermes.backendservice.entities.Timeline;
-import ro.societateahermes.backendservice.service.TimelineServiceInterface;
 import ro.societateahermes.backendservice.service.serviceImplementation.TimelineServiceImplementation;
 
 import javax.validation.Valid;
@@ -16,7 +15,7 @@ import java.util.List;
 @RequestMapping("/timeline")
 public class TimelineControllerImplementation implements TimelineControllerInterface {
 
-    private final TimelineServiceInterface timeLineService;
+    private final TimelineServiceImplementation timeLineService;
 
     @Autowired
     public TimelineControllerImplementation(TimelineServiceImplementation timeLineService) {
@@ -27,18 +26,18 @@ public class TimelineControllerImplementation implements TimelineControllerInter
     @PostMapping()
     @Override
     public Timeline createEvenFromTimeline(@Valid @RequestBody Long IdTimeline, EventDTO eventDTO) {
-        return timeLineService.createEvenFromTimeline(IdTimeline, eventDTO);
+         return timeLineService.createEvenFromTimeline(IdTimeline, eventDTO);
     }
 
     @GetMapping
     @Override
-    public List<Timeline> getAll() {
-        return timeLineService.getAll();
+    public List<EventDTO> getAllEvenFromTimeline(Timeline timeline) {
+        return timeLineService.orderByDateAndTime(timeline);
     }
 
-    @DeleteMapping("/{IdTimeline}/{IdEvent}")
+    @DeleteMapping("/{IdTimeline}")
     @Override
-    public void deleteEvenFromTimeline(@Valid @PathVariable("IdTimeline")  Long IdTimeline, @Valid @PathVariable("IdEvent")  Long IdEvent) {
+    public void deleteEvenFromTimeline(@Valid @PathVariable("IdTimeline")  Long IdTimeline, @Valid @RequestBody EventDTO IdEvent) {
         timeLineService.deleteEvenFromTimeline(IdTimeline, IdEvent);
     }
 }
