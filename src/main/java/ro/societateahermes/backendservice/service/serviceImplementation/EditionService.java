@@ -5,10 +5,13 @@ import org.springframework.web.multipart.MultipartFile;
 import ro.societateahermes.backendservice.entities.Edition;
 import ro.societateahermes.backendservice.entities.Image;
 import ro.societateahermes.backendservice.entities.Video;
+import ro.societateahermes.backendservice.entities.dto.EditionDto;
+import ro.societateahermes.backendservice.entities.mapper.EditionMapper;
 import ro.societateahermes.backendservice.repository.EditionRepository;
 import ro.societateahermes.backendservice.repository.FileSystemRepository;
 import ro.societateahermes.backendservice.repository.ImageRepository;
 import ro.societateahermes.backendservice.repository.VideoRepository;
+import ro.societateahermes.backendservice.service.EditionServiceInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class EditionService {
+public class EditionService implements EditionServiceInterface {
     private final EditionRepository editionRepository;
     private final ImageRepository imageRepository;
     private final VideoRepository videoRepository;
@@ -29,17 +32,11 @@ public class EditionService {
         this.fileSystemRepository = fileSystemRepository;
     }
 
-    public List<Edition> getAll() {
-        return editionRepository.findAll();
-    }
-
-    public void save(Edition edition) {
-        for (Image image : edition.getImages()) {
-            image.setPath("src/main/resources/" + edition.getId() + "/" + image.getPath());
-            imageRepository.save(image);
-        }
-
-        editionRepository.save(edition);
+    public List<EditionDto> getAll() {
+        List<Edition> editions = editionRepository.findAll();
+        return editions.stream()
+                .map(EditionMapper::convertToDto)
+                .collect(Collectors.toList());
     }
 
     public void saveImageToEdition(Long editionId, MultipartFile file) {
@@ -53,13 +50,6 @@ public class EditionService {
         Image image = new Image(edition, "src/main/resources/edition/" + file.getOriginalFilename());
         imageRepository.save(image);
         edition.addImage(image);
-    }
-
-    public List<Image> getImagesOfEdition(Long editionId) {
-        return imageRepository.findAll()
-                .stream()
-                .filter(image -> image.getEdition().getId().equals(editionId))
-                .collect(Collectors.toList());
     }
 
     public void saveMediaToNewEdition(List<MultipartFile> images, List<MultipartFile> videos) {
