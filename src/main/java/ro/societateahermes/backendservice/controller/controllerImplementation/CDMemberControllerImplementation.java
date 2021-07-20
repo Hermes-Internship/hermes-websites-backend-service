@@ -1,6 +1,7 @@
 package ro.societateahermes.backendservice.controller.controllerImplementation;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import ro.societateahermes.backendservice.controller.CDMemberControllerInterface;
@@ -42,6 +43,7 @@ public class CDMemberControllerImplementation implements CDMemberControllerInter
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
+    @Transactional
     @Override
     public void updateCDMember(@Valid @RequestBody CDMemberDTO cdMemberDTO) {
         cdMemberService.update(CDMemberConverter.cdMemberDTOToCDMember(cdMemberDTO));
