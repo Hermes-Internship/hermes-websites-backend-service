@@ -9,7 +9,7 @@ public interface CDMemberServiceInterface {
 
     void delete(Long CDMemberID);
 
-    void update(Long CDMemberID, CDMember cdMember);
+    void update(CDMember cdMember);
 
     List<CDMember> getAllCDMembers();
 }

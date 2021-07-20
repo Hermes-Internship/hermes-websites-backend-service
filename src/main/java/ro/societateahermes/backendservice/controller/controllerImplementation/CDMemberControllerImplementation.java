@@ -40,10 +40,10 @@ public class CDMemberControllerImplementation implements CDMemberControllerInter
         cdMemberService.delete(cdMemberID);
     }
 
-    @PutMapping("/{cd-id}")
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
     @Override
-    public void updateCDMember(@PathVariable("cd-id") Long CDMemberID, @Valid @RequestBody CDMemberDTO cdMemberDTO) {
-        cdMemberService.update(CDMemberID, CDMemberConverter.cdMemberDTOToCDMember(cdMemberDTO));
+    public void updateCDMember(@Valid @RequestBody CDMemberDTO cdMemberDTO) {
+        cdMemberService.update(CDMemberConverter.cdMemberDTOToCDMember(cdMemberDTO));
     }
 }

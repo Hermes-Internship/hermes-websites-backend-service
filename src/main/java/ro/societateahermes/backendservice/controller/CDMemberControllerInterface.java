@@ -10,7 +10,7 @@ public interface CDMemberControllerInterface {
 
     void deleteCDMember(Long CDMemberID);
 
-    void updateCDMember(Long CDMemberID, CDMemberDTO cdMemberDTO);
+    void updateCDMember(CDMemberDTO cdMemberDTO);
 
     List<CDMemberDTO> getAllCDMembers();
 }

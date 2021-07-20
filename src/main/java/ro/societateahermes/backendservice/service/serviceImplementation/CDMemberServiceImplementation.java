@@ -35,8 +35,8 @@ public class CDMemberServiceImplementation implements CDMemberServiceInterface {
     }
 
     @Override
-    public void update(Long CDMemberID, CDMember cdMember) {
-        CDMember updatedCDMember = cdMemberRepository.getOne(CDMemberID);
+    public void update(CDMember cdMember) {
+        CDMember updatedCDMember = cdMemberRepository.getOne(cdMember.getCDMemberID());
         updatedCDMember.setImagePath(cdMember.getImagePath());
         updatedCDMember.setFacebookLink(cdMember.getFacebookLink());
         updatedCDMember.setDescription(cdMember.getDescription());
