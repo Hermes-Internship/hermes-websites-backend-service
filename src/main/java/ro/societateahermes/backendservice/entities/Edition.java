@@ -38,7 +38,15 @@ public class Edition {
         images.add(image);
     }
 
+    public void removeImage(Image image) {
+        images.remove(image);
+    }
+
     public void addVideo(Video video) {
         videos.add(video);
+    }
+
+    public void removeVideo(Video video) {
+        videos.remove(video);
     }
 }

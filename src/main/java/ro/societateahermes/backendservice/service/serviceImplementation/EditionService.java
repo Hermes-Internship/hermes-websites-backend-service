@@ -12,6 +12,7 @@ import ro.societateahermes.backendservice.repository.FileSystemRepository;
 import ro.societateahermes.backendservice.repository.ImageRepository;
 import ro.societateahermes.backendservice.repository.VideoRepository;
 import ro.societateahermes.backendservice.service.EditionServiceInterface;
+import ro.societateahermes.backendservice.utils.FileUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,24 +40,6 @@ public class EditionService implements EditionServiceInterface {
                 .collect(Collectors.toList());
     }
 
-    public void saveMediaToNewEdition(List<MultipartFile> images, List<MultipartFile> videos) {
-        List<Image> savedImages = this.saveImages(images);
-        List<Video> savedVideos = this.saveVideos(videos);
-
-        Edition edition = new Edition(savedImages, savedVideos);
-        editionRepository.save(edition);
-
-        for (Image savedImage : savedImages) {
-            savedImage.setEdition(edition);
-            imageRepository.save(savedImage);
-        }
-
-        for (Video savedVideo : savedVideos) {
-            savedVideo.setEdition(edition);
-            videoRepository.save(savedVideo);
-        }
-    }
-
     public void saveImagesToNewEdition(List<MultipartFile> images) {
         List<Image> savedImages = this.saveImages(images);
 
@@ -67,23 +50,6 @@ public class EditionService implements EditionServiceInterface {
             savedImage.setEdition(edition);
             imageRepository.save(savedImage);
         }
-    }
-
-    public void saveVideosToNewEdition(List<MultipartFile> videos) {
-        List<Video> savedVideos = this.saveVideos(videos);
-
-        Edition edition = new Edition(null, savedVideos);
-        editionRepository.save(edition);
-
-        for (Video savedVideo : savedVideos) {
-            savedVideo.setEdition(edition);
-            videoRepository.save(savedVideo);
-        }
-    }
-
-    public void addMediaToEdition(Long editionId, List<MultipartFile> images, List<MultipartFile> videos) {
-        this.saveImages(editionId, images);
-        this.saveVideos(editionId, videos);
     }
 
     private List<Image> saveImages(List<MultipartFile> multipartFiles) {
@@ -104,20 +70,15 @@ public class EditionService implements EditionServiceInterface {
         return images;
     }
 
-    private void saveImages(Long editionId, List<MultipartFile> multipartImages) {
-        Edition edition = editionRepository.findById(editionId).orElseThrow();
+    public void saveVideosToNewEdition(List<MultipartFile> videos) {
+        List<Video> savedVideos = this.saveVideos(videos);
 
-        try {
-            for (MultipartFile multipartImage : multipartImages) {
-                String originalFilename = multipartImage.getOriginalFilename();
-                fileSystemRepository.saveFile(multipartImage.getBytes(), "edition", originalFilename);
+        Edition edition = new Edition(null, savedVideos);
+        editionRepository.save(edition);
 
-                Image image = new Image(edition, "src/main/resources/edition/" + originalFilename);
-                imageRepository.save(image);
-                edition.addImage(image);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (Video savedVideo : savedVideos) {
+            savedVideo.setEdition(edition);
+            videoRepository.save(savedVideo);
         }
     }
 
@@ -139,7 +100,24 @@ public class EditionService implements EditionServiceInterface {
         return videos;
     }
 
-    private void saveVideos(Long editionId, List<MultipartFile> multipartVideos) {
+    public void saveImagesToEdition(Long editionId, List<MultipartFile> multipartImages) {
+        Edition edition = editionRepository.findById(editionId).orElseThrow();
+
+        try {
+            for (MultipartFile multipartImage : multipartImages) {
+                String originalFilename = multipartImage.getOriginalFilename();
+                fileSystemRepository.saveFile(multipartImage.getBytes(), "edition", originalFilename);
+
+                Image image = new Image(edition, "src/main/resources/edition/" + originalFilename);
+                imageRepository.save(image);
+                edition.addImage(image);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveVideosToEdition(Long editionId, List<MultipartFile> multipartVideos) {
         Edition edition = editionRepository.findById(editionId).orElseThrow();
 
         try {
@@ -153,6 +131,19 @@ public class EditionService implements EditionServiceInterface {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void deleteImages(Long editionId, List<Long> imageIds) {
+        Edition edition = editionRepository.findById(editionId).orElseThrow();
+
+        for (Long imageId : imageIds) {
+            Image image = imageRepository.findById(imageId).orElseThrow();
+
+            edition.removeImage(image);
+
+            FileUtils.deleteFile(image.getPath());
+            imageRepository.delete(image);
         }
     }
 }
