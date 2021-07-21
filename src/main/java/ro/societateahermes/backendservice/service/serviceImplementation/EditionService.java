@@ -109,8 +109,8 @@ public class EditionService implements EditionServiceInterface {
                 fileSystemRepository.saveFile(multipartImage.getBytes(), "edition", originalFilename);
 
                 Image image = new Image(edition, "src/main/resources/edition/" + originalFilename);
-                imageRepository.save(image);
                 edition.addImage(image);
+                editionRepository.save(edition);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -126,8 +126,8 @@ public class EditionService implements EditionServiceInterface {
                 fileSystemRepository.saveFile(multipartVideo.getBytes(), "edition", originalFilename);
 
                 Video video = new Video(edition, "src/main/resources/edition/" + originalFilename);
-                videoRepository.save(video);
                 edition.addVideo(video);
+                editionRepository.save(edition);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -141,9 +141,9 @@ public class EditionService implements EditionServiceInterface {
             Image image = imageRepository.findById(imageId).orElseThrow();
 
             edition.removeImage(image);
+            editionRepository.save(edition);
 
             FileUtils.deleteFile(image.getPath());
-            imageRepository.delete(image);
         }
     }
 }
