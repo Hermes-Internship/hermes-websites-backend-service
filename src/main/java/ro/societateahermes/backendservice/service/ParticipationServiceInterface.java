@@ -7,11 +7,9 @@ import ro.societateahermes.backendservice.entities.User;
 
 import java.util.List;
 
-public interface UserServiceInterface {
+public interface ParticipationServiceInterface {
 
-    User saveUserFromDTO(MySubmissionDTO user);
+    Participation savefromDTO(User user, MySubmissionDTO submissionDTO);
 
-    void addParticipation(User user, Participation participation);
-
-    List<UserDTO> getAllUsers();
+    List<UserDTO> getAllUsersFromEvent(Long eventId);
 }
