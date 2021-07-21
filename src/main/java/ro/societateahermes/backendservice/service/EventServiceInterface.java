@@ -13,4 +13,5 @@ public interface EventServiceInterface {
     NotificationSwitchDTO getEventStatusByEventName(String eventName);
 
     List<EventDTO> eventIsOngoing(Event event);
+
 }

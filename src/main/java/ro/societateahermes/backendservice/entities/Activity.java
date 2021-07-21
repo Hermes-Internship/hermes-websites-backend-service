@@ -21,4 +21,5 @@ public class Activity {
     private LocalDateTime activityEndDate;
     private int maximumNumberOfParticipants;
     private String activityLink;
+
 }

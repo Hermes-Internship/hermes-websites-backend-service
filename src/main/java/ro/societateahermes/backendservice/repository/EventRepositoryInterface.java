@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface EventRepositoryInterface extends JpaRepository<Event, Long> {
 
     Optional<Event> findByEventName(String eventName);
+
 }

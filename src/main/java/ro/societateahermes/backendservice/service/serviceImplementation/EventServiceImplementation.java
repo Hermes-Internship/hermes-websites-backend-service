@@ -15,12 +15,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import ro.societateahermes.backendservice.entities.Event;
+import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
+import ro.societateahermes.backendservice.service.EventServiceInterface;
+import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+
 @Service
 public class EventServiceImplementation implements EventServiceInterface {
 
     private final EventRepositoryInterface eventRepository;
     private final EventMapperInterface eventMapper;
 
+    @Autowired
     public EventServiceImplementation(EventRepositoryInterface eventRepository, EventMapperInterface eventMapper) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
@@ -44,6 +56,7 @@ public class EventServiceImplementation implements EventServiceInterface {
                 return new NotificationSwitchDTO("Event has started", true);
             }
             return new NotificationSwitchDTO("Event has finished", false);
+
         }
         return new NotificationSwitchDTO("Event not found", false);
     }
