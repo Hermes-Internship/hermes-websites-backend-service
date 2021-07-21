@@ -1,14 +1,13 @@
 package ro.societateahermes.backendservice.service;
 
-import ro.societateahermes.backendservice.entities.Event;
+import ro.societateahermes.backendservice.entities.NewsFeedPost;
 import ro.societateahermes.backendservice.entities.dto.NewsFeedDTO;
 
 import java.util.List;
 
 public interface NewsFeedServiceInterface {
 
-    List<NewsFeedDTO> getAllNotificationsForNewsFeed();
-    void createEvent(Event event);
-    void deleteEvent(Long id);
-    void updateEvent(Event eventOutdated,Event eventUpdated);
+    List<NewsFeedDTO> getAllPost();
+    void createPost(NewsFeedPost newsFeedPost);
+    void deletePost(Long idPost);
 }

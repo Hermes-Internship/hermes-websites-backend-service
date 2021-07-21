@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NewsFeedDTO {
 
-    private String eventImagePath;
-    private String eventDescription;
-    private String eventLink;
+    private String postDescription;
+    private String postImagePath;
+    private String postLink;
 }
