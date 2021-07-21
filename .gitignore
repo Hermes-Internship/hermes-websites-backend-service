@@ -114,3 +114,4 @@ fabric.properties
 /src/main/resources/images/*
 !/src/main/resources/images/.gitkeep
 
+./hermes-websites-backend-service.iml
