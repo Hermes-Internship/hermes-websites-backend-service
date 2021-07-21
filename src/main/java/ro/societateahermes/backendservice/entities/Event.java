@@ -21,6 +21,7 @@ public class Event {
     private String eventEstimatedTime;
     private LocalDateTime eventEndDate;
     private String eventLink;
+    private String eventLocation;
     @OneToMany(mappedBy = "event")
     private List<Activity> listOfActivities;
 
