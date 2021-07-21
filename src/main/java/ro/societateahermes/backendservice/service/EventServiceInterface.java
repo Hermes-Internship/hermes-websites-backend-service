@@ -1,6 +1,6 @@
 package ro.societateahermes.backendservice.service;
 
-import ro.societateahermes.backendservice.service.dto.NotificationSwitchDTO;
+import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
 
 public interface EventServiceInterface {
 
