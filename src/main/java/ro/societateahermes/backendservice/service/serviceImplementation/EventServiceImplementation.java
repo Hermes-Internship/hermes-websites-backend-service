@@ -10,6 +10,10 @@ import ro.societateahermes.backendservice.service.EventServiceInterface;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
+import ro.societateahermes.backendservice.service.EventServiceInterface;
+import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 
@@ -19,17 +23,13 @@ public class EventServiceImplementation implements EventServiceInterface {
     @Autowired
     private  EventRepositoryInterface eventRepository;
 
-
-
     @Override
     public void addParticipation(long eventID, Participation participation) {
         Event event = eventRepository.getOne(eventID);
         List<Participation> participationList = event.getListOfParticipation();
         participationList.add(participation);
         event.setListOfParticipation(participationList);
-
     }
-
     public NotificationSwitchDTO getEventStatusByEventName(String eventName) {
         Optional<Event> eventOptional = eventRepository.findByEventName(eventName);
         if (eventOptional.isPresent()) {
@@ -45,4 +45,5 @@ public class EventServiceImplementation implements EventServiceInterface {
         }
         return new NotificationSwitchDTO("Event not found", false);
     }
+
 }
