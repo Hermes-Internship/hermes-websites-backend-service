@@ -19,9 +19,8 @@ public class CDMemberDTO {
     private String facebookLink;
     @NotEmpty(message = "Description is mandatory!")
     private String description;
-    @Pattern(regexp = "^[A-Za-z\\s]+$", message = "Name cannot contain numbers or special characters!")
-    @NotBlank(message = "Name is mandatory!")
+    @NotEmpty(message = "Name is mandatory!")
     private String name;
-    @NotBlank(message = "Position is mandatory!")
+    @NotEmpty(message = "Position is mandatory!")
     private String position;
 }
