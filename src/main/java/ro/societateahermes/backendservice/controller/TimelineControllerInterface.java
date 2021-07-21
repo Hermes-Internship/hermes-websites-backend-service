@@ -1,15 +1,20 @@
 package ro.societateahermes.backendservice.controller;
 
-import ro.societateahermes.backendservice.entities.dto.EventDTO;
+import ro.societateahermes.backendservice.entities.Event;
+import ro.societateahermes.backendservice.entities.dto.ActivityDTO;
 import ro.societateahermes.backendservice.entities.Timeline;
 
 import java.util.List;
 
 public interface TimelineControllerInterface {
 
-    Timeline createEvenFromTimeline(Long IdTimeline, EventDTO eventDTO);
+    Timeline createActivityFromTimeline(Long IdEvent, ActivityDTO activityDTO);
 
-    List<EventDTO> getAllEvenFromTimeline(Timeline timeline);
+    Timeline updateActivityFromTimeline(Long IdEvent, ActivityDTO activityDTO);
 
-    void deleteEvenFromTimeline(Long IdTimeline, EventDTO IdEvent);
+    void deleteActivityFromTimeline(Long IdEvent, ActivityDTO IdActivity);
+
+    ActivityDTO getOneActivityFromTimeline(Long IdEvent, ActivityDTO activityDTO);
+
+    List<ActivityDTO> getAllActivityFromTimeline(Timeline timeline);
 }

@@ -2,16 +2,11 @@ package ro.societateahermes.backendservice.service.serviceImplementation;
 
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.Event;
-import ro.societateahermes.backendservice.entities.dto.EventDTO;
 import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
-import ro.societateahermes.backendservice.mappers.EventMapperInterface;
 import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
 import ro.societateahermes.backendservice.service.EventServiceInterface;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,17 +19,10 @@ import ro.societateahermes.backendservice.entities.Participation;
 public class EventServiceImplementation implements EventServiceInterface {
 
     private final EventRepositoryInterface eventRepository;
-    private final EventMapperInterface eventMapper;
 
     @Autowired
-    public EventServiceImplementation(EventRepositoryInterface eventRepository, EventMapperInterface eventMapper) {
+    public EventServiceImplementation(EventRepositoryInterface eventRepository) {
         this.eventRepository = eventRepository;
-        this.eventMapper = eventMapper;
-    }
-
-    @Override
-    public List<Event> getAll() {
-        return eventRepository.findAll();
     }
 
     @Override
@@ -60,21 +48,4 @@ public class EventServiceImplementation implements EventServiceInterface {
         return new NotificationSwitchDTO("Event not found", false);
     }
 
-    @Override
-    public List<EventDTO> eventIsOngoing(Event event) {
-        List<EventDTO> events = new ArrayList<>();
-
-        LocalDate startDate = LocalDate.from(event.getEventStartDate());
-        LocalTime startTime = LocalTime.from(event.getEventStartDate());
-
-        LocalDate endDate = LocalDate.from(event.getEventEndDate());
-        LocalTime endTime = LocalTime.from(event.getEventEndDate());
-
-        if (startDate.equals(LocalDate.now()) || LocalDate.now().isBefore(endDate)) {
-            if (startTime.equals(LocalTime.now()) || LocalTime.now().isBefore(endTime))
-               events = eventMapper.eventsToEventDTOS(getAll());
-        }
-
-        return events;
-    }
 }

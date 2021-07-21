@@ -3,7 +3,8 @@ package ro.societateahermes.backendservice.controller.controllerImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.societateahermes.backendservice.controller.TimelineControllerInterface;
-import ro.societateahermes.backendservice.entities.dto.EventDTO;
+import ro.societateahermes.backendservice.entities.Event;
+import ro.societateahermes.backendservice.entities.dto.ActivityDTO;
 import ro.societateahermes.backendservice.entities.Timeline;
 import ro.societateahermes.backendservice.service.serviceImplementation.TimelineServiceImplementation;
 
@@ -25,20 +26,30 @@ public class TimelineControllerImplementation implements TimelineControllerInter
 
     @PostMapping()
     @Override
-    public Timeline createEvenFromTimeline(@Valid @RequestBody Long IdTimeline, EventDTO eventDTO) {
-         return timeLineService.createEvenFromTimeline(IdTimeline, eventDTO);
+    public Timeline createActivityFromTimeline(@Valid @RequestBody Long IdEvent, ActivityDTO activityDTO) {
+         return timeLineService.createActivityFromTimeline(IdEvent, activityDTO);
+    }
+
+    @Override
+    public Timeline updateActivityFromTimeline(Long IdEvent, ActivityDTO activityDTO) {
+        return timeLineService.updateActivityFromTimeline(IdEvent, activityDTO);
     }
 
     @GetMapping
     @Override
-    public List<EventDTO> getAllEvenFromTimeline(Timeline timeline) {
-        return timeLineService.orderByDateAndTime(timeline);
+    public List<ActivityDTO> getAllActivityFromTimeline(Timeline timeline) {
+        return timeLineService.orderActivityByDateAndTime(timeline);
     }
 
-    @DeleteMapping("/{IdTimeline}")
+    @DeleteMapping("/{IdEvent}")
     @Override
-    public void deleteEvenFromTimeline(@Valid @PathVariable("IdTimeline")  Long IdTimeline, @Valid @RequestBody EventDTO IdEvent) {
-        timeLineService.deleteEvenFromTimeline(IdTimeline, IdEvent);
+    public void deleteActivityFromTimeline(@Valid @PathVariable("IdEvent")  Long IdEvent, @Valid @RequestBody ActivityDTO IdActivity) {
+        timeLineService.deleteActivityFromTimeline(IdEvent, IdActivity);
+    }
+
+    @Override
+    public ActivityDTO getOneActivityFromTimeline(Long IdEvent, ActivityDTO activityDTO) {
+        return timeLineService.getOneActivityFromTimeline(IdEvent, activityDTO);
     }
 }
 

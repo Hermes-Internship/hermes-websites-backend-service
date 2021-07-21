@@ -13,12 +13,12 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventDTO {
+public class ActivityDTO {
 
     @Id
     @GeneratedValue
-    private Long IdEvent;
-    private String eventName;
-    private LocalDateTime eventStartDate;
-    private String location;
+    private Long IdActivity;
+    private String activityName;
+    private LocalDateTime activityStartDate;
+    private String activityLocation;
 }

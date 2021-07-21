@@ -1,12 +1,9 @@
 package ro.societateahermes.backendservice.entities;
 
 import lombok.Data;
-import ro.societateahermes.backendservice.entities.dto.EventDTO;
+import ro.societateahermes.backendservice.entities.dto.ActivityDTO;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import java.util.List;
 
@@ -16,6 +13,8 @@ public class Timeline {
     @Id
     @GeneratedValue
     private Long IdTimeline;
+    @OneToOne(mappedBy = "timeline")
+    private Event event;
     @OneToMany(mappedBy = "timeline")
-    private List<EventDTO> listOfEvents;
+    private List<ActivityDTO> listOfActivities;
 }
