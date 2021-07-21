@@ -16,14 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import ro.societateahermes.backendservice.entities.Event;
-import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
-import ro.societateahermes.backendservice.service.EventServiceInterface;
-import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
+import ro.societateahermes.backendservice.entities.Participation;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 
 @Service
@@ -43,8 +37,13 @@ public class EventServiceImplementation implements EventServiceInterface {
         return eventRepository.findAll();
     }
 
-
     @Override
+    public void addParticipation(long eventID, Participation participation) {
+        Event event = eventRepository.getOne(eventID);
+        List<Participation> participationList = event.getListOfParticipation();
+        participationList.add(participation);
+        event.setListOfParticipation(participationList);
+    }
     public NotificationSwitchDTO getEventStatusByEventName(String eventName) {
         Optional<Event> eventOptional = eventRepository.findByEventName(eventName);
         if (eventOptional.isPresent()) {
