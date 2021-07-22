@@ -4,8 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import ro.societateahermes.backendservice.entities.Email;
+import ro.societateahermes.backendservice.entities.EmailTemplates;
 import ro.societateahermes.backendservice.service.EmailServiceInterface;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 @Service
 public class EmailServiceImplementation implements EmailServiceInterface {
@@ -19,17 +25,37 @@ public class EmailServiceImplementation implements EmailServiceInterface {
     //private SimpleMailMessage template;
 
 
-    public void sendSimpleMessage(String to, String subject, String text) {
+    public void sendSimpleMessage(Email email) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(FROM);
-            message.setTo(to);
-            message.setSubject(subject);
-            message.setText(text);
+            message.setTo(email.getTo());
+            message.setSubject(email.getSubject());
+            message.setText(email.getText());
             emailSender.send(message);
         } catch (MailException exception) {
             exception.printStackTrace();
         }
+    }
+
+    public void sendConfirmationEmail(Email email) {
+        this.sendHtmlMessage(email, EmailTemplates.CONFIRMATION.getTemplate());
+    }
+
+    private void sendHtmlMessage(Email email, String templateContent) {
+        try {
+            MimeMessage message = emailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom(FROM);
+            helper.setTo(email.getTo());
+            helper.setSubject(email.getSubject());
+            helper.setText(templateContent, true);
+//          helper.addInline("attachment.png", resourceFile);
+            emailSender.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /*
@@ -88,18 +114,7 @@ public class EmailServiceImplementation implements EmailServiceInterface {
         String htmlBody = FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerTemplate, templateModel);
 
         sendHtmlMessage(to, subject, htmlBody);
-    }
-
-    private void sendHtmlMessage(String to, String subject, String htmlBody) throws MessagingException {
-
-        MimeMessage message = emailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-        helper.setFrom(NOREPLY_ADDRESS);
-        helper.setTo(to);
-        helper.setSubject(subject);
-        helper.setText(htmlBody, true);
-        helper.addInline("attachment.png", resourceFile);
-        emailSender.send(message);
     }*/
+
 
 }

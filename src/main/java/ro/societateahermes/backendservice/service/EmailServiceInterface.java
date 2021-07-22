@@ -1,5 +1,9 @@
 package ro.societateahermes.backendservice.service;
 
+import ro.societateahermes.backendservice.entities.Email;
+
 public interface EmailServiceInterface {
-    void sendSimpleMessage(String to, String subject, String text);
+    void sendSimpleMessage(Email email);
+
+    void sendConfirmationEmail(Email email);
 }
