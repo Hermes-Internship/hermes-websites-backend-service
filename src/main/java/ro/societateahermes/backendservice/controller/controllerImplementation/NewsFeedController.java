@@ -23,7 +23,7 @@ public class NewsFeedController {
         return newsFeed.getAllPost();
     }
     @PostMapping
-    public void saveEventToNewsFeed(@RequestBody NewsFeedPost post){
+    public void saveEventToNewsFeed(@RequestBody NewsFeedDTO post){
         newsFeed.createPost(post);
     }
     @DeleteMapping("/{newsId}")
