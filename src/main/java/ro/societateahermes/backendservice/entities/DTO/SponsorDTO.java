@@ -7,6 +7,7 @@ import ro.societateahermes.backendservice.entities.Event;
 import ro.societateahermes.backendservice.entities.PurchasedPackage;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -15,14 +16,14 @@ public class SponsorDTO {
 
     private long id;
 
-    @NotBlank(message = "Name is mandatory")
+    @NotNull(message = "Name is mandatory")
     private String name;
 
     private String logo;
 
-    @NotBlank(message = "Package is mandatory")
+    @NotNull(message = "Package is mandatory")
     private PurchasedPackage purchasedPackage;
 
-    @NotBlank(message = "EventId is mandatory")
+    @NotNull(message = "EventId is mandatory")
     private long eventId;
 }

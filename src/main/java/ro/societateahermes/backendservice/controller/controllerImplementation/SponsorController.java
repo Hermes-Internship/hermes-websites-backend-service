@@ -9,6 +9,7 @@ import ro.societateahermes.backendservice.entities.dto.SponsorDTO;
 import ro.societateahermes.backendservice.entities.dto.UserDTO;
 import ro.societateahermes.backendservice.service.SponsorServiceInterface;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class SponsorController {
     }
 
     @PostMapping
-    public void save(@RequestBody SponsorDTO sponsorDTO) {
+    public void save(@RequestBody @Valid SponsorDTO sponsorDTO) {
         sponsorService.save(sponsorDTO);
     }
 
@@ -40,7 +41,7 @@ public class SponsorController {
     }
 
     @PutMapping
-    public void update(@RequestBody SponsorDTO sponsorDTO)
+    public void update(@RequestBody @Valid SponsorDTO sponsorDTO)
     {
         sponsorService.update(sponsorDTO);
     }
