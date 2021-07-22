@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class ExceptionController {
@@ -26,4 +27,8 @@ public class ExceptionController {
         });
         return errors;
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoSuchElementException.class)
+    public String handleNoSuchElement(NoSuchElementException ex) { return ex.getMessage(); }
 }

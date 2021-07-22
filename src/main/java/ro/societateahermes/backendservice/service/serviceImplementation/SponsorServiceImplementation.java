@@ -11,6 +11,7 @@ import ro.societateahermes.backendservice.repository.SponsorRepositoryInterface;
 import ro.societateahermes.backendservice.service.SponsorServiceInterface;
 import ro.societateahermes.backendservice.utils.mapper.SponsorMapper;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,8 +45,7 @@ public class SponsorServiceImplementation implements SponsorServiceInterface {
 
     @Override
     public void delete(long sponsorId) {
-        Sponsor sponsor = sponsorRepository.getOne(sponsorId);
-        sponsorRepository.delete(sponsor);
+        sponsorRepository.delete(sponsorRepository.findById(sponsorId).orElseThrow());
 
     }
 
@@ -57,7 +57,7 @@ public class SponsorServiceImplementation implements SponsorServiceInterface {
 
     @Override
     public SponsorDTO getOne(long sponsorId) {
-        return sponsorMapper.convertToDTO(sponsorRepository.getOne(sponsorId));
+        return sponsorMapper.convertToDTO(sponsorRepository.findById(sponsorId).orElseThrow());
     }
 
 }
