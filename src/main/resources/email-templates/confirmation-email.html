@@ -4,11 +4,18 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 </head>
 <body>
-<p th:text="#{greetings(${recipientName})}"></p>
-<p th:text="${text}"></p>
-<p th:text="#{regards}"></p>
+<p>Salut,
+    <span th:text="${recipientName}"></span>
+    . Multumim pentru inregistrare la evenimentul ...
+</p>
+
 <p>
-    <em th:text="#{signature(${senderName})}"></em> <br/>
+    O zi frumoasa in continuare,
+</p>
+<p>
+    <em>
+        Organizatia Hermes
+    </em> <br/>
 </p>
 </body>
 </html>

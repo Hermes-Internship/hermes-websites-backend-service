@@ -5,13 +5,18 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import ro.societateahermes.backendservice.entities.Email;
-import ro.societateahermes.backendservice.entities.EmailTemplates;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import ro.societateahermes.backendservice.entities.*;
 import ro.societateahermes.backendservice.service.EmailServiceInterface;
+import ro.societateahermes.backendservice.service.EventServiceInterface;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class EmailServiceImplementation implements EmailServiceInterface {
@@ -21,9 +26,52 @@ public class EmailServiceImplementation implements EmailServiceInterface {
     @Autowired
     private JavaMailSender emailSender;
 
+    @Autowired
+    private SpringTemplateEngine thymeleafTemplateEngine;
+
+    @Autowired
+    private EventServiceInterface eventService;
+
     //@Autowired
     //private SimpleMailMessage template;
 
+    @Scheduled(cron = "0 7 * * *")
+    public void checkEvents(Integer daysBefore) {
+        for (Event event : eventService.getAll()) {
+            if (eventService.isDaysBeforeEvent(event, 3)) {
+                this.sendReminderMessageForEvent(event, 3);
+            } else if (eventService.isDaysBeforeEvent(event, 1)) {
+                this.sendReminderMessageForEvent(event, 1);
+            } else if (eventService.isDuringEvent(event)) {
+                this.sendReminderMessageForEvent(event);
+            }
+        }
+    }
+
+    public void sendReminderMessageForEvent(Event event) {
+        for (Participation participation : event.getListOfParticipation()) {
+            User user = participation.getUser();
+            String recipientName = user.getFirstName() + " " + user.getLastName();
+            String to = user.getEmail();
+
+            Email email = new Email(to, recipientName,
+                    "Reminder pe parcursul evenimentului " + event.getEventName());
+            this.sendReminderEmail(email);
+        }
+    }
+
+    public void sendReminderMessageForEvent(Event event, Integer daysBefore) {
+        // todo: make reminder-email.html
+        for (Participation participation : event.getListOfParticipation()) {
+            User user = participation.getUser();
+            String recipientName = user.getFirstName() + " " + user.getLastName();
+            String to = user.getEmail();
+
+            Email email = new Email(to, recipientName, "Reminder pentru evenimentul " + event.getEventName(),
+                    daysBefore);
+            this.sendReminderEmail(email);
+        }
+    }
 
     public void sendSimpleMessage(Email email) {
         try {
@@ -31,15 +79,37 @@ public class EmailServiceImplementation implements EmailServiceInterface {
             message.setFrom(FROM);
             message.setTo(email.getTo());
             message.setSubject(email.getSubject());
-            message.setText(email.getText());
+            message.setText("Test description");
             emailSender.send(message);
         } catch (MailException exception) {
             exception.printStackTrace();
         }
     }
 
+    public void sendReminderEmail(Email email) {
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("recipientName", email.getRecipientName());
+        if (email.getDaysBefore() != null) {
+            variables.put("daysBefore", email.getDaysBefore());
+        }
+
+        String replacedThymeleafTemplate = this.getReplacedThymeleafTemplate(variables, EmailTemplates.REMINDER);
+        this.sendHtmlMessage(email, replacedThymeleafTemplate);
+    }
+
     public void sendConfirmationEmail(Email email) {
-        this.sendHtmlMessage(email, EmailTemplates.CONFIRMATION.getTemplate());
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("recipientName", email.getRecipientName());
+
+        String replacedThymeleafTemplate = this.getReplacedThymeleafTemplate(variables, EmailTemplates.CONFIRMATION);
+        this.sendHtmlMessage(email, replacedThymeleafTemplate);
+    }
+
+    public String getReplacedThymeleafTemplate(Map<String, Object> templateModel, EmailTemplates emailTemplate) {
+        Context thymeleafContext = new Context();
+        thymeleafContext.setVariables(templateModel);
+
+        return thymeleafTemplateEngine.process(emailTemplate.getTemplateName(), thymeleafContext);
     }
 
     private void sendHtmlMessage(Email email, String templateContent) {
@@ -55,7 +125,6 @@ public class EmailServiceImplementation implements EmailServiceInterface {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-
     }
 
     /*
@@ -92,18 +161,7 @@ public class EmailServiceImplementation implements EmailServiceInterface {
     }
 
 
-    @Override
-    public void sendMessageUsingThymeleafTemplate(
-            String to, String subject, Map<String, Object> templateModel)
-            throws MessagingException {
 
-        Context thymeleafContext = new Context();
-        thymeleafContext.setVariables(templateModel);
-
-        String htmlBody = thymeleafTemplateEngine.process("template-thymeleaf.html", thymeleafContext);
-
-        sendHtmlMessage(to, subject, htmlBody);
-    }
 
     @Override
     public void sendMessageUsingFreemarkerTemplate(

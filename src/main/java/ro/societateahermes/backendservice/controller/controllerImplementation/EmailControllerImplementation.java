@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 import ro.societateahermes.backendservice.entities.Email;
 import ro.societateahermes.backendservice.service.EmailServiceInterface;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/email")
 public class EmailControllerImplementation {
@@ -18,11 +20,11 @@ public class EmailControllerImplementation {
     @PostMapping("/send-simple")
     public void sendSimpleEmail() {
         emailService.sendSimpleMessage(new Email("chismatei@gmail.com", "Chis Matei",
-                "Test subject", "Test description"));
+                "Test subject"));
     }
 
     @PostMapping("/send-confirmation")
-    public void sendConfirmationEmail() {
+    public void sendConfirmationEmail() throws IOException {
         emailService.sendConfirmationEmail(new Email("chismatei@gmail.com", "Chis Matei",
                 "Confirmation Email"));
     }

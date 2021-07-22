@@ -18,19 +18,17 @@ public enum EmailTemplates {
         this.templateName = templateName;
     }
 
-    public String getTemplate() {
-        try {
-            return new String(new ClassPathResource(EMAIL_TEMPLATES_FOLDER + templateName)
-                    .getInputStream().readAllBytes(),
-                    StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return "Error";
+    public String getTemplate() throws IOException {
+        return new String(new ClassPathResource(EMAIL_TEMPLATES_FOLDER + templateName)
+                .getInputStream().readAllBytes(),
+                StandardCharsets.UTF_8);
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getTemplateName() {
+        return templateName;
     }
 }

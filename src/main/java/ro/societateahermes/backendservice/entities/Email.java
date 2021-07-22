@@ -11,7 +11,7 @@ public class Email {
     private String to;
     private String recipientName;
     private String subject;
-    private String text;
+    private Integer daysBefore;
 
     public Email(String to, String recipientName, String subject) {
         this.to = to;

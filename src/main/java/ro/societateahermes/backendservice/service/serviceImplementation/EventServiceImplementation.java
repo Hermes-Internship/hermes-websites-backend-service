@@ -7,14 +7,11 @@ import ro.societateahermes.backendservice.entities.Participation;
 import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
 import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
 import ro.societateahermes.backendservice.service.EventServiceInterface;
-import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.List;
-import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
-import ro.societateahermes.backendservice.service.EventServiceInterface;
-import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 
@@ -22,7 +19,11 @@ import java.util.Optional;
 public class EventServiceImplementation implements EventServiceInterface {
 
     @Autowired
-    private  EventRepositoryInterface eventRepository;
+    private EventRepositoryInterface eventRepository;
+
+    public List<Event> getAll() {
+        return eventRepository.findAll();
+    }
 
     @Override
     public void addParticipation(long eventID, Participation participation) {
@@ -31,6 +32,7 @@ public class EventServiceImplementation implements EventServiceInterface {
         participationList.add(participation);
         event.setListOfParticipation(participationList);
     }
+
     public NotificationSwitchDTO getEventStatusByEventName(String eventName) {
         Optional<Event> eventOptional = eventRepository.findByEventName(eventName);
         if (eventOptional.isPresent()) {
@@ -47,4 +49,14 @@ public class EventServiceImplementation implements EventServiceInterface {
         return new NotificationSwitchDTO("Event not found", false);
     }
 
+    public boolean isDaysBeforeEvent(Event event, Integer daysBefore) {
+        LocalDateTime eventStartDate = event.getEventStartDate();
+        Period period = Period.between(eventStartDate.toLocalDate(), LocalDate.now());
+        return period.getDays() == daysBefore;
+    }
+
+    public boolean isDuringEvent(Event event) {
+        LocalDateTime now = LocalDateTime.now();
+        return event.getEventStartDate().isBefore(now) && event.getEventEndDate().isAfter(now);
+    }
 }
