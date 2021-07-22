@@ -1,19 +1,21 @@
 package ro.societateahermes.backendservice.service;
 
+import ro.societateahermes.backendservice.entities.ImageType;
 import ro.societateahermes.backendservice.exceptions.ImageException;
 import org.springframework.web.multipart.MultipartFile;
 import ro.societateahermes.backendservice.entities.Image;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public interface ImageServiceInterface {
-    File convertMultiPartToFile(MultipartFile file) throws IOException;
+    String convertMultiPartToFile(MultipartFile file, ImageType imageType) throws IOException;
 
-    Image getImageByPath(String canonicalImagePath) throws ImageException;
+    File getImageByPath(String canonicalImagePath, ImageType cd) throws ImageException, URISyntaxException;
 
-    void deleteImage(String canonicalImagePath) throws IOException;
+    void deleteImage(String canonicalImagePath, ImageType imageType) throws IOException, URISyntaxException;
 
     List<Image> getAll();
 }

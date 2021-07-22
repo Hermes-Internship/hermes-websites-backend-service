@@ -4,12 +4,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public interface ImageControllerInterface {
-    void saveImage(MultipartFile multipartFile) throws IOException;
+    String saveImage(MultipartFile multipartFile) throws IOException;
 
-    ResponseEntity<?> getImageByPath(String canonicalImagePath);
+    ResponseEntity<?> getImageByPath(String canonicalImagePath) throws URISyntaxException, IOException;
 
-    void deleteImage(String canonicalImagePath) throws IOException;
+    void deleteImage(String canonicalImagePath) throws IOException, URISyntaxException;
 
 }

@@ -1,8 +1,13 @@
 package ro.societateahermes.backendservice.controller.controllerImplementation;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
 
 
+import org.springframework.http.MediaType;
+import ro.societateahermes.backendservice.entities.ImageType;
 import ro.societateahermes.backendservice.exceptions.ImageException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,30 +25,27 @@ public class ImageControllerImplementation implements ImageControllerInterface {
 
     private final ImageServiceImplementation imageService;
 
-    @Autowired
     public ImageControllerImplementation(ImageServiceImplementation imageService) {
         this.imageService = imageService;
     }
 
     @Override
-    @PostMapping
-    public void saveImage(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        imageService.convertMultiPartToFile(multipartFile);
+    @PostMapping("/cd")
+    public String saveImage(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+        return imageService.convertMultiPartToFile(multipartFile, ImageType.CD);
     }
 
     @Override
-    @GetMapping
-    public ResponseEntity<?> getImageByPath(@RequestParam("path") String canonicalImagePath) {
-        try {
-            return new ResponseEntity<Image>(imageService.getImageByPath(canonicalImagePath), HttpStatus.OK);
-
-        } catch (ImageException imageException) {
-            return new ResponseEntity<String>(imageException.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping(produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, value = "/cd")
+    public ResponseEntity<?> getImageByPath(@RequestParam("name") String imageName) throws URISyntaxException, IOException {
+        File image = imageService.getImageByPath(imageName, ImageType.CD);
+        byte[] imageContent = Files.readAllBytes(image.toPath());
+        return new ResponseEntity<>(imageContent, HttpStatus.OK);
     }
+
     @Override
-    @DeleteMapping
-    public void deleteImage(@RequestParam("path") String canonicalImagePath) throws IOException {
-        imageService.deleteImage(canonicalImagePath);
+    @DeleteMapping("/cd")
+    public void deleteImage(@RequestParam("name") String imageName) throws IOException, URISyntaxException {
+        imageService.deleteImage(imageName, ImageType.CD);
     }
 }
