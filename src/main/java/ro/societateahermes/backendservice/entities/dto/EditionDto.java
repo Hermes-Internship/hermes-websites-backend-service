@@ -17,8 +17,4 @@ public class EditionDto {
     private List<Image> images;
 
     private List<Video> videos;
-
-    public void addImage(Image image) {
-        images.add(image);
-    }
 }

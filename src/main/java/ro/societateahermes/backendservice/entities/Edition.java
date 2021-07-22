@@ -3,36 +3,34 @@ package ro.societateahermes.backendservice.entities;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Entity
 @AllArgsConstructor
-@NoArgsConstructor
 public class Edition {
+    @JsonManagedReference
+    @OneToMany(mappedBy = "edition", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Image> images;
+
     @Id
     @GeneratedValue
     private Long id;
 
-    public Edition(List<Image> images, List<Video> videos) {
-        this.images = images;
-        this.videos = videos;
-    }
-
     //    @ManyToOne
 //    @JoinColumn("event_id")
 //    private Event event;
-
     @JsonManagedReference
-    @OneToMany(mappedBy = "edition", cascade = CascadeType.ALL)
-    private List<Image> images;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "edition", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "edition", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Video> videos;
+
+    public Edition() {
+        images = new ArrayList<>();
+        videos = new ArrayList<>();
+    }
 
     public void addImage(Image image) {
         images.add(image);

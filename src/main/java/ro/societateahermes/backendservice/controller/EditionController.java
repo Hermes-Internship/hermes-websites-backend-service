@@ -25,63 +25,28 @@ public class EditionController {
         return editionService.getAll();
     }
 
-//    @PostMapping
-//    public void saveNewEditionWithMedia(@RequestParam(value = "image", required = false) List<MultipartFile> images,
-//                                        @RequestParam(value = "video", required = false) List<MultipartFile> videos) {
-//        // todo: replace the 2 list with a @RequestBody MediaUpload class
-//
-//        if (images != null) {
-//            editionService.saveImagesToNewEdition(images);
-//        }
-//        if (videos != null) {
-//            editionService.saveVideosToNewEdition(videos);
-//        }
-//
-//
-//        // todo: find if edition should be created without any image or video
-//        // if it shouldn't, return a bad request
-//    }
-
     @PostMapping
     public void saveNewEditionWithMedia(@ModelAttribute EditionMediaUpload editionMediaUpload) {
         List<MultipartFile> images = editionMediaUpload.getImages();
         List<MultipartFile> videos = editionMediaUpload.getVideos();
 
+        Long newEditionId = editionService.createEmptyEdition().getId();
         if (images != null) {
-            editionService.saveImagesToNewEdition(images);
+            editionService.saveImagesToEdition(newEditionId, images);
         }
         if (videos != null) {
-            editionService.saveVideosToNewEdition(videos);
+            editionService.saveVideosToEdition(newEditionId, videos);
         }
-
-        // todo: find if edition should be created without any image or video
-        // if it shouldn't, return a bad request
     }
 
-//    @PostMapping("/{editionId}")
-//    public ResponseEntity<Object> addMediaToEdition(@PathVariable("editionId") Long editionId,
-//                                                    @RequestParam(value = "image", required = false) List<MultipartFile> images,
-//                                                    @RequestParam(value = "video", required = false) List<MultipartFile> videos) {
-//        // todo: replace the 2 list with a @RequestBody MediaUpload class
-//
-//        if (images == null && videos == null) {
-//            return new ResponseEntity<>("No image or video sent", HttpStatus.BAD_REQUEST);
-//        }
-//
-//        if (images != null) {
-//            editionService.saveImagesToEdition(editionId, images);
-//        }
-//        if (videos != null) {
-//            editionService.saveVideosToEdition(editionId, videos);
-//        }
-//
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @DeleteMapping("/{editionId}")
+    public void deleteEdition(@PathVariable("editionId") Long editionId) {
+        editionService.deleteEdition(editionId);
+    }
 
-    @PostMapping("/{editionId}")
+    @PostMapping("/{editionId}/media")
     public ResponseEntity<Object> addMediaToEdition(@PathVariable("editionId") Long editionId,
                                                     @ModelAttribute EditionMediaUpload editionMediaUpload) {
-        // todo: replace the 2 list with a @RequestBody MediaUpload class
         List<MultipartFile> images = editionMediaUpload.getImages();
         List<MultipartFile> videos = editionMediaUpload.getVideos();
 
@@ -89,30 +54,35 @@ public class EditionController {
             return new ResponseEntity<>("No image or video sent", HttpStatus.BAD_REQUEST);
         }
 
-        if (images != null) {
+        if (images != null && videos != null) {
+            editionService.saveMediaToEdition(editionId, images, videos);
+        } else if (images != null) {
             editionService.saveImagesToEdition(editionId, images);
-        }
-        if (videos != null) {
+        } else {
             editionService.saveVideosToEdition(editionId, videos);
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @DeleteMapping("/{editionId}")
-//    public void removeMediaFromEdition(@PathVariable("editionId") Long editionId,
-//                                       @RequestParam(value = "image_id", required = false) List<Long> imageIds,
-//                                       @RequestParam(value = "video_id", required = false) List<Long> videoIds) {
-//        // todo: replace the 2 list with a @RequestBody MediaDeletion class
-//
-//        editionService.deleteImages(editionId, imageIds);
-//    }
-
-    @DeleteMapping("/{editionId}")
-    public void removeMediaFromEdition(@PathVariable("editionId") Long editionId,
-                                       @ModelAttribute EditionMediaDeletion editionMediaDeletion) {
-        // todo: replace the 2 list with a @RequestBody MediaDeletion class
+    @DeleteMapping("/{editionId}/media")
+    public ResponseEntity<Object> deleteMediaFromEdition(@PathVariable("editionId") Long editionId,
+                                                         @RequestBody EditionMediaDeletion editionMediaDeletion) {
         List<Long> imagesIds = editionMediaDeletion.getImagesIds();
-        editionService.deleteImages(editionId, imagesIds);
+        List<Long> videosIds = editionMediaDeletion.getVideosIds();
+
+        if (imagesIds == null && videosIds == null) {
+            return new ResponseEntity<>("No image or video sent", HttpStatus.BAD_REQUEST);
+        }
+
+        if (imagesIds != null && videosIds != null) {
+            editionService.deleteMediaFromEdition(editionId, imagesIds, videosIds);
+        } else if (imagesIds != null) {
+            editionService.deleteImagesFromEdition(editionId, imagesIds);
+        } else {
+            editionService.deleteVideosFromEdition(editionId, videosIds);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
