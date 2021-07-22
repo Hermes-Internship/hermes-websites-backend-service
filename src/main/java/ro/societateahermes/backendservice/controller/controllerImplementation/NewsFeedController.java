@@ -22,6 +22,7 @@ public class NewsFeedController {
     public List<NewsFeedDTO> getNews(){
         return newsFeed.getAllPost();
     }
+
     @PostMapping
     public void saveEventToNewsFeed(@RequestBody NewsFeedDTO post){
         newsFeed.createPost(post);
