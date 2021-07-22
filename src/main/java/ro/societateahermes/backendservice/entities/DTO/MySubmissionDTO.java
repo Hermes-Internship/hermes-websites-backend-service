@@ -1,9 +1,9 @@
 package ro.societateahermes.backendservice.entities.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ro.societateahermes.backendservice.entities.form.Answer;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
