@@ -1,17 +1,16 @@
 package ro.societateahermes.backendservice.service.serviceImplementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import ro.societateahermes.backendservice.service.EmailServiceInterface;
 
-@Service("EmailService")
-public class EmailServiceImplementation {
-
+@Service
+public class EmailServiceImplementation implements EmailServiceInterface {
     //@Value("${spring.mail.username}")
-    private static final String NOREPLY_ADDRESS = "hermesconnor1@gmail.com";
+    private static final String FROM = "hermesconnor1@gmail.com";
 
     @Autowired
     private JavaMailSender emailSender;
@@ -23,7 +22,7 @@ public class EmailServiceImplementation {
     public void sendSimpleMessage(String to, String subject, String text) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(NOREPLY_ADDRESS);
+            message.setFrom(FROM);
             message.setTo(to);
             message.setSubject(subject);
             message.setText(text);
