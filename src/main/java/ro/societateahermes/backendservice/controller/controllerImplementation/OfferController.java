@@ -34,4 +34,12 @@ public class OfferController {
     public void delete(@PathVariable("offerId") Long offerId) {
         offerService.delete(offerId);
     }
+
+    @PutMapping
+    public void update(@RequestBody OfferDTO offerDTO) { offerService.update(offerDTO); }
+
+    @GetMapping("/{offerId}")
+    public OfferDTO getOne(@PathVariable("offerId") long offerId) {
+        return offerService.getOne(offerId);
+    }
 }

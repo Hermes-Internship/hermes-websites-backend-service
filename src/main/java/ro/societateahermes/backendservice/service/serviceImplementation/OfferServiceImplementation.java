@@ -1,6 +1,9 @@
 package ro.societateahermes.backendservice.service.serviceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import ro.societateahermes.backendservice.entities.Offer;
 import ro.societateahermes.backendservice.entities.dto.OfferDTO;
 import ro.societateahermes.backendservice.repository.OfferRepositoryInterface;
 import ro.societateahermes.backendservice.service.OfferServiceInterface;
@@ -34,5 +37,16 @@ public class OfferServiceImplementation implements OfferServiceInterface {
     public void delete(Long offerId) {
         offerRepository.delete(offerRepository.getOne(offerId));
 
+    }
+
+    @Override
+    public void update(OfferDTO offerDTO) {
+        Offer offer = offerMapper.convertToOffer(offerDTO);
+        offerRepository.save(offer);
+    }
+
+    @Override
+    public OfferDTO getOne(long offerId) {
+        return offerMapper.convertToDTO(offerRepository.getOne(offerId));
     }
 }

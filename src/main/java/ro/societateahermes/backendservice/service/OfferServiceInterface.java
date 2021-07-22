@@ -10,4 +10,8 @@ public interface OfferServiceInterface {
     void save(OfferDTO offerDTO);
 
     void delete(Long offerId);
+
+    void update(OfferDTO offerDTO);
+
+    OfferDTO getOne(long offerId);
 }
