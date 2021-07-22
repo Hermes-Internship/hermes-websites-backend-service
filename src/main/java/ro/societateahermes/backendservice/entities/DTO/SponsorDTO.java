@@ -1,7 +1,14 @@
 package ro.societateahermes.backendservice.entities.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import ro.societateahermes.backendservice.entities.Event;
 import ro.societateahermes.backendservice.entities.PurchasedPackage;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SponsorDTO {
 
     private long id;
@@ -11,4 +18,6 @@ public class SponsorDTO {
     private String logo;
 
     private PurchasedPackage purchasedPackage;
+
+    private long eventId;
 }
