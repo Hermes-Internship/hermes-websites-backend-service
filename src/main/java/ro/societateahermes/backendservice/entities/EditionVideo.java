@@ -1,6 +1,7 @@
 package ro.societateahermes.backendservice.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,9 +9,11 @@ import javax.persistence.*;
 
 @Data
 @Entity
+@AllArgsConstructor
 @NoArgsConstructor
 public class EditionVideo {
-    public EditionVideo(String path) {
+    public EditionVideo(Long id, String path) {
+        this.id = id;
         this.path = path;
     }
 

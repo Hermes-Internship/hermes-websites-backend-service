@@ -3,16 +3,10 @@ package ro.societateahermes.backendservice.entities.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
-public class EditionDto {
+public class EditionImageDto {
     private Long id;
 
-//    private Event event;
-
-    private List<EditionImageDto> images;
-
-    private List<EditionVideoDto> videos;
+    private String path;
 }

@@ -19,7 +19,8 @@ public class EditionImage {
     private Edition edition;
     private String path;
 
-    public EditionImage(String path) {
+    public EditionImage(Long id, String path) {
+        this.id = id;
         this.path = path;
     }
 
