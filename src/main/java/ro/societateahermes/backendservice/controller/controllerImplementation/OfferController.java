@@ -42,4 +42,9 @@ public class OfferController {
     public OfferDTO getOne(@PathVariable("offerId") long offerId) {
         return offerService.getOne(offerId);
     }
+
+    @GetMapping("/sponsor/{sponsorId}")
+    public List<OfferDTO> getBySponsor(@PathVariable("sponsorId") long sponsorId) {
+        return offerService.getBySponsor(sponsorId);
+    }
 }

@@ -14,4 +14,6 @@ public interface OfferServiceInterface {
     void update(OfferDTO offerDTO);
 
     OfferDTO getOne(long offerId);
+
+    List<OfferDTO> getBySponsor(long sponsorId);
 }
