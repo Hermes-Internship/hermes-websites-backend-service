@@ -1,9 +1,11 @@
 package ro.societateahermes.backendservice.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ro.societateahermes.backendservice.entities.EditionImage;
 import ro.societateahermes.backendservice.entities.EditionMediaDeletion;
 import ro.societateahermes.backendservice.entities.EditionMediaUpload;
 import ro.societateahermes.backendservice.entities.dto.EditionDto;
@@ -11,6 +13,8 @@ import ro.societateahermes.backendservice.service.serviceImplementation.EditionS
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 @RestController
@@ -44,6 +48,13 @@ public class EditionController {
     @DeleteMapping("/{editionId}")
     public void deleteEdition(@PathVariable("editionId") Long editionId) throws IOException {
         editionService.deleteEdition(editionId);
+    }
+
+    @GetMapping(value = "/image/{imageId}", produces = MediaType.IMAGE_JPEG_VALUE)
+    public ResponseEntity<?> getImageById(@PathVariable("imageId") Long imageId) throws IOException {
+        EditionImage image = editionService.getImageById(imageId);
+        byte[] imageContent = Files.readAllBytes(Path.of(image.getPath()));
+        return new ResponseEntity<>(imageContent, HttpStatus.OK);
     }
 
     @PostMapping("/{editionId}/media")
