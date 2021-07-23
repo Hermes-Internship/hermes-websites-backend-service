@@ -51,7 +51,7 @@ public class EventServiceImplementation implements EventServiceInterface {
 
     public boolean isDaysBeforeEvent(Event event, Integer daysBefore) {
         LocalDateTime eventStartDate = event.getEventStartDate();
-        Period period = Period.between(eventStartDate.toLocalDate(), LocalDate.now());
+        Period period = Period.between(LocalDate.now(), eventStartDate.toLocalDate());
         return period.getDays() == daysBefore;
     }
 

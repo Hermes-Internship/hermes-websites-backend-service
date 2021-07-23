@@ -28,4 +28,9 @@ public class EmailControllerImplementation {
         emailService.sendConfirmationEmail(new Email("chismatei@gmail.com", "Chis Matei",
                 "Confirmation Email"));
     }
+
+    @PostMapping("/check-events")
+    public void checkEvents() {
+        emailService.checkEvents();
+    }
 }

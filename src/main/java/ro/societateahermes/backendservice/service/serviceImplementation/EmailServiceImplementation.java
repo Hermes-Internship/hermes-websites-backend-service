@@ -35,20 +35,32 @@ public class EmailServiceImplementation implements EmailServiceInterface {
     //@Autowired
     //private SimpleMailMessage template;
 
-    @Scheduled(cron = "0 7 * * *")
-    public void checkEvents(Integer daysBefore) {
+    @Scheduled(cron = "20 8 14 * * *")
+    public void checkEventsScheduled() {
         for (Event event : eventService.getAll()) {
             if (eventService.isDaysBeforeEvent(event, 3)) {
-                this.sendReminderMessageForEvent(event, 3);
+                this.sendReminderMessageBeforeEvent(event, 3);
             } else if (eventService.isDaysBeforeEvent(event, 1)) {
-                this.sendReminderMessageForEvent(event, 1);
+                this.sendReminderMessageBeforeEvent(event, 1);
             } else if (eventService.isDuringEvent(event)) {
-                this.sendReminderMessageForEvent(event);
+                this.sendReminderMessageDuringEvent(event);
             }
         }
     }
 
-    public void sendReminderMessageForEvent(Event event) {
+    public void checkEvents() {
+        for (Event event : eventService.getAll()) {
+            if (eventService.isDaysBeforeEvent(event, 3)) {
+                this.sendReminderMessageBeforeEvent(event, 3);
+            } else if (eventService.isDaysBeforeEvent(event, 1)) {
+                this.sendReminderMessageBeforeEvent(event, 1);
+            } else if (eventService.isDuringEvent(event)) {
+                this.sendReminderMessageDuringEvent(event);
+            }
+        }
+    }
+
+    public void sendReminderMessageDuringEvent(Event event) {
         for (Participation participation : event.getListOfParticipation()) {
             User user = participation.getUser();
             String recipientName = user.getFirstName() + " " + user.getLastName();
@@ -56,12 +68,16 @@ public class EmailServiceImplementation implements EmailServiceInterface {
 
             Email email = new Email(to, recipientName,
                     "Reminder pe parcursul evenimentului " + event.getEventName());
-            this.sendReminderEmail(email);
+
+            Map<String, Object> optionalVariables = new HashMap<>();
+            optionalVariables.put("eventName", event.getEventName());
+            optionalVariables.put("eventLocation", event.getEventLocation());
+
+            this.sendReminderEmail(email, optionalVariables, EmailTemplates.DURING_EVENT_REMINDER);
         }
     }
 
-    public void sendReminderMessageForEvent(Event event, Integer daysBefore) {
-        // todo: make reminder-email.html
+    public void sendReminderMessageBeforeEvent(Event event, Integer daysBefore) {
         for (Participation participation : event.getListOfParticipation()) {
             User user = participation.getUser();
             String recipientName = user.getFirstName() + " " + user.getLastName();
@@ -69,31 +85,24 @@ public class EmailServiceImplementation implements EmailServiceInterface {
 
             Email email = new Email(to, recipientName, "Reminder pentru evenimentul " + event.getEventName(),
                     daysBefore);
-            this.sendReminderEmail(email);
+
+            Map<String, Object> optionalVariables = new HashMap<>();
+            optionalVariables.put("eventName", event.getEventName());
+            optionalVariables.put("eventStartDate", event.getEventStartDate());
+            optionalVariables.put("eventEndDate", event.getEventEndDate());
+            optionalVariables.put("eventLocation", event.getEventLocation());
+
+            this.sendReminderEmail(email, optionalVariables, EmailTemplates.BEFORE_EVENT_REMINDER);
         }
     }
 
-    public void sendSimpleMessage(Email email) {
-        try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(FROM);
-            message.setTo(email.getTo());
-            message.setSubject(email.getSubject());
-            message.setText("Test description");
-            emailSender.send(message);
-        } catch (MailException exception) {
-            exception.printStackTrace();
-        }
-    }
-
-    public void sendReminderEmail(Email email) {
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("recipientName", email.getRecipientName());
+    public void sendReminderEmail(Email email, Map<String, Object> optionalVariables, EmailTemplates emailTemplate) {
+        optionalVariables.put("recipientName", email.getRecipientName());
         if (email.getDaysBefore() != null) {
-            variables.put("daysBefore", email.getDaysBefore());
+            optionalVariables.put("daysBefore", email.getDaysBefore());
         }
 
-        String replacedThymeleafTemplate = this.getReplacedThymeleafTemplate(variables, EmailTemplates.REMINDER);
+        String replacedThymeleafTemplate = this.getReplacedThymeleafTemplate(optionalVariables, emailTemplate);
         this.sendHtmlMessage(email, replacedThymeleafTemplate);
     }
 
@@ -127,52 +136,16 @@ public class EmailServiceImplementation implements EmailServiceInterface {
         }
     }
 
-    /*
-    @Override
-    public void sendSimpleMessageUsingTemplate(String to,
-                                               String subject,
-                                               String ...templateModel) {
-        String text = String.format(template.getText(), templateModel);
-        sendSimpleMessage(to, subject, text);
-    }
-
-    @Override
-    public void sendMessageWithAttachment(String to,
-                                          String subject,
-                                          String text,
-                                          String pathToAttachment) {
+    public void sendSimpleMessage(Email email) {
         try {
-            MimeMessage message = emailSender.createMimeMessage();
-            // pass 'true' to the constructor to create a multipart message
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
-            helper.setFrom(NOREPLY_ADDRESS);
-            helper.setTo(to);
-            helper.setSubject(subject);
-            helper.setText(text);
-
-            FileSystemResource file = new FileSystemResource(new File(pathToAttachment));
-            helper.addAttachment("Invoice", file);
-
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom(FROM);
+            message.setTo(email.getTo());
+            message.setSubject(email.getSubject());
+            message.setText("Test description");
             emailSender.send(message);
-        } catch (MessagingException e) {
-            e.printStackTrace();
+        } catch (MailException exception) {
+            exception.printStackTrace();
         }
     }
-
-
-
-
-    @Override
-    public void sendMessageUsingFreemarkerTemplate(
-            String to, String subject, Map<String, Object> templateModel)
-            throws IOException, TemplateException, MessagingException {
-
-        Template freemarkerTemplate = freemarkerConfigurer.getConfiguration().getTemplate("template-freemarker.ftl");
-        String htmlBody = FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerTemplate, templateModel);
-
-        sendHtmlMessage(to, subject, htmlBody);
-    }*/
-
-
 }

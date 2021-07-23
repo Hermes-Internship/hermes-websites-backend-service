@@ -7,7 +7,8 @@ import java.nio.charset.StandardCharsets;
 
 public enum EmailTemplates {
     CONFIRMATION("Confirmation email", "confirmation-email.html"),
-    REMINDER("Reminder email", "reminder-email.html");
+    BEFORE_EVENT_REMINDER("Before event reminder email", "before-event-reminder-email.html"),
+    DURING_EVENT_REMINDER("During event reminder email", "during-event-reminder-email.html");
 
     private static final String EMAIL_TEMPLATES_FOLDER = "email-templates/";
     private final String name;
