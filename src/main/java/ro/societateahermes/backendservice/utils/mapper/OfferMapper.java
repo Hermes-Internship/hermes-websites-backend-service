@@ -1,9 +1,11 @@
 package ro.societateahermes.backendservice.utils.mapper;
 
+import org.springframework.stereotype.Component;
 import ro.societateahermes.backendservice.entities.Offer;
 import ro.societateahermes.backendservice.entities.dto.OfferDTO;
 import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
 
+@Component
 public class OfferMapper {
 
     private SponsorMapper sponsorMapper;
