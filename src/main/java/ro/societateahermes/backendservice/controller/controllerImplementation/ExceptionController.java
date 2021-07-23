@@ -1,4 +1,4 @@
-package ro.societateahermes.backendservice.controller.exceptionController;
+package ro.societateahermes.backendservice.controller.controllerImplementation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
