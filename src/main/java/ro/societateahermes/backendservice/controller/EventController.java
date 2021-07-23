@@ -9,7 +9,7 @@ import ro.societateahermes.backendservice.service.EventServiceInterface;
 import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
 
 @RestController
-@RequestMapping("event")
+@RequestMapping("/event")
 public class EventController {
 
     @Autowired
@@ -19,7 +19,7 @@ public class EventController {
         this.eventServiceInterface = eventServiceInterface;
     }
 
-    @GetMapping("/event-status/{eventName}")
+    @GetMapping("/status/{eventName}")
     public NotificationSwitchDTO getEventStatus(@PathVariable("eventName") String eventName) {
         return eventServiceInterface.getEventStatusByEventName(eventName);
     }

@@ -7,6 +7,7 @@ import ro.societateahermes.backendservice.entities.Participation;
 import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
 import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
 import ro.societateahermes.backendservice.service.EventServiceInterface;
+import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
