@@ -54,9 +54,11 @@ public class OfferServiceImplementation implements OfferServiceInterface {
     @Override
     public List<OfferDTO> getBySponsor(long sponsorId) {
         List<Offer> offerList = new ArrayList<>();
-        for (Offer o : offerRepository.findAll())
+        for (Offer o : offerRepository.findAll()) {
             if (o.getSponsor().getId() == sponsorId)
                 offerList.add(o);
+        }
+
         return offerList.stream().map(offer -> offerMapper.convertToDTO(offer)).collect(Collectors.toList());
     }
 }
