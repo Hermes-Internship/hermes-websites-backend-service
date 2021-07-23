@@ -1,7 +1,6 @@
 package ro.societateahermes.backendservice.controller.controllerImplementation;
 
 import org.springframework.web.bind.annotation.*;
-import ro.societateahermes.backendservice.entities.NewsFeedPost;
 import ro.societateahermes.backendservice.entities.dto.NewsFeedDTO;
 import ro.societateahermes.backendservice.service.serviceImplementation.NewsFeedServiceImplementation;
 

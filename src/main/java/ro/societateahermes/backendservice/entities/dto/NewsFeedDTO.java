@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NewsFeedDTO {
 
+    private long postId;
     private String postDescription;
     private String postImagePath;
     private String postLink;

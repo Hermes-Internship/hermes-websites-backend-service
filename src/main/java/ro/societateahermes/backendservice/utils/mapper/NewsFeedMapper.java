@@ -1,14 +1,17 @@
 package ro.societateahermes.backendservice.utils.mapper;
 
+import org.springframework.stereotype.Component;
 import ro.societateahermes.backendservice.entities.NewsFeedPost;
 import ro.societateahermes.backendservice.entities.dto.NewsFeedDTO;
 
+@Component
 public class NewsFeedMapper {
 
     public NewsFeedDTO convertToDTO(NewsFeedPost newsFeedPost){
         NewsFeedDTO newsFeedDTO = new NewsFeedDTO();
+        newsFeedDTO.setPostId(newsFeedPost.getPostId());
         newsFeedDTO.setPostDescription(newsFeedPost.getPostDescription());
-        newsFeedDTO.setPostImagePath(newsFeedDTO.getPostImagePath());
+        newsFeedDTO.setPostImagePath(newsFeedPost.getPostImagePath());
         newsFeedDTO.setPostLink(newsFeedPost.getPostLink());
 
         return newsFeedDTO;
