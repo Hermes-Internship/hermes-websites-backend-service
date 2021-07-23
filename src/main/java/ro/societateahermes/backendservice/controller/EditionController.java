@@ -9,6 +9,8 @@ import ro.societateahermes.backendservice.entities.EditionMediaUpload;
 import ro.societateahermes.backendservice.entities.dto.EditionDto;
 import ro.societateahermes.backendservice.service.serviceImplementation.EditionService;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -40,7 +42,7 @@ public class EditionController {
     }
 
     @DeleteMapping("/{editionId}")
-    public void deleteEdition(@PathVariable("editionId") Long editionId) {
+    public void deleteEdition(@PathVariable("editionId") Long editionId) throws IOException {
         editionService.deleteEdition(editionId);
     }
 
@@ -67,7 +69,7 @@ public class EditionController {
 
     @DeleteMapping("/{editionId}/media")
     public ResponseEntity<Object> deleteMediaFromEdition(@PathVariable("editionId") Long editionId,
-                                                         @RequestBody EditionMediaDeletion editionMediaDeletion) {
+                                                         @RequestBody EditionMediaDeletion editionMediaDeletion) throws IOException, URISyntaxException {
         List<Long> imagesIds = editionMediaDeletion.getImagesIds();
         List<Long> videosIds = editionMediaDeletion.getVideosIds();
 

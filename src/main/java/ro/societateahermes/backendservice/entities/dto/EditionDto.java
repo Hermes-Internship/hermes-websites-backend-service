@@ -2,8 +2,8 @@ package ro.societateahermes.backendservice.entities.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import ro.societateahermes.backendservice.entities.Image;
-import ro.societateahermes.backendservice.entities.Video;
+import ro.societateahermes.backendservice.entities.EditionImage;
+import ro.societateahermes.backendservice.entities.EditionVideo;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class EditionDto {
 
 //    private Event event;
 
-    private List<Image> images;
+    private List<EditionImage> images;
 
-    private List<Video> videos;
+    private List<EditionVideo> videos;
 }

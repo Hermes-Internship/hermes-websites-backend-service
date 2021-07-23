@@ -9,12 +9,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Image {
+public class CDMember {
     @Id
     @GeneratedValue
-    private Long imageID;
-    private String canonicalImagePath;
+    private Long CDMemberID;
+    private String imagePath;
+    private String facebookLink;
+    private String description;
+    private String name;
+    private String position;
 }

@@ -12,39 +12,40 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 public class Edition {
-    @JsonManagedReference
-    @OneToMany(mappedBy = "edition", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Image> images;
-
     @Id
     @GeneratedValue
     private Long id;
 
-    //    @ManyToOne
+//    @ManyToOne
 //    @JoinColumn("event_id")
 //    private Event event;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "edition", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Video> videos;
+    private List<EditionImage> images;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "edition", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EditionVideo> videos;
 
     public Edition() {
         images = new ArrayList<>();
         videos = new ArrayList<>();
     }
 
-    public void addImage(Image image) {
+    public void addImage(EditionImage image) {
         images.add(image);
     }
 
-    public void removeImage(Image image) {
+    public void removeImage(EditionImage image) {
         images.remove(image);
     }
 
-    public void addVideo(Video video) {
+    public void addVideo(EditionVideo video) {
         videos.add(video);
     }
 
-    public void removeVideo(Video video) {
+    public void removeVideo(EditionVideo video) {
         videos.remove(video);
     }
 }

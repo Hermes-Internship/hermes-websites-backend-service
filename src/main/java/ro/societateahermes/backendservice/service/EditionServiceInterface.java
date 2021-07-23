@@ -3,6 +3,8 @@ package ro.societateahermes.backendservice.service;
 import org.springframework.web.multipart.MultipartFile;
 import ro.societateahermes.backendservice.entities.dto.EditionDto;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 public interface EditionServiceInterface {
@@ -16,5 +18,5 @@ public interface EditionServiceInterface {
 
     void saveVideosToEdition(Long editionId, List<MultipartFile> multipartVideos);
 
-    void deleteImagesFromEdition(Long editionId, List<Long> imageIds);
+    void deleteImagesFromEdition(Long editionId, List<Long> imageIds) throws IOException, URISyntaxException;
 }
