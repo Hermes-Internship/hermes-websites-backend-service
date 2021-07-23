@@ -32,7 +32,7 @@ public class SponsorMapper {
         sponsor.setId(sponsorDTO.getId());
         sponsor.setLogo(sponsorDTO.getLogo());
         sponsor.setName(sponsorDTO.getName());
-        sponsor.setEvent(eventRepository.getOne(sponsorDTO.getEventId()));
+        sponsor.setEvent(eventRepository.findById(sponsorDTO.getEventId()).orElseThrow());
         sponsor.setPurchasedPackage(sponsorDTO.getPurchasedPackage());
         return sponsor;
     }
