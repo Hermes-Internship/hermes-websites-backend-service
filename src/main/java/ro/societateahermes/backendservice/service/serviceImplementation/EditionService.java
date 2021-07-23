@@ -18,7 +18,6 @@ import ro.societateahermes.backendservice.service.ImageServiceInterface;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,12 +42,18 @@ public class EditionService implements EditionServiceInterface {
                 .collect(Collectors.toList());
     }
 
+    public EditionImage getImageById(Long imageId) {
+        return imageRepository.findById(imageId).orElseThrow();
+    }
+
     public Edition createEmptyEdition() {
         return editionRepository.save(new Edition());
     }
 
+    @Transactional
     public void deleteEdition(Long editionId) throws IOException {
-        this.deleteImagesFromEdition(editionId);
+        this.deleteImagesOfEdition(editionId);
+        this.deleteVideosOfEdition(editionId);
         editionRepository.delete(editionRepository.findById(editionId).orElseThrow());
     }
 
@@ -63,11 +68,7 @@ public class EditionService implements EditionServiceInterface {
 
         try {
             for (MultipartFile multipartImage : multipartImages) {
-//                String originalFilename = multipartImage.getOriginalFilename();
-//                fileSystemRepository.saveFile(multipartImage.getBytes(), "edition", originalFilename);
                 String imagePath = imageService.convertMultiPartToFile(multipartImage, ImageType.EDITION);
-//                FileUtils.saveFileToResources(multipartImage.getBytes(), "edition", originalFilename);
-
 
                 EditionImage image = new EditionImage(edition, imagePath);
                 imageRepository.save(image);
@@ -84,10 +85,7 @@ public class EditionService implements EditionServiceInterface {
 
         try {
             for (MultipartFile multipartVideo : multipartVideos) {
-//                String originalFilename = multipartVideo.getOriginalFilename();
-//                fileSystemRepository.saveFile(multipartVideo.getBytes(), "edition", originalFilename);
                 String videoPath = imageService.convertMultiPartToFile(multipartVideo, ImageType.EDITION);
-//                FileUtils.saveFileToResources(multipartVideo.getBytes(), "edition", originalFilename);
 
                 edition.addVideo(new EditionVideo(edition, videoPath));
                 editionRepository.save(edition);
@@ -110,28 +108,24 @@ public class EditionService implements EditionServiceInterface {
             EditionImage image = imageRepository.findById(imageId).orElseThrow();
 
             imageService.deleteImage(image.getPath());
-//            FileUtils.deleteFile(image.getPath());
 
             edition.removeImage(image);
             editionRepository.save(edition);
         }
     }
 
-    public void deleteImagesFromEdition(Long editionId) throws IOException {
+    public void deleteImagesOfEdition(Long editionId) throws IOException {
         Edition edition = editionRepository.findById(editionId).orElseThrow();
 
+        List<EditionImage> images = edition.getImages();
+        for (int i = 0; i < images.size(); i++) {
+            EditionImage image = images.get(i);
 
-//        for (EditionImage image : edition.getImages()) {
-//            imageService.deleteImage(image.getPath());
-//
-//            edition.removeImage(image);
-//            editionRepository.save(edition);
-//        }
-        for (Iterator<EditionImage> it = edition.getImages().iterator(); it.hasNext(); ) {
-            it.remove();
+            imageService.deleteImage(image.getPath());
 
-            edition.removeImage(it.next());
+            edition.removeImage(image);
             editionRepository.save(edition);
+            i--;
         }
     }
 
@@ -142,10 +136,24 @@ public class EditionService implements EditionServiceInterface {
             EditionVideo video = videoRepository.findById(videoId).orElseThrow();
 
             imageService.deleteImage(video.getPath());
-//            FileUtils.deleteFile(video.getPath());
 
             edition.removeVideo(video);
             editionRepository.save(edition);
+        }
+    }
+
+    public void deleteVideosOfEdition(Long editionId) throws IOException {
+        Edition edition = editionRepository.findById(editionId).orElseThrow();
+
+        List<EditionVideo> videos = edition.getVideos();
+        for (int i = 0; i < videos.size(); i++) {
+            EditionVideo video = videos.get(i);
+
+            imageService.deleteImage(video.getPath());
+
+            edition.removeVideo(video);
+            editionRepository.save(edition);
+            i--;
         }
     }
 }
