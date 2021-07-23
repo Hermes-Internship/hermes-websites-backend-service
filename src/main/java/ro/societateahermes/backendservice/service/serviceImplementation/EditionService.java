@@ -10,7 +10,6 @@ import ro.societateahermes.backendservice.entities.dto.EditionDto;
 import ro.societateahermes.backendservice.entities.mapper.EditionMapper;
 import ro.societateahermes.backendservice.repository.EditionImageRepository;
 import ro.societateahermes.backendservice.repository.EditionRepository;
-import ro.societateahermes.backendservice.repository.FileSystemRepository;
 import ro.societateahermes.backendservice.repository.VideoRepository;
 import ro.societateahermes.backendservice.service.EditionServiceInterface;
 import ro.societateahermes.backendservice.service.ImageServiceInterface;
@@ -28,7 +27,7 @@ public class EditionService implements EditionServiceInterface {
     private final VideoRepository videoRepository;
     private final ImageServiceInterface imageService;
 
-    public EditionService(EditionRepository editionRepository, EditionImageRepository imageRepository, VideoRepository videoRepository, FileSystemRepository fileSystemRepository, ImageServiceInterface imageService) {
+    public EditionService(EditionRepository editionRepository, EditionImageRepository imageRepository, VideoRepository videoRepository, ImageServiceInterface imageService) {
         this.editionRepository = editionRepository;
         this.imageRepository = imageRepository;
         this.videoRepository = videoRepository;
