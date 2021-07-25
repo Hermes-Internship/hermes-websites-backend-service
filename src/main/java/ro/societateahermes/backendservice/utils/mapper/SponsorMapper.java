@@ -1,18 +1,16 @@
 package ro.societateahermes.backendservice.utils.mapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ro.societateahermes.backendservice.entities.Sponsor;
 import ro.societateahermes.backendservice.entities.dto.SponsorDTO;
 import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
 
-
+@Component
 public class SponsorMapper {
 
+    @Autowired
     private EventRepositoryInterface eventRepository;
-
-    public SponsorMapper(EventRepositoryInterface repo)
-    {
-        this.eventRepository=repo;
-    }
 
     public SponsorDTO convertToDTO(Sponsor sponsor)
     {

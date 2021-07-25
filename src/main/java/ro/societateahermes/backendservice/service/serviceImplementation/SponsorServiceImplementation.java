@@ -21,14 +21,11 @@ public class SponsorServiceImplementation implements SponsorServiceInterface {
 
     private SponsorRepositoryInterface sponsorRepository;
 
-    private EventRepositoryInterface eventRepository;
-
+    @Autowired
     private SponsorMapper sponsorMapper;
 
-    public SponsorServiceImplementation(SponsorRepositoryInterface sponsorRepository, EventRepositoryInterface eventRepository) {
+    public SponsorServiceImplementation(SponsorRepositoryInterface sponsorRepository) {
         this.sponsorRepository = sponsorRepository;
-        this.eventRepository = eventRepository;
-        this.sponsorMapper = new SponsorMapper(eventRepository);
     }
 
 
