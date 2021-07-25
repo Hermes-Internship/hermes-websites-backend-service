@@ -1,5 +1,6 @@
 package ro.societateahermes.backendservice.utils.mapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.societateahermes.backendservice.entities.Offer;
 import ro.societateahermes.backendservice.entities.dto.OfferDTO;
@@ -8,13 +9,8 @@ import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
 @Component
 public class OfferMapper {
 
+    @Autowired
     private SponsorMapper sponsorMapper;
-    private EventRepositoryInterface eventRepo;
-
-    public OfferMapper(EventRepositoryInterface eventRepo) {
-        this.eventRepo = eventRepo;
-        this.sponsorMapper = new SponsorMapper(eventRepo);
-    }
 
     public OfferDTO convertToDTO(Offer offer) {
         OfferDTO offerDTO= new OfferDTO();
