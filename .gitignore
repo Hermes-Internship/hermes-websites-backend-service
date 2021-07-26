@@ -3,9 +3,6 @@
 # Compiled class file
 *.class
 
-# resources folder
-src/main/resources/edition
-
 # Log file
 *.log
 
@@ -118,4 +115,5 @@ fabric.properties
 /src/main/resources/images/edition/*
 !/src/main/resources/images/cd/.gitkeep
 
+./hermes-websites-backend-service.iml
 ./hermes-websites-backend-service.iml
