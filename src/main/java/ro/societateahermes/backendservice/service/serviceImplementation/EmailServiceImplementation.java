@@ -1,6 +1,7 @@
 package ro.societateahermes.backendservice.service.serviceImplementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,7 +19,8 @@ import java.util.Map;
 
 @Service
 public class EmailServiceImplementation implements EmailServiceInterface {
-    private static final String FROM = "hermesconnor1@gmail.com";
+    @Value("${spring.mail.username}")
+    private String FROM;
 
     @Autowired
     private JavaMailSender emailSender;
@@ -29,7 +31,7 @@ public class EmailServiceImplementation implements EmailServiceInterface {
     @Autowired
     private EventServiceInterface eventService;
 
-    @Scheduled(cron = "0 43 13 * * *")
+    @Scheduled(cron = "0 52 13 * * *")
     public void sendAppropriateEmails() {
         for (Event event : eventService.getAll()) {
             if (eventService.isDaysBeforeEvent(event, 3)) {
