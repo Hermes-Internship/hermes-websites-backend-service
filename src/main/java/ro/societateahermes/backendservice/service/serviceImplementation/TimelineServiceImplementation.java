@@ -3,10 +3,12 @@ package ro.societateahermes.backendservice.service.serviceImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.dto.ActivityDTO;
-import ro.societateahermes.backendservice.entities.Timeline;
 import ro.societateahermes.backendservice.entities.dto.TimelineDTO;
+import ro.societateahermes.backendservice.mappers.ActivityMapperInterface;
 import ro.societateahermes.backendservice.mappers.TimelineMapperInterface;
+import ro.societateahermes.backendservice.repository.ActivityRepositoryInterface;
 import ro.societateahermes.backendservice.repository.TimelineRepositoryInterface;
+import ro.societateahermes.backendservice.service.ActivityServiceInterface;
 import ro.societateahermes.backendservice.service.TimelineServiceInterface;
 
 import java.util.Comparator;
@@ -25,8 +27,13 @@ public class TimelineServiceImplementation implements TimelineServiceInterface {
     }
 
     @Override
-    public List<TimelineDTO> getAllActivityFromTimeline() {
-        return timelineMapper.timelinesToTimelineDTOS(timelineRepository.findAll());
+    public void save(TimelineDTO timelineDTO) {
+        timelineRepository.save(timelineMapper.convertToTimeline(timelineDTO));
+    }
+
+    @Override
+    public void delete(TimelineDTO timelineDTO) {
+        timelineRepository.delete(timelineMapper.convertToTimeline(timelineDTO));
     }
 
     @Override
@@ -41,9 +48,15 @@ public class TimelineServiceImplementation implements TimelineServiceInterface {
     }
 
     @Override
+    public List<TimelineDTO> getAllActivityFromTimeline() {
+        return timelineMapper.convertToTimelineDTOS(timelineRepository.findAll());
+    }
+
+    @Override
     public TimelineDTO createActivityFromTimeline(Long IdEvent, ActivityDTO activityDTO) {
         TimelineDTO timelineDTO = getTimelineOfEvent(IdEvent);
         timelineDTO.getListOfActivities().add(activityDTO);
+        save(timelineDTO);
 
         return timelineDTO;
     }
@@ -51,34 +64,47 @@ public class TimelineServiceImplementation implements TimelineServiceInterface {
     @Override
     public TimelineDTO updateActivityFromTimeline(Long IdEvent, ActivityDTO activityDTO) {
         TimelineDTO timelineDTO = getTimelineOfEvent(IdEvent);
-        ActivityDTO activity = timelineDTO.getListOfActivities().get(activityDTO.getIdActivity().intValue());
+        ActivityDTO activity = new ActivityDTO();
 
-        activity.setActivityName(activityDTO.getActivityName());
-        activity.setActivityStartDate(activityDTO.getActivityStartDate());
-        activity.setActivityLocation(activityDTO.getActivityLocation());
+        for(ActivityDTO activitySelect : timelineDTO.getListOfActivities())
+            if(activitySelect.getIdActivity().equals(activityDTO.getIdActivity())){
+                activity.setActivityName(activityDTO.getActivityName());
+                activity.setActivityStartDate(activityDTO.getActivityStartDate());
+                activity.setActivityLocation(activityDTO.getActivityLocation());
+            }
+
+        timelineDTO.getListOfActivities().add(activity);
+        save(timelineDTO);
 
         return timelineDTO;
     }
 
     @Override
-    public void deleteActivityFromTimeline(Long IdEvent, ActivityDTO eventDTO) {
+    public void deleteActivityFromTimeline(Long IdEvent, ActivityDTO activityDTO) {
         TimelineDTO timelineDTO = getTimelineOfEvent(IdEvent);
-        timelineDTO.getListOfActivities().remove(eventDTO);
-    }
-
-    @Override
-    public List<ActivityDTO> orderActivityByDateAndTime(Long IdEvent){
-        TimelineDTO timelineDTO = getTimelineOfEvent(IdEvent);
-        timelineDTO.getListOfActivities().sort(Comparator.comparing(ActivityDTO::getActivityStartDate));
-
-        return timelineDTO.getListOfActivities();
+        timelineDTO.getListOfActivities().remove(activityDTO);
+        save(timelineDTO);
     }
 
     @Override
     public ActivityDTO getOneActivityFromTimeline(Long IdEvent, Long IdActivity) {
-        TimelineDTO timeLine = getTimelineOfEvent(IdEvent);
+        TimelineDTO timelineDTO = getTimelineOfEvent(IdEvent);
 
-        return timeLine.getListOfActivities().get(IdActivity.intValue());
+        ActivityDTO activityDTO = new ActivityDTO();
+        for(ActivityDTO activitySelect : timelineDTO.getListOfActivities()) {
+            if (activitySelect.getIdActivity().equals(IdActivity))
+                activityDTO = activitySelect;
+        }
+
+        return activityDTO;
+    }
+
+    @Override
+    public List<ActivityDTO> orderActivityByDateAndTimeFromTimeline(Long IdEvent){
+        TimelineDTO timelineDTO = getTimelineOfEvent(IdEvent);
+        timelineDTO.getListOfActivities().sort(Comparator.comparing(ActivityDTO::getActivityStartDate));
+
+        return timelineDTO.getListOfActivities();
     }
 }
 

@@ -11,7 +11,11 @@ import java.util.List;
 )
 public interface TimelineMapperInterface {
 
-    TimelineDTO timelineToTimelineDTO(Timeline timeline);
+    TimelineDTO convertToTimelineDTO(Timeline timeline);
 
-    List<TimelineDTO> timelinesToTimelineDTOS(List<Timeline> timelines);
+    Timeline convertToTimeline(TimelineDTO timelineDTO);
+
+    List<TimelineDTO> convertToTimelineDTOS(List<Timeline> timelines);
+
+    List<Timeline> convertToTimelines(List<TimelineDTO> timelineDTOS);
 }

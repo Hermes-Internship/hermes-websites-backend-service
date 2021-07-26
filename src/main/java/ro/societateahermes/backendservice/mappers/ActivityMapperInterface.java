@@ -12,7 +12,11 @@ import java.util.List;
 )
 public interface ActivityMapperInterface {
 
-    ActivityDTO activityToActivityDTO(Activity activity);
+    ActivityDTO convertToActivityDTO(Activity activity);
 
-    List<ActivityDTO> activitiesToActivityDTOS(List<Activity> activities);
+    Activity convertToActivity(ActivityDTO activityDTO);
+
+    List<ActivityDTO> convertToActivityDTOS(List<Activity> activities);
+
+    List<Activity> convertToActivities(List<ActivityDTO> activityDTOS);
 }

@@ -1,13 +1,15 @@
 package ro.societateahermes.backendservice.service;
 
-import ro.societateahermes.backendservice.entities.Event;
 import ro.societateahermes.backendservice.entities.dto.ActivityDTO;
-import ro.societateahermes.backendservice.entities.Timeline;
 import ro.societateahermes.backendservice.entities.dto.TimelineDTO;
 
 import java.util.List;
 
 public interface TimelineServiceInterface {
+
+    void save(TimelineDTO timelineDTO);
+
+    void delete(TimelineDTO timelineDTO);
 
     List<TimelineDTO> getAllActivityFromTimeline();
 
@@ -19,8 +21,7 @@ public interface TimelineServiceInterface {
 
     void deleteActivityFromTimeline(Long IdEvent, ActivityDTO eventDTO);
 
-    List<ActivityDTO> orderActivityByDateAndTime(Long IdEvent);
-
     ActivityDTO getOneActivityFromTimeline(Long IdEvent, Long IdActivity);
 
+    List<ActivityDTO> orderActivityByDateAndTimeFromTimeline(Long IdEvent);
 }

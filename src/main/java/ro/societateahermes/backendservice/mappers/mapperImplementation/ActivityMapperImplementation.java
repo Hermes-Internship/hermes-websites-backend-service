@@ -19,7 +19,7 @@ import java.util.List;
 public class ActivityMapperImplementation implements ActivityMapperInterface {
     
     @Override
-    public ActivityDTO activityToActivityDTO(Activity activity) {
+    public ActivityDTO convertToActivityDTO(Activity activity) {
 
         if(activity == null)
             return null;
@@ -35,16 +35,44 @@ public class ActivityMapperImplementation implements ActivityMapperInterface {
     }
 
     @Override
-    public List<ActivityDTO> activitiesToActivityDTOS(List<Activity> activities) {
+    public Activity convertToActivity(ActivityDTO activityDTO) {
+        if(activityDTO == null)
+            return null;
+
+        Activity activity = new Activity();
+
+        activity.setIdActivity(activityDTO.getIdActivity());
+        activity.setActivityName(activityDTO.getActivityName());
+        activity.setActivityStartDate(activityDTO.getActivityStartDate());
+        activity.setActivityLocation(activityDTO.getActivityLocation());
+
+        return activity;
+    }
+
+    @Override
+    public List<ActivityDTO> convertToActivityDTOS(List<Activity> activities) {
 
         if (activities == null )
             return null;
 
-        List<ActivityDTO> eventDTOS = new ArrayList<ActivityDTO>(activities.size());
+        List<ActivityDTO> activityDTOS = new ArrayList<ActivityDTO>(activities.size());
         for (Activity activity : activities ) {
-            eventDTOS.add(activityToActivityDTO(activity));
+            activityDTOS.add(convertToActivityDTO(activity));
         }
 
-        return eventDTOS;
+        return activityDTOS;
+    }
+
+    @Override
+    public List<Activity> convertToActivities(List<ActivityDTO> activityDTOS) {
+        if (activityDTOS == null )
+            return null;
+
+        List<Activity> activities = new ArrayList<Activity>(activityDTOS.size());
+        for (ActivityDTO activityDTO : activityDTOS ) {
+            activities.add(convertToActivity(activityDTO));
+        }
+
+        return activities;
     }
 }

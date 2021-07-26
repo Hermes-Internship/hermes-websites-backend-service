@@ -21,7 +21,7 @@ public class TimelineMapperImplementation implements TimelineMapperInterface {
     }
 
     @Override
-    public TimelineDTO timelineToTimelineDTO(Timeline timeline) {
+    public TimelineDTO convertToTimelineDTO(Timeline timeline) {
         if(timeline == null)
             return null;
 
@@ -29,22 +29,50 @@ public class TimelineMapperImplementation implements TimelineMapperInterface {
 
         timelineDTO.setIdTimeline(timeline.getIdTimeline());
         timelineDTO.setIdEvent(timeline.getIdEvent());
-        timelineDTO.setListOfActivities(activityMapper.activitiesToActivityDTOS(timeline.getListOfActivities()));
+        timelineDTO.setListOfActivities(activityMapper.convertToActivityDTOS(timeline.getListOfActivities()));
 
         return timelineDTO;
     }
 
     @Override
-    public List<TimelineDTO> timelinesToTimelineDTOS(List<Timeline> timelines) {
+    public Timeline convertToTimeline(TimelineDTO timelineDTO) {
+        if(timelineDTO == null)
+            return null;
+
+        Timeline timeline = new Timeline();
+
+        timeline.setIdTimeline(timelineDTO.getIdTimeline());
+        timeline.setIdEvent(timelineDTO.getIdEvent());
+        timeline.setListOfActivities(activityMapper.convertToActivities(timelineDTO.getListOfActivities()));
+
+        return timeline;
+    }
+
+    @Override
+    public List<TimelineDTO> convertToTimelineDTOS(List<Timeline> timelines) {
 
         if (timelines == null )
             return null;
 
         List<TimelineDTO> timelineDTO = new ArrayList<TimelineDTO>(timelines.size());
         for (Timeline timeline : timelines ) {
-            timelineDTO.add(timelineToTimelineDTO(timeline));
+            timelineDTO.add(convertToTimelineDTO(timeline));
         }
 
         return timelineDTO;
+    }
+
+    @Override
+    public List<Timeline> convertToTimelines(List<TimelineDTO> timelineDTOS) {
+
+        if (timelineDTOS == null )
+            return null;
+
+        List<Timeline> timelines = new ArrayList<Timeline>(timelineDTOS.size());
+        for (TimelineDTO timelineDTO : timelineDTOS ) {
+            timelines.add(convertToTimeline(timelineDTO));
+        }
+
+        return timelines;
     }
 }
