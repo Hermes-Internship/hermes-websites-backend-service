@@ -16,7 +16,6 @@ import ro.societateahermes.backendservice.utils.mapper.EditionMapper;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -95,7 +94,7 @@ public class EditionService implements EditionServiceInterface {
     }
 
     @Transactional
-    public void deleteMediaFromEdition(Long editionId, List<Long> imageIds, List<Long> videosIds) throws IOException, URISyntaxException {
+    public void deleteMediaFromEdition(Long editionId, List<Long> imageIds, List<Long> videosIds) throws IOException {
         this.deleteImagesFromEdition(editionId, imageIds);
         this.deleteVideosFromEdition(editionId, videosIds);
     }
@@ -128,7 +127,7 @@ public class EditionService implements EditionServiceInterface {
         }
     }
 
-    public void deleteVideosFromEdition(Long editionId, List<Long> videosIds) throws IOException, URISyntaxException {
+    public void deleteVideosFromEdition(Long editionId, List<Long> videosIds) throws IOException {
         Edition edition = editionRepository.findById(editionId).orElseThrow();
 
         for (Long videoId : videosIds) {
