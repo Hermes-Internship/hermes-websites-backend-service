@@ -10,11 +10,11 @@ import java.util.Map;
 public interface EmailServiceInterface {
     void sendAppropriateEmails();
 
-    void configureReminderMessageDuringEvent(Event event);
+    void configureAndSendReminderMessageDuringEvent(Event event);
 
-    void configureConfirmationEmail(Participation participation) throws IOException;
+    void configureAndSendConfirmationEmail(Participation participation) throws IOException;
 
-    void configureReminderMessageBeforeEvent(Event event, Integer daysBefore);
+    void configureAndSendReminderMessageBeforeEvent(Event event, Integer daysBefore);
 
     String getReplacedThymeleafTemplate(Map<String, Object> templateModel, EmailTemplates emailTemplate);
 }

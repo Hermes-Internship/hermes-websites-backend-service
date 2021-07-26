@@ -35,16 +35,16 @@ public class EmailServiceImplementation implements EmailServiceInterface {
     public void sendAppropriateEmails() {
         for (Event event : eventService.getAll()) {
             if (eventService.isDaysBeforeEvent(event, 3)) {
-                this.configureReminderMessageBeforeEvent(event, 3);
+                this.configureAndSendReminderMessageBeforeEvent(event, 3);
             } else if (eventService.isDaysBeforeEvent(event, 1)) {
-                this.configureReminderMessageBeforeEvent(event, 1);
+                this.configureAndSendReminderMessageBeforeEvent(event, 1);
             } else if (eventService.isDuringEvent(event)) {
-                this.configureReminderMessageDuringEvent(event);
+                this.configureAndSendReminderMessageDuringEvent(event);
             }
         }
     }
 
-    public void configureReminderMessageDuringEvent(Event event) {
+    public void configureAndSendReminderMessageDuringEvent(Event event) {
         for (Participation participation : eventService.getParticipationsOfEvent(event)) {
             User user = participation.getUser();
             String recipientName = user.getFirstName() + " " + user.getLastName();
@@ -63,7 +63,7 @@ public class EmailServiceImplementation implements EmailServiceInterface {
         }
     }
 
-    public void configureReminderMessageBeforeEvent(Event event, Integer daysBefore) {
+    public void configureAndSendReminderMessageBeforeEvent(Event event, Integer daysBefore) {
         for (Participation participation : eventService.getParticipationsOfEvent(event)) {
             User user = participation.getUser();
             String recipientName = user.getFirstName() + " " + user.getLastName();
@@ -84,7 +84,7 @@ public class EmailServiceImplementation implements EmailServiceInterface {
         }
     }
 
-    public void configureConfirmationEmail(Participation participation) {
+    public void configureAndSendConfirmationEmail(Participation participation) {
         User user = participation.getUser();
         Event event = participation.getEvent();
 

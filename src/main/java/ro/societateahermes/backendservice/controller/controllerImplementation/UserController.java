@@ -50,6 +50,6 @@ public class UserController implements UserControllerInterface {
         userService.addParticipation(user, participation);
         eventService.addParticipation(submission.getEventId(), participation);
 
-        emailService.configureConfirmationEmail(participation);
+        emailService.configureAndSendConfirmationEmail(participation);
     }
 }
