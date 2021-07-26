@@ -3,9 +3,8 @@ package ro.societateahermes.backendservice.controller.controllerImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.societateahermes.backendservice.controller.TimelineControllerInterface;
-import ro.societateahermes.backendservice.entities.Event;
 import ro.societateahermes.backendservice.entities.dto.ActivityDTO;
-import ro.societateahermes.backendservice.entities.Timeline;
+import ro.societateahermes.backendservice.entities.dto.TimelineDTO;
 import ro.societateahermes.backendservice.service.serviceImplementation.TimelineServiceImplementation;
 
 import javax.validation.Valid;
@@ -24,21 +23,16 @@ public class TimelineControllerImplementation implements TimelineControllerInter
     }
 
 
-    @PostMapping()
+    @PostMapping("/{IdEvent}")
     @Override
-    public Timeline createActivityFromTimeline(@Valid @RequestBody Long IdEvent, ActivityDTO activityDTO) {
+    public TimelineDTO createActivityFromTimeline(@Valid @PathVariable("IdEvent") Long IdEvent, @Valid @RequestBody ActivityDTO activityDTO) {
          return timeLineService.createActivityFromTimeline(IdEvent, activityDTO);
     }
 
+    @PutMapping("/{IdEvent}")
     @Override
-    public Timeline updateActivityFromTimeline(Long IdEvent, ActivityDTO activityDTO) {
+    public TimelineDTO updateActivityFromTimeline(@Valid @PathVariable("IdEvent") Long IdEvent, @Valid @RequestBody ActivityDTO activityDTO) {
         return timeLineService.updateActivityFromTimeline(IdEvent, activityDTO);
-    }
-
-    @GetMapping
-    @Override
-    public List<ActivityDTO> getAllActivityFromTimeline(Timeline timeline) {
-        return timeLineService.orderActivityByDateAndTime(timeline);
     }
 
     @DeleteMapping("/{IdEvent}")
@@ -47,10 +41,29 @@ public class TimelineControllerImplementation implements TimelineControllerInter
         timeLineService.deleteActivityFromTimeline(IdEvent, IdActivity);
     }
 
+    @GetMapping("/{IdEvent}/{IdActivity}")
     @Override
-    public ActivityDTO getOneActivityFromTimeline(Long IdEvent, ActivityDTO activityDTO) {
-        return timeLineService.getOneActivityFromTimeline(IdEvent, activityDTO);
+    public ActivityDTO getOneActivityFromTimeline(@Valid @PathVariable("IdEvent") Long IdEvent, @Valid @PathVariable("IdActivity") Long IdActivity) {
+        return timeLineService.getOneActivityFromTimeline(IdEvent, IdActivity);
     }
+
+    @GetMapping
+    @Override
+    public List<TimelineDTO> getAllActivityFromTimeline() {
+        return timeLineService.getAllActivityFromTimeline();
+    }
+
+    @GetMapping("/{IdEvent}")
+    @Override
+    public List<ActivityDTO> getAllActivityFromTimelineOrderByDateAndTime(@Valid @PathVariable("IdEvent") Long IdEvent) {
+        return timeLineService.orderActivityByDateAndTime(IdEvent);
+    }
+
+//    @GetMapping("/{IdEvent}")
+//    @Override
+//    public TimelineDTO getOneTimeline(@Valid @PathVariable("IdEvent") Long IdEvent) {
+//        return timeLineService.getTimelineOfEvent(IdEvent);
+//    }
 }
 
 
