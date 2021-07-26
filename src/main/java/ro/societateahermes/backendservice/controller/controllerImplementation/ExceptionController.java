@@ -13,7 +13,6 @@ import java.util.Map;
 
 @ControllerAdvice
 public class ExceptionController {
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
