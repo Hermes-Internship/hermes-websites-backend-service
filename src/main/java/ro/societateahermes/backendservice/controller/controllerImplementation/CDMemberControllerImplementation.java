@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ro.societateahermes.backendservice.controller.CDMemberControllerInterface;
-import ro.societateahermes.backendservice.controller.converters.CDMemberConverter;
 import ro.societateahermes.backendservice.entities.dto.CDMemberDTO;
 import ro.societateahermes.backendservice.service.serviceImplementation.CDMemberServiceImplementation;
+import ro.societateahermes.backendservice.utils.mapper.CDMemberMapper;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,14 +24,14 @@ public class CDMemberControllerImplementation implements CDMemberControllerInter
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void saveCDMember(@Valid @RequestBody CDMemberDTO cdMemberDTO) {
-        cdMemberService.save(CDMemberConverter.cdMemberDTOToCDMember(cdMemberDTO));
+        cdMemberService.save(CDMemberMapper.cdMemberDTOToCDMember(cdMemberDTO));
     }
 
     @GetMapping
     @Override
     public List<CDMemberDTO> getAllCDMembers() {
         return cdMemberService.getAllCDMembers().stream()
-                .map(CDMemberConverter::cdMemberToCDMemberDTO).collect(Collectors.toList());
+                .map(CDMemberMapper::cdMemberToCDMemberDTO).collect(Collectors.toList());
     }
 
     @DeleteMapping("/{cd-id}")
@@ -45,6 +45,6 @@ public class CDMemberControllerImplementation implements CDMemberControllerInter
     @Transactional
     @Override
     public void updateCDMember(@Valid @RequestBody CDMemberDTO cdMemberDTO) {
-        cdMemberService.update(CDMemberConverter.cdMemberDTOToCDMember(cdMemberDTO));
+        cdMemberService.update(CDMemberMapper.cdMemberDTOToCDMember(cdMemberDTO));
     }
 }

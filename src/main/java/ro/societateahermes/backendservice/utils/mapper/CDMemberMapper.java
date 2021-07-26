@@ -1,9 +1,9 @@
-package ro.societateahermes.backendservice.controller.converters;
+package ro.societateahermes.backendservice.utils.mapper;
 
 import ro.societateahermes.backendservice.entities.CDMember;
 import ro.societateahermes.backendservice.entities.dto.CDMemberDTO;
 
-public class CDMemberConverter {
+public class CDMemberMapper {
     public static CDMemberDTO cdMemberToCDMemberDTO(CDMember cdMember) {
         if (cdMember == null) return null;
         CDMemberDTO cdMemberDTO = new CDMemberDTO();
