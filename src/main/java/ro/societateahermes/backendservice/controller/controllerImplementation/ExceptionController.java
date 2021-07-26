@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import ro.societateahermes.backendservice.exceptions.UnathorizeException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,9 +29,16 @@ public class ExceptionController {
         return errors;
     }
 
+    @ExceptionHandler(UnathorizeException.class)
+    public ResponseEntity<?> handleUnathorizeException(UnathorizeException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.FORBIDDEN);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+
 
 }
