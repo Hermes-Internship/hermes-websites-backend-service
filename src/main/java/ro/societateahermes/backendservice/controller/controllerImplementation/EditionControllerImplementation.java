@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ro.societateahermes.backendservice.controller.EditionControllerInterface;
 import ro.societateahermes.backendservice.entities.EditionImage;
 import ro.societateahermes.backendservice.entities.EditionMediaDeletion;
 import ro.societateahermes.backendservice.entities.EditionMediaUpload;
@@ -12,17 +13,16 @@ import ro.societateahermes.backendservice.entities.dto.EditionDto;
 import ro.societateahermes.backendservice.service.serviceImplementation.EditionService;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
 @RestController
 @RequestMapping("/edition")
-public class EditionController {
+public class EditionControllerImplementation implements EditionControllerInterface {
     private final EditionService editionService;
 
-    public EditionController(EditionService editionService) {
+    public EditionControllerImplementation(EditionService editionService) {
         this.editionService = editionService;
     }
 
@@ -80,7 +80,7 @@ public class EditionController {
 
     @DeleteMapping("/{editionId}/media")
     public ResponseEntity<Object> deleteMediaFromEdition(@PathVariable("editionId") Long editionId,
-                                                         @RequestBody EditionMediaDeletion editionMediaDeletion) throws IOException, URISyntaxException {
+                                                         @RequestBody EditionMediaDeletion editionMediaDeletion) throws IOException {
         List<Long> imagesIds = editionMediaDeletion.getImagesIds();
         List<Long> videosIds = editionMediaDeletion.getVideosIds();
 
