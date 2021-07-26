@@ -6,6 +6,7 @@ import ro.societateahermes.backendservice.entities.Event;
 import ro.societateahermes.backendservice.entities.Participation;
 import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
 import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
+import ro.societateahermes.backendservice.repository.ParticipationRepositoryInterface;
 import ro.societateahermes.backendservice.service.EventServiceInterface;
 
 import java.time.LocalDate;
@@ -21,6 +22,9 @@ public class EventServiceImplementation implements EventServiceInterface {
     @Autowired
     private EventRepositoryInterface eventRepository;
 
+    @Autowired
+    private ParticipationRepositoryInterface participationRepository;
+
     public List<Event> getAll() {
         return eventRepository.findAll();
     }
@@ -31,6 +35,11 @@ public class EventServiceImplementation implements EventServiceInterface {
         List<Participation> participationList = event.getListOfParticipation();
         participationList.add(participation);
         event.setListOfParticipation(participationList);
+        eventRepository.save(event);
+    }
+
+    public List<Participation> getParticipationsOfEvent(Event event) {
+        return participationRepository.findParticipationByEvent(event);
     }
 
     public NotificationSwitchDTO getEventStatusByEventName(String eventName) {

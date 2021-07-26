@@ -1,16 +1,20 @@
 package ro.societateahermes.backendservice.service;
 
-import ro.societateahermes.backendservice.entities.Email;
+import ro.societateahermes.backendservice.entities.EmailTemplates;
 import ro.societateahermes.backendservice.entities.Event;
+import ro.societateahermes.backendservice.entities.Participation;
 
 import java.io.IOException;
+import java.util.Map;
 
 public interface EmailServiceInterface {
-    void sendSimpleMessage(Email email);
+    void sendAppropriateEmails();
 
-    void sendConfirmationEmail(Email email) throws IOException;
+    void configureReminderMessageDuringEvent(Event event);
 
-    void sendReminderMessageBeforeEvent(Event event, Integer daysBefore);
+    void configureConfirmationEmail(Participation participation) throws IOException;
 
-    void checkEvents();
+    void configureReminderMessageBeforeEvent(Event event, Integer daysBefore);
+
+    String getReplacedThymeleafTemplate(Map<String, Object> templateModel, EmailTemplates emailTemplate);
 }

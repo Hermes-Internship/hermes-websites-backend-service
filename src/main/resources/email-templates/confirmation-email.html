@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 </head>
 <body>
-<p>Salut,
-    <span th:text="${recipientName}"></span>
-    . Multumim pentru inregistrare la evenimentul ...
+<p>Salut, [[${recipientName}]]. Multumim de inscrierea la evenimentul [[${eventName}]].
+</p>
+<p>
+    Detalii despre eveniment: incepere ([[${eventStartDate}]]), incheiere ([[${eventEndDate}]]), locatie
+    ([[${eventLocation}]])
 </p>
 
 <p>

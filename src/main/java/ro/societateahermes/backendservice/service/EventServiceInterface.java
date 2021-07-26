@@ -9,6 +9,8 @@ import java.util.List;
 public interface EventServiceInterface {
     List<Event> getAll();
 
+    List<Participation> getParticipationsOfEvent(Event event);
+
     void addParticipation(long eventID, Participation participation);
 
     NotificationSwitchDTO getEventStatusByEventName(String eventName);
