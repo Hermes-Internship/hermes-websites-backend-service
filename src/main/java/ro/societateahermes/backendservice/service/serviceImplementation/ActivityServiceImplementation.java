@@ -22,11 +22,6 @@ public class ActivityServiceImplementation implements ActivityServiceInterface {
     }
 
     @Override
-    public List<Activity> getAll() {
-        return activityRepository.findAll();
-    }
-
-    @Override
     public List<ActivityDTO> eventIsOngoing(Activity activity) {
         List<ActivityDTO> activities = new ArrayList<>();
 
@@ -38,7 +33,7 @@ public class ActivityServiceImplementation implements ActivityServiceInterface {
 
         if (startDate.equals(LocalDate.now()) || LocalDate.now().isBefore(endDate)) {
             if (startTime.equals(LocalTime.now()) || LocalTime.now().isBefore(endTime))
-                activities = activityMapper.activitiesToActivityDTOS(getAll());
+                activities = activityMapper.activitiesToActivityDTOS(activityRepository.findAll());
         }
 
         return activities;

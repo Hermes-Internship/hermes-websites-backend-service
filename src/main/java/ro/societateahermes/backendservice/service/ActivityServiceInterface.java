@@ -7,7 +7,5 @@ import java.util.List;
 
 public interface ActivityServiceInterface {
 
-    List<Activity> getAll();
-
     List<ActivityDTO> eventIsOngoing(Activity activity);
 }
