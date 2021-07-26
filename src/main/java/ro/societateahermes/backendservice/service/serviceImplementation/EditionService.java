@@ -7,12 +7,12 @@ import ro.societateahermes.backendservice.entities.EditionImage;
 import ro.societateahermes.backendservice.entities.EditionVideo;
 import ro.societateahermes.backendservice.entities.ImageType;
 import ro.societateahermes.backendservice.entities.dto.EditionDto;
-import ro.societateahermes.backendservice.entities.mapper.EditionMapper;
 import ro.societateahermes.backendservice.repository.EditionImageRepository;
 import ro.societateahermes.backendservice.repository.EditionRepository;
 import ro.societateahermes.backendservice.repository.VideoRepository;
 import ro.societateahermes.backendservice.service.EditionServiceInterface;
 import ro.societateahermes.backendservice.service.ImageServiceInterface;
+import ro.societateahermes.backendservice.utils.mapper.EditionMapper;
 
 import javax.transaction.Transactional;
 import java.io.IOException;

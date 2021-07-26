@@ -1,4 +1,4 @@
-package ro.societateahermes.backendservice.entities.mapper;
+package ro.societateahermes.backendservice.utils.mapper;
 
 import ro.societateahermes.backendservice.entities.EditionImage;
 import ro.societateahermes.backendservice.entities.dto.EditionImageDto;
