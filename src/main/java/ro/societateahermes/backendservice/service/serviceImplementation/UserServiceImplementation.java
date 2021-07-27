@@ -5,6 +5,7 @@ import ro.societateahermes.backendservice.entities.DTO.UserDTO;
 import ro.societateahermes.backendservice.entities.User;
 import ro.societateahermes.backendservice.repository.UserRepositoryInterface;
 import ro.societateahermes.backendservice.service.UserServiceInterface;
+import ro.societateahermes.backendservice.utils.mapper.UserMapper;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -12,8 +13,6 @@ import java.util.List;
 @Service
 public class UserServiceImplementation implements UserServiceInterface {
     private final UserRepositoryInterface userRepository;
-    /* private final ActivityRepositoryInterface activityRepository;
-    private final EventRepositoryInterface eventRepository;*/
 
     UserServiceImplementation(UserRepositoryInterface userRepo) {
         userRepository = userRepo;
@@ -21,25 +20,17 @@ public class UserServiceImplementation implements UserServiceInterface {
 
     @Override
     public void save(UserDTO user) {
-        User updatedUser =  new User();
-        updatedUser.setEmail(user.getEmail());
-        updatedUser.setField(user.getField());
-        updatedUser.setFirstName(user.getFirstName());
-        updatedUser.setUsername(user.getUsername());
-        updatedUser.setLanguage(user.getLanguage());
-        updatedUser.setLastName(user.getLastName());
-        updatedUser.setPassword(user.getPassword());
-        updatedUser.setUniversity(user.getUniversity());
-        updatedUser.setYearOfStudy(user.getYearOfStudy());
-        userRepository.save(updatedUser);
+
+        userRepository.save(UserMapper.userDTOtoUser(user));
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        return UserMapper.usersToUsersDTO(userRepository.findAll());
     }
 
     @Override
+    @Transactional
     public void delete(Long id){
         for(User user : userRepository.findAll())
         {
@@ -56,16 +47,8 @@ public class UserServiceImplementation implements UserServiceInterface {
     @Transactional
     public void update(UserDTO user) {
         if (user != null) {
-            User updatedUser = userRepository.getOne(user.getID());
-            updatedUser.setEmail(user.getEmail());
-            updatedUser.setField(user.getField());
-            updatedUser.setFirstName(user.getFirstName());
-            updatedUser.setUsername(user.getUsername());
-            updatedUser.setLanguage(user.getLanguage());
-            updatedUser.setLastName(user.getLastName());
-            updatedUser.setPassword(user.getPassword());
-            updatedUser.setUniversity(user.getUniversity());
-            updatedUser.setYearOfStudy(user.getYearOfStudy());
+
+            userRepository.save(UserMapper.userDTOtoUser(user));
         }else{
             ///throw error
         }

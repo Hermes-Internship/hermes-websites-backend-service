@@ -22,7 +22,7 @@ public class  UserController implements UserControllerInterface {
 
 
     @GetMapping
-    public List<User> getAll(){
+    public List<UserDTO> getAll(){
         return service.getAllUsers();
     }
 

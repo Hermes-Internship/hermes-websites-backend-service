@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserControllerInterface {
     void save(UserDTO user);
-    List<User> getAll();
+    List<UserDTO> getAll();
     void delete (Long userId);
     void put(UserDTO user);
 }

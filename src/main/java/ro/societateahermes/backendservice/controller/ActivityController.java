@@ -23,7 +23,7 @@ public class ActivityController implements ActivityControllerInterface{
     }
 
     @GetMapping
-    public List<Activity> getAll() {
+    public List<ActivityDTO> getAll() {
         return activityService.getAllActivities();
     }
 

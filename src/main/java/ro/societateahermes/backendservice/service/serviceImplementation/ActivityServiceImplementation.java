@@ -3,13 +3,12 @@ package ro.societateahermes.backendservice.service.serviceImplementation;
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.Activity;
 import ro.societateahermes.backendservice.entities.DTO.ActivityDTO;
-import ro.societateahermes.backendservice.entities.User;
+import ro.societateahermes.backendservice.utils.mapper.ActivityMapper;
 import ro.societateahermes.backendservice.repository.ActivityRepositoryInterface;
 import ro.societateahermes.backendservice.service.ActivityServiceInterface;
 
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -22,25 +21,16 @@ public class ActivityServiceImplementation implements ActivityServiceInterface {
 
     @Override
     public void save(ActivityDTO activity) {
-
-        Activity updatedActivity = new Activity();
-        updatedActivity.setActivityLink(activity.getActivityLink());
-        updatedActivity.setActivityName(activity.getActivityName());
-        updatedActivity.setActivityDescription(activity.getActivityDescription());
-        updatedActivity.setActivityEndDate(activity.getActivityEndDate());
-        updatedActivity.setActivityStartDate(activity.getActivityStartDate());
-        updatedActivity.setActivityEstimatedTime(activity.getActivityEstimatedTime());
-        updatedActivity.setMaximumNumberOfParticipants(activity.getMaximumNumberOfParticipants());
-        updatedActivity.setEvent(activity.getEvent());
-        activityRepository.save(updatedActivity);
+        activityRepository.save(ActivityMapper.activityDTOtoActivity(activity));
     }
 
     @Override
-    public List<Activity> getAllActivities() {
-        return activityRepository.findAll();
+    public List<ActivityDTO> getAllActivities() {
+         return ActivityMapper.activitiesToActivitiesDTO(activityRepository.findAll());
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         for(Activity activity  : activityRepository.findAll())
         {
@@ -52,17 +42,11 @@ public class ActivityServiceImplementation implements ActivityServiceInterface {
     }
 
     @Override
+    @Transactional
     public void update(ActivityDTO activity) {
         if (activity != null){
-            Activity updatedActivity = activityRepository.getOne(activity.getIdActivity());
-            updatedActivity.setActivityLink(activity.getActivityLink());
-            updatedActivity.setActivityName(activity.getActivityName());
-            updatedActivity.setActivityDescription(activity.getActivityDescription());
-            updatedActivity.setActivityEndDate(activity.getActivityEndDate());
-            updatedActivity.setActivityStartDate(activity.getActivityStartDate());
-            updatedActivity.setActivityEstimatedTime(activity.getActivityEstimatedTime());
-            updatedActivity.setMaximumNumberOfParticipants(activity.getMaximumNumberOfParticipants());
-            updatedActivity.setEvent(activity.getEvent());
+            Activity updatedActivity = ActivityMapper.activityDTOtoActivity(activity);
+            activityRepository.save(updatedActivity);
         }
     }
 }

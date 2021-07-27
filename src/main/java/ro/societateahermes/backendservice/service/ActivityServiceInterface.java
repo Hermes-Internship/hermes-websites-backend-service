@@ -10,7 +10,7 @@ import java.util.List;
 public interface ActivityServiceInterface {
     void save(ActivityDTO activity);
 
-    List<Activity> getAllActivities();
+    List<ActivityDTO> getAllActivities();
 
     void delete(Long id);
 

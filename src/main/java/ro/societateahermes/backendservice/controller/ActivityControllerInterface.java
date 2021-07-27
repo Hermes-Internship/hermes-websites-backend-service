@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ActivityControllerInterface {
     void save(ActivityDTO activity);
-    List<Activity> getAll();
+    List<ActivityDTO> getAll();
     void delete (Long activityId);
     void put(ActivityDTO activityDTO);
 }
