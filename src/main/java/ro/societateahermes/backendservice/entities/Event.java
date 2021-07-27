@@ -1,5 +1,6 @@
 package ro.societateahermes.backendservice.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,11 +30,12 @@ public class Event {
 
     private String eventLocation;
     @OneToMany(mappedBy = "event")
-    private List<Activity> listOfActivities=new ArrayList<>();
+    private List<Activity> listOfActivities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<Participation> listOfParticipation=new ArrayList<>();
+    @OneToMany(mappedBy = "event")
+    private List<Participation> listOfParticipation = new ArrayList<>();
 
-
-
+    @JsonBackReference
+    @OneToMany(mappedBy = "event")
+    private List<Edition> editions = new ArrayList<>();
 }

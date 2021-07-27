@@ -31,12 +31,13 @@ public class EditionControllerImplementation implements EditionControllerInterfa
         return editionService.getAll();
     }
 
-    @PostMapping
-    public void saveNewEditionWithMedia(@ModelAttribute EditionMediaUpload editionMediaUpload) {
+    @PostMapping("/{eventId}")
+    public void saveNewEditionWithMedia(@PathVariable Long eventId,
+                                        @ModelAttribute EditionMediaUpload editionMediaUpload) {
         List<MultipartFile> images = editionMediaUpload.getImages();
         List<MultipartFile> videos = editionMediaUpload.getVideos();
 
-        Long newEditionId = editionService.createEmptyEdition().getId();
+        Long newEditionId = editionService.createEmptyEdition(eventId).getId();
         if (images != null) {
             editionService.saveImagesToEdition(newEditionId, images);
         }

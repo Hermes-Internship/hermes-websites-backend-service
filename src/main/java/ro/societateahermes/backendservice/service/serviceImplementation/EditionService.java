@@ -9,6 +9,7 @@ import ro.societateahermes.backendservice.entities.ImageType;
 import ro.societateahermes.backendservice.entities.dto.EditionDto;
 import ro.societateahermes.backendservice.repository.EditionImageRepository;
 import ro.societateahermes.backendservice.repository.EditionRepository;
+import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
 import ro.societateahermes.backendservice.repository.VideoRepository;
 import ro.societateahermes.backendservice.service.EditionServiceInterface;
 import ro.societateahermes.backendservice.service.ImageServiceInterface;
@@ -21,12 +22,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class EditionService implements EditionServiceInterface {
+    private final EventRepositoryInterface eventRepository;
     private final EditionRepository editionRepository;
     private final EditionImageRepository imageRepository;
     private final VideoRepository videoRepository;
     private final ImageServiceInterface imageService;
 
-    public EditionService(EditionRepository editionRepository, EditionImageRepository imageRepository, VideoRepository videoRepository, ImageServiceInterface imageService) {
+    public EditionService(EventRepositoryInterface eventRepository, EditionRepository editionRepository, EditionImageRepository imageRepository, VideoRepository videoRepository, ImageServiceInterface imageService) {
+        this.eventRepository = eventRepository;
         this.editionRepository = editionRepository;
         this.imageRepository = imageRepository;
         this.videoRepository = videoRepository;
@@ -44,8 +47,10 @@ public class EditionService implements EditionServiceInterface {
         return imageRepository.findById(imageId).orElseThrow();
     }
 
-    public Edition createEmptyEdition() {
-        return editionRepository.save(new Edition());
+    public Edition createEmptyEdition(Long eventId) {
+        Edition edition = new Edition();
+        edition.setEvent(eventRepository.findById(eventId).orElseThrow());
+        return editionRepository.save(edition);
     }
 
     @Transactional

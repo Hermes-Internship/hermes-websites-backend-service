@@ -14,7 +14,7 @@ public interface EditionServiceInterface {
 
     EditionImage getImageById(Long imageId);
 
-    Edition createEmptyEdition();
+    Edition createEmptyEdition(Long eventId);
 
     void deleteEdition(Long editionId) throws IOException;
 

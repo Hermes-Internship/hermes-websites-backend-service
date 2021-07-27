@@ -14,7 +14,8 @@ import java.util.List;
 public interface EditionControllerInterface {
     List<EditionDto> getAll();
 
-    void saveNewEditionWithMedia(@ModelAttribute EditionMediaUpload editionMediaUpload);
+    void saveNewEditionWithMedia(@PathVariable Long eventId,
+                                 @ModelAttribute EditionMediaUpload editionMediaUpload);
 
     void deleteEdition(@PathVariable("editionId") Long editionId) throws IOException;
 

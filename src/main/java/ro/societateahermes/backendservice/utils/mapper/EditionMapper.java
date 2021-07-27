@@ -19,7 +19,7 @@ public class EditionMapper {
                 .map(EditionVideoMapper::convertToDto)
                 .collect(Collectors.toList());
 
-        return new EditionDto(edition.getId(), editionImagesDto, editionVideosDto);
+        return new EditionDto(edition.getId(), edition.getEvent(), editionImagesDto, editionVideosDto);
     }
 
     public static Edition convertToEdition(EditionDto editionDto) {
@@ -30,6 +30,6 @@ public class EditionMapper {
                 .map(EditionVideoMapper::convertToEditionVideo)
                 .collect(Collectors.toList());
 
-        return new Edition(editionDto.getId(), editionImages, editionVideos);
+        return new Edition(editionDto.getId(), editionDto.getEvent(), editionImages, editionVideos);
     }
 }

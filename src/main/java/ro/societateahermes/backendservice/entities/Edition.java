@@ -16,9 +16,10 @@ public class Edition {
     @GeneratedValue
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn("event_id")
-//    private Event event;
+    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "edition", cascade = CascadeType.ALL, orphanRemoval = true)
