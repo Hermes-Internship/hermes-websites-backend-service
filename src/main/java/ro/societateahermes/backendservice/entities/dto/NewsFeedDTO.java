@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NotificationSwitchDTO {
+public class NewsFeedDTO {
 
-    private String message;
-    private Boolean isInProgress;
+    private long postId;
+    private String postDescription;
+    private String postImagePath;
+    private String postLink;
 }

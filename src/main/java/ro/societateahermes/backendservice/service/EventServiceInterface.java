@@ -8,4 +8,5 @@ public interface EventServiceInterface {
     void addParticipation(long eventID, Participation participation);
 
     NotificationSwitchDTO getEventStatusByEventName(String eventName);
+
 }
