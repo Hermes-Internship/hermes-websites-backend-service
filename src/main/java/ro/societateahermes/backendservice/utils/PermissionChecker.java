@@ -1,7 +1,5 @@
 package ro.societateahermes.backendservice.utils;
 
-import ro.societateahermes.backendservice.entities.ERole;
-import ro.societateahermes.backendservice.entities.Role;
 
 import java.util.List;
 
