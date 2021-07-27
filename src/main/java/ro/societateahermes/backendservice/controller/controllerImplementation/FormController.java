@@ -10,6 +10,7 @@ import ro.societateahermes.backendservice.exceptions.UnathorizeException;
 import ro.societateahermes.backendservice.security.services.AdminDetailsImpl;
 import ro.societateahermes.backendservice.service.serviceImplementation.FormService;
 import ro.societateahermes.backendservice.utils.PermissionChecker;
+import ro.societateahermes.backendservice.utils.RolesActiveUser;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,18 +35,20 @@ public class FormController {
     @PostMapping("/{event}")
     public void save(@PathVariable("event") String eventType, @RequestBody FormDto formDto) throws UnathorizeException {
 
-        AdminDetailsImpl adminDetails = (AdminDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<String> roles = adminDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
+        List<String> roles = RolesActiveUser.getRoles();
         if (!PermissionChecker.check(eventType, roles)) {
             throw new UnathorizeException("User is not authorized");
         }
         formService.save(formDto);
     }
 
-    @DeleteMapping("/{formId}")
-    public void delete(@PathVariable("formId") Long formId) {
+    @DeleteMapping("/{event}/{formId}")
+    public void delete(@PathVariable("event") String eventType, @PathVariable("formId") Long formId) throws UnathorizeException {
+
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.check(eventType, roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
         formService.delete(formId);
     }
 }
