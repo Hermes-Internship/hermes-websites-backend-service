@@ -20,10 +20,15 @@ public class FormController {
         return formService.getAll();
     }
 
+    @GetMapping("/{eventId}")
+    public FormDto getForm(@PathVariable Long eventId) {
+        return formService.getForm(eventId);
+    }
 
-    @PostMapping
-    public void save(@RequestBody FormDto formDto) {
-        formService.save(formDto);
+    @PostMapping("/{eventId}")
+    public void save(@PathVariable Long eventId,
+                     @RequestBody FormDto formDto) {
+        formService.save(eventId, formDto);
     }
 
     @DeleteMapping("/{formId}")
