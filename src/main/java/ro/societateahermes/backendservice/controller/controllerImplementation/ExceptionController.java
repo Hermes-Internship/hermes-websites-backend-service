@@ -29,5 +29,7 @@ public class ExceptionController {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NoSuchElementException.class)
-    public String handleNoSuchElement(NoSuchElementException ex) { return ex.getMessage(); }
+    public String handleNoSuchElement(NoSuchElementException ex) { return ex.getMessage();
+    }
+
 }

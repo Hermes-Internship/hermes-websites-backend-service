@@ -3,10 +3,8 @@ package ro.societateahermes.backendservice.entities.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ro.societateahermes.backendservice.entities.Event;
 import ro.societateahermes.backendservice.entities.PurchasedPackage;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
