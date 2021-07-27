@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +30,9 @@ public class Event {
 
     @OneToMany(mappedBy = "user")
     private List<Participation> listOfParticipation=new ArrayList<>();
+
+    @OneToMany(mappedBy = "event")
+    private List<Sponsor> sponsorList;
 
 
 
