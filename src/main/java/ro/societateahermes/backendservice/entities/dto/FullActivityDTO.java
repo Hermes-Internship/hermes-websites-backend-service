@@ -1,19 +1,16 @@
-package ro.societateahermes.backendservice.entities.DTO;
+package ro.societateahermes.backendservice.entities.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ro.societateahermes.backendservice.entities.Event;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ActivityDTO {
+public class FullActivityDTO {
     private Long IdActivity;
     private Event event;
     private String activityName;

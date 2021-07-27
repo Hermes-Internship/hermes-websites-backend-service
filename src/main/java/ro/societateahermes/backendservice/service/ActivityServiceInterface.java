@@ -1,18 +1,15 @@
 package ro.societateahermes.backendservice.service;
 
-import ro.societateahermes.backendservice.entities.Activity;
-import ro.societateahermes.backendservice.entities.DTO.ActivityDTO;
-import ro.societateahermes.backendservice.entities.DTO.UserDTO;
-import ro.societateahermes.backendservice.entities.User;
+import ro.societateahermes.backendservice.entities.dto.FullActivityDTO;
 
 import java.util.List;
 
 public interface ActivityServiceInterface {
-    void save(ActivityDTO activity);
+    void save(FullActivityDTO activity);
 
-    List<ActivityDTO> getAllActivities();
+    List<FullActivityDTO> getAllActivities();
 
     void delete(Long id);
 
-    void update(ActivityDTO activity);
+    void update(FullActivityDTO activity);
 }

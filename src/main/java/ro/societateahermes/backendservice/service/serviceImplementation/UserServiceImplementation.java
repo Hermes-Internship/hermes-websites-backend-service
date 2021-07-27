@@ -1,7 +1,7 @@
 package ro.societateahermes.backendservice.service.serviceImplementation;
 
 import org.springframework.stereotype.Service;
-import ro.societateahermes.backendservice.entities.DTO.UserDTO;
+import ro.societateahermes.backendservice.entities.dto.UserDTO;
 import ro.societateahermes.backendservice.entities.User;
 import ro.societateahermes.backendservice.repository.UserRepositoryInterface;
 import ro.societateahermes.backendservice.service.UserServiceInterface;

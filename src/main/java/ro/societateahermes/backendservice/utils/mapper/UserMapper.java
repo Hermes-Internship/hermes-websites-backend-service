@@ -1,6 +1,6 @@
 package ro.societateahermes.backendservice.utils.mapper;
 
-import ro.societateahermes.backendservice.entities.DTO.UserDTO;
+import ro.societateahermes.backendservice.entities.dto.UserDTO;
 import ro.societateahermes.backendservice.entities.User;
 
 import java.util.List;
@@ -16,8 +16,7 @@ public class UserMapper {
         updatedUser.setUsername(userDTO.getUsername());
         updatedUser.setLanguage(userDTO.getLanguage());
         updatedUser.setLastName(userDTO.getLastName());
-        updatedUser.setPassword(userDTO.getPassword());
-        updatedUser.setUniversity(userDTO.getUniversity());
+         updatedUser.setUniversity(userDTO.getUniversity());
         updatedUser.setYearOfStudy(userDTO.getYearOfStudy());
         return updatedUser;
     }
@@ -30,7 +29,6 @@ public class UserMapper {
         userDTO.setUsername(user.getUsername());
         userDTO.setLanguage(user.getLanguage());
         userDTO.setLastName(user.getLastName());
-        userDTO.setPassword(user.getPassword());
         userDTO.setUniversity(user.getUniversity());
         userDTO.setYearOfStudy(user.getYearOfStudy());
         return userDTO;

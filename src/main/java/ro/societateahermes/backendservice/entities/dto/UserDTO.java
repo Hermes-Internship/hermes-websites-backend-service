@@ -1,4 +1,4 @@
-package ro.societateahermes.backendservice.entities.DTO;
+package ro.societateahermes.backendservice.entities.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +14,7 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String university;
-    private String password;
+
     private String yearOfStudy;
     private String field;
     private String language;

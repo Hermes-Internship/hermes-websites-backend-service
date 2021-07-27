@@ -2,7 +2,7 @@ package ro.societateahermes.backendservice.service.serviceImplementation;
 
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.Activity;
-import ro.societateahermes.backendservice.entities.DTO.ActivityDTO;
+import ro.societateahermes.backendservice.entities.dto.FullActivityDTO;
 import ro.societateahermes.backendservice.utils.mapper.ActivityMapper;
 import ro.societateahermes.backendservice.repository.ActivityRepositoryInterface;
 import ro.societateahermes.backendservice.service.ActivityServiceInterface;
@@ -20,12 +20,12 @@ public class ActivityServiceImplementation implements ActivityServiceInterface {
     }
 
     @Override
-    public void save(ActivityDTO activity) {
+    public void save(FullActivityDTO activity) {
         activityRepository.save(ActivityMapper.activityDTOtoActivity(activity));
     }
 
     @Override
-    public List<ActivityDTO> getAllActivities() {
+    public List<FullActivityDTO> getAllActivities() {
          return ActivityMapper.activitiesToActivitiesDTO(activityRepository.findAll());
     }
 
@@ -43,7 +43,7 @@ public class ActivityServiceImplementation implements ActivityServiceInterface {
 
     @Override
     @Transactional
-    public void update(ActivityDTO activity) {
+    public void update(FullActivityDTO activity) {
         if (activity != null){
             Activity updatedActivity = ActivityMapper.activityDTOtoActivity(activity);
             activityRepository.save(updatedActivity);

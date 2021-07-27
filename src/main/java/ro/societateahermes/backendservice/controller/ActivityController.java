@@ -1,8 +1,7 @@
 package ro.societateahermes.backendservice.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ro.societateahermes.backendservice.entities.Activity;
-import ro.societateahermes.backendservice.entities.DTO.ActivityDTO;
+import ro.societateahermes.backendservice.entities.dto.FullActivityDTO;
 import ro.societateahermes.backendservice.service.ActivityServiceInterface;
 import ro.societateahermes.backendservice.service.serviceImplementation.ActivityServiceImplementation;
 
@@ -18,12 +17,12 @@ public class ActivityController implements ActivityControllerInterface{
     }
 
     @PostMapping
-    public void save(@RequestBody ActivityDTO activityDTO) {
-        activityService.save(activityDTO);
+    public void save(@RequestBody FullActivityDTO fullActivityDTO) {
+        activityService.save(fullActivityDTO);
     }
 
     @GetMapping
-    public List<ActivityDTO> getAll() {
+    public List<FullActivityDTO> getAll() {
         return activityService.getAllActivities();
     }
 
@@ -33,7 +32,7 @@ public class ActivityController implements ActivityControllerInterface{
     }
 
     @PutMapping("/update")
-    public void put(@RequestBody ActivityDTO activityDTO) {
-        activityService.update(activityDTO);
+    public void put(@RequestBody FullActivityDTO fullActivityDTO) {
+        activityService.update(fullActivityDTO);
     }
 }
