@@ -12,6 +12,7 @@ import ro.societateahermes.backendservice.exceptions.UnathorizeException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class ExceptionController {
@@ -40,5 +41,11 @@ public class ExceptionController {
     }
 
 
+
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoSuchElementException.class)
+    public String handleNoSuchElement(NoSuchElementException ex) { return ex.getMessage();
+    }
 
 }
