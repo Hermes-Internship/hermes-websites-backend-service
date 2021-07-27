@@ -1,9 +1,9 @@
-package ro.societateahermes.backendservice.mappers.mapperImplementation;
+package ro.societateahermes.backendservice.utils.mapper.mapperImplementation;
 
 import org.springframework.stereotype.Component;
 import ro.societateahermes.backendservice.entities.Activity;
 import ro.societateahermes.backendservice.entities.dto.ActivityDTO;
-import ro.societateahermes.backendservice.mappers.ActivityMapperInterface;
+import ro.societateahermes.backendservice.utils.mapper.ActivityMapperInterface;
 
 import javax.annotation.processing.Generated;
 import java.util.ArrayList;

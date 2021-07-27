@@ -1,4 +1,4 @@
-package ro.societateahermes.backendservice.mappers;
+package ro.societateahermes.backendservice.utils.mapper;
 
 import org.mapstruct.Mapper;
 import ro.societateahermes.backendservice.entities.Timeline;

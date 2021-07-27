@@ -1,11 +1,11 @@
-package ro.societateahermes.backendservice.mappers.mapperImplementation;
+package ro.societateahermes.backendservice.utils.mapper.mapperImplementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.societateahermes.backendservice.entities.Timeline;
 import ro.societateahermes.backendservice.entities.dto.TimelineDTO;
-import ro.societateahermes.backendservice.mappers.ActivityMapperInterface;
-import ro.societateahermes.backendservice.mappers.TimelineMapperInterface;
+import ro.societateahermes.backendservice.utils.mapper.ActivityMapperInterface;
+import ro.societateahermes.backendservice.utils.mapper.TimelineMapperInterface;
 
 import java.util.ArrayList;
 import java.util.List;

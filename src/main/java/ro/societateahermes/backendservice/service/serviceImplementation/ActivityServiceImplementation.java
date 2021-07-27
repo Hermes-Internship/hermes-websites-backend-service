@@ -7,7 +7,7 @@ import ro.societateahermes.backendservice.entities.Event;
 import ro.societateahermes.backendservice.entities.Timeline;
 import ro.societateahermes.backendservice.entities.dto.ActivityDTO;
 import ro.societateahermes.backendservice.entities.dto.TimelineDTO;
-import ro.societateahermes.backendservice.mappers.ActivityMapperInterface;
+import ro.societateahermes.backendservice.utils.mapper.ActivityMapperInterface;
 import ro.societateahermes.backendservice.repository.ActivityRepositoryInterface;
 import ro.societateahermes.backendservice.service.ActivityServiceInterface;
 

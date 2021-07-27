@@ -4,11 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.dto.ActivityDTO;
 import ro.societateahermes.backendservice.entities.dto.TimelineDTO;
-import ro.societateahermes.backendservice.mappers.ActivityMapperInterface;
-import ro.societateahermes.backendservice.mappers.TimelineMapperInterface;
-import ro.societateahermes.backendservice.repository.ActivityRepositoryInterface;
+import ro.societateahermes.backendservice.utils.mapper.TimelineMapperInterface;
 import ro.societateahermes.backendservice.repository.TimelineRepositoryInterface;
-import ro.societateahermes.backendservice.service.ActivityServiceInterface;
 import ro.societateahermes.backendservice.service.TimelineServiceInterface;
 
 import java.util.Comparator;
