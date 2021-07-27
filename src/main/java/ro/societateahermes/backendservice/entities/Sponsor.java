@@ -3,11 +3,10 @@ package ro.societateahermes.backendservice.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ro.societateahermes.backendservice.entities.Event;
-import ro.societateahermes.backendservice.entities.PurchasedPackage;
 
 import javax.persistence.*;
 import java.util.List;
+
 
 @Data
 @AllArgsConstructor

@@ -32,4 +32,7 @@ public class SponsorMapper {
         return sponsor;
     }
 
+
+
+
 }

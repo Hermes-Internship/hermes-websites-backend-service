@@ -31,8 +31,8 @@ public class Event {
     @OneToMany(mappedBy = "user")
     private List<Participation> listOfParticipation=new ArrayList<>();
 
-    @OneToOne(mappedBy = "event")
-    private Sponsor sponsor;
+    @OneToMany(mappedBy = "event")
+    private List<Sponsor> sponsorList;
 
 
 }
