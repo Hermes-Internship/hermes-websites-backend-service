@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Event {
+
     @Id
     @GeneratedValue
     private Long IdEvent;
@@ -23,7 +24,6 @@ public class Event {
     private String eventEstimatedTime;
     private LocalDateTime eventEndDate;
     private String eventLink;
-
     private String eventLocation;
     @OneToMany(mappedBy = "event")
     private List<Activity> listOfActivities=new ArrayList<>();

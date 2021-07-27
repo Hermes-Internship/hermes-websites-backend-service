@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NotificationSwitchDTO {
+
     private String message;
     private Boolean isInProgress;
-
 }
