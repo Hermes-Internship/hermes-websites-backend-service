@@ -45,6 +45,13 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    public static final String ROLE_A = "admin";
+    public static final String ROLE_B = "cariereIT";
+    public static final String ROLE_C = "guideDays";
+    public static final String ROLE_D = "hackathon";
+    public static final String ROLE_E = "destresiune";
+
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -100,31 +107,31 @@ public class AuthController {
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case "admin":
+                    case ROLE_A:
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
 
                         break;
-                    case "cariereIT":
+                    case ROLE_B:
                         Role cariereRole = roleRepository.findByName(ERole.ROLE_PROJECT_MANAGER_CARIEREIT)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(cariereRole);
 
                         break;
-                    case "guideDays":
+                    case ROLE_C:
                         Role guideRole = roleRepository.findByName(ERole.ROLE_PROJECT_MANAGER_GUIDEDAYS)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(guideRole);
 
                         break;
-                    case "hackathon":
+                    case ROLE_D:
                         Role hackathonRole = roleRepository.findByName(ERole.ROLE_PROJECT_MANAGER_HACKATHON)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(hackathonRole);
 
                         break;
-                    case "destresiune":
+                    case ROLE_E:
                         Role destresiuneRole = roleRepository.findByName(ERole.ROLE_PROJECT_MANAGER_DESTRESIUNE)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(destresiuneRole);
