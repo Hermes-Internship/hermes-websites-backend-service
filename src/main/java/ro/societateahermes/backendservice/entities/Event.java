@@ -4,8 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -28,9 +32,6 @@ public class Event {
 
     @OneToMany(mappedBy = "event")
     private List<Participation> listOfParticipation = new ArrayList<>();
-
-    @OneToMany(mappedBy = "event")
-    private List<Participation> listOfParticipation;
 
     @OneToMany(mappedBy = "event")
     private List<Sponsor> sponsorList;

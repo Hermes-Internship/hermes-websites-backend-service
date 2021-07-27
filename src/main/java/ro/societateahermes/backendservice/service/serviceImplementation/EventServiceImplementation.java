@@ -1,17 +1,19 @@
 package ro.societateahermes.backendservice.service.serviceImplementation;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.Event;
+import ro.societateahermes.backendservice.entities.Participation;
 import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
 import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
+import ro.societateahermes.backendservice.repository.ParticipationRepositoryInterface;
 import ro.societateahermes.backendservice.service.EventServiceInterface;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import ro.societateahermes.backendservice.entities.Participation;
 
 
 
