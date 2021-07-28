@@ -33,28 +33,28 @@ public class SponsorController {
         return sponsorService.getOne(sponsorId);
     }
 
-    @PostMapping("/{event}")
-    public void save(@PathVariable("event") String eventType, @RequestBody @Valid SponsorDTO sponsorDTO) throws UnathorizeException {
+    @PostMapping("/{eventId}")
+    public void save(@PathVariable("eventId") long eventId, @RequestBody @Valid SponsorDTO sponsorDTO) throws UnathorizeException {
         List<String> roles = RolesActiveUser.getRoles();
-        if (!PermissionChecker.check(eventType, roles)) {
+        if (!PermissionChecker.check(eventId, roles)) {
             throw new UnathorizeException("User is not authorized");
         }
         sponsorService.save(sponsorDTO);
     }
 
-    @DeleteMapping("/{event}/{sponsorId}")
-    public void delete(@PathVariable("event") String eventType, @PathVariable("sponsorId") long sponsorId) throws UnathorizeException {
+    @DeleteMapping("/{eventId}/{sponsorId}")
+    public void delete(@PathVariable("eventId") long eventId, @PathVariable("sponsorId") long sponsorId) throws UnathorizeException {
         List<String> roles = RolesActiveUser.getRoles();
-        if (!PermissionChecker.check(eventType, roles)) {
+        if (!PermissionChecker.check(eventId, roles)) {
             throw new UnathorizeException("User is not authorized");
         }
         sponsorService.delete(sponsorId);
     }
 
-    @PutMapping("/{event}")
-    public void update(@PathVariable("event") String eventType, @RequestBody @Valid SponsorDTO sponsorDTO) throws UnathorizeException {
+    @PutMapping("/{eventId}")
+    public void update(@PathVariable("eventId") long eventId, @RequestBody @Valid SponsorDTO sponsorDTO) throws UnathorizeException {
         List<String> roles = RolesActiveUser.getRoles();
-        if (!PermissionChecker.check(eventType, roles)) {
+        if (!PermissionChecker.check(eventId, roles)) {
             throw new UnathorizeException("User is not authorized");
         }
         sponsorService.update(sponsorDTO);

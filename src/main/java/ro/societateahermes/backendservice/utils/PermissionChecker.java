@@ -6,14 +6,14 @@ import java.util.List;
 public class PermissionChecker {
 
 
-    public static final String EVENT_A = "destresiune";
-    public static final String EVENT_B = "cariereinit";
-    public static final String EVENT_C = "guideDays";
-    public static final String EVENT_D = "hackathon";
+    public static final String EVENT_A = "2";
+    public static final String EVENT_B = "1";
+    public static final String EVENT_C = "4";
+    public static final String EVENT_D = "3";
 
 
-    public static boolean check(String event, List<String> roles) {
-        switch (event.toLowerCase()) {
+    public static boolean check(long eventId, List<String> roles) {
+        switch (String.valueOf(eventId)) {
             case EVENT_A:
                 return roles.contains("ROLE_ADMIN") || roles.contains("ROLE_PROJECT_MANAGER_DESTRESIUNE");
             case EVENT_B:
@@ -25,6 +25,11 @@ public class PermissionChecker {
             default:
                 return false;
         }
+    }
+
+    public static boolean checkAdmin(List<String> roles) {
+        return (roles.contains("ROLE_ADMIN"));
+
     }
 
 }

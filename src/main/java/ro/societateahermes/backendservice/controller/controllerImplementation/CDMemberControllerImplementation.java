@@ -5,6 +5,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import ro.societateahermes.backendservice.controller.CDMemberControllerInterface;
+import ro.societateahermes.backendservice.exceptions.UnathorizeException;
+import ro.societateahermes.backendservice.utils.PermissionChecker;
+import ro.societateahermes.backendservice.utils.RolesActiveUser;
 import ro.societateahermes.backendservice.utils.mapper.CDMemberMapper;
 import ro.societateahermes.backendservice.entities.dto.CDMemberDTO;
 import ro.societateahermes.backendservice.service.serviceImplementation.CDMemberServiceImplementation;
@@ -24,7 +27,11 @@ public class CDMemberControllerImplementation implements CDMemberControllerInter
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveCDMember(@Valid @RequestBody CDMemberDTO cdMemberDTO) {
+    public void saveCDMember(@Valid @RequestBody CDMemberDTO cdMemberDTO) throws UnathorizeException {
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.checkAdmin(roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
         cdMemberService.save(CDMemberMapper.cdMemberDTOToCDMember(cdMemberDTO));
     }
 
@@ -37,7 +44,11 @@ public class CDMemberControllerImplementation implements CDMemberControllerInter
 
     @DeleteMapping("/{cd-id}")
     @Override
-    public void deleteCDMember(@PathVariable("cd-id") Long cdMemberID) {
+    public void deleteCDMember(@PathVariable("cd-id") Long cdMemberID) throws UnathorizeException {
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.checkAdmin(roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
         cdMemberService.delete(cdMemberID);
     }
 
@@ -45,7 +56,11 @@ public class CDMemberControllerImplementation implements CDMemberControllerInter
     @ResponseStatus(HttpStatus.OK)
     @Transactional
     @Override
-    public void updateCDMember(@Valid @RequestBody CDMemberDTO cdMemberDTO) {
+    public void updateCDMember(@Valid @RequestBody CDMemberDTO cdMemberDTO) throws UnathorizeException {
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.checkAdmin(roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
         cdMemberService.update(CDMemberMapper.cdMemberDTOToCDMember(cdMemberDTO));
     }
 }

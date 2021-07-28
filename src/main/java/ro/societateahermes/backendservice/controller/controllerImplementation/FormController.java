@@ -32,21 +32,21 @@ public class FormController {
     }
 
 
-    @PostMapping("/{event}")
-    public void save(@PathVariable("event") String eventType, @RequestBody FormDto formDto) throws UnathorizeException {
+    @PostMapping("/{eventId}")
+    public void save(@PathVariable("eventId") long eventId, @RequestBody FormDto formDto) throws UnathorizeException {
 
         List<String> roles = RolesActiveUser.getRoles();
-        if (!PermissionChecker.check(eventType, roles)) {
+        if (!PermissionChecker.check(eventId, roles)) {
             throw new UnathorizeException("User is not authorized");
         }
         formService.save(formDto);
     }
 
-    @DeleteMapping("/{event}/{formId}")
-    public void delete(@PathVariable("event") String eventType, @PathVariable("formId") Long formId) throws UnathorizeException {
+    @DeleteMapping("/{eventId}/{formId}")
+    public void delete(@PathVariable("eventId") long eventId, @PathVariable("formId") Long formId) throws UnathorizeException {
 
         List<String> roles = RolesActiveUser.getRoles();
-        if (!PermissionChecker.check(eventType, roles)) {
+        if (!PermissionChecker.check(eventId, roles)) {
             throw new UnathorizeException("User is not authorized");
         }
         formService.delete(formId);

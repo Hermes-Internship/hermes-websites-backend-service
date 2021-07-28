@@ -25,19 +25,19 @@ public class NewsFeedController {
         return newsFeed.getAllPost();
     }
 
-    @PostMapping("/{event}")
-    public void saveEventToNewsFeed(@PathVariable("event") String eventType, @RequestBody NewsFeedDTO post) throws UnathorizeException {
+    @PostMapping("/{eventId}")
+    public void saveEventToNewsFeed(@PathVariable("eventId") long eventId, @RequestBody NewsFeedDTO post) throws UnathorizeException {
         List<String> roles = RolesActiveUser.getRoles();
-        if (!PermissionChecker.check(eventType, roles)) {
+        if (!PermissionChecker.check(eventId, roles)) {
             throw new UnathorizeException("User is not authorized");
         }
         newsFeed.createPost(post);
     }
 
-    @DeleteMapping("/{event}/{newsId}")
-    public void deleteEventFromNewsFeed(@PathVariable("event") String eventType, @PathVariable("newsId") Long id) throws UnathorizeException {
+    @DeleteMapping("/{eventId}/{newsId}")
+    public void deleteEventFromNewsFeed(@PathVariable("eventId") long eventId, @PathVariable("newsId") Long id) throws UnathorizeException {
         List<String> roles = RolesActiveUser.getRoles();
-        if (!PermissionChecker.check(eventType, roles)) {
+        if (!PermissionChecker.check(eventId, roles)) {
             throw new UnathorizeException("User is not authorized");
         }
         newsFeed.deletePost(id);
