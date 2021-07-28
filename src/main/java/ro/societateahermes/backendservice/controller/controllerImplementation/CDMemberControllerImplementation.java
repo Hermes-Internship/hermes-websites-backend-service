@@ -8,11 +8,9 @@ import ro.societateahermes.backendservice.controller.CDMemberControllerInterface
 import ro.societateahermes.backendservice.entities.dto.CDMemberDTO;
 import ro.societateahermes.backendservice.service.CDMemberServiceInterface;
 import ro.societateahermes.backendservice.service.serviceImplementation.CDMemberServiceImplementation;
-import ro.societateahermes.backendservice.utils.mapper.CDMemberMapper;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/cd-member")
@@ -25,8 +23,8 @@ public class CDMemberControllerImplementation implements CDMemberControllerInter
 
     @PostMapping
     public ResponseEntity<String> saveCDMember(@Valid @RequestBody CDMemberDTO cdMemberDTO) {
-        if (cdMemberService.isValidCdMember(cdMemberDTO)) {
-            cdMemberService.save(CDMemberMapper.cdMemberDTOToCDMember(cdMemberDTO));
+        if (cdMemberService.isValid(cdMemberDTO)) {
+            cdMemberService.save(cdMemberDTO);
             return new ResponseEntity<>("", HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>("Invalid cd member.", HttpStatus.BAD_REQUEST);
@@ -36,8 +34,7 @@ public class CDMemberControllerImplementation implements CDMemberControllerInter
     @GetMapping
     @Override
     public List<CDMemberDTO> getAllCDMembers() {
-        return cdMemberService.getAllCDMembers().stream()
-                .map(CDMemberMapper::cdMemberToCDMemberDTO).collect(Collectors.toList());
+        return cdMemberService.getAllCDMembers();
     }
 
     @DeleteMapping("/{cd-id}")
@@ -51,6 +48,6 @@ public class CDMemberControllerImplementation implements CDMemberControllerInter
     @Transactional
     @Override
     public void updateCDMember(@Valid @RequestBody CDMemberDTO cdMemberDTO) {
-        cdMemberService.update(CDMemberMapper.cdMemberDTOToCDMember(cdMemberDTO));
+        cdMemberService.update(cdMemberDTO);
     }
 }

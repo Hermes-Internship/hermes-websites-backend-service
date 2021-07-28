@@ -1,18 +1,17 @@
 package ro.societateahermes.backendservice.service;
 
-import ro.societateahermes.backendservice.entities.cdMember.CDMember;
 import ro.societateahermes.backendservice.entities.dto.CDMemberDTO;
 
 import java.util.List;
 
 public interface CDMemberServiceInterface {
-    void save(CDMember CDMember);
+    void save(CDMemberDTO CDMemberDto);
 
     void delete(Long CDMemberID);
 
-    void update(CDMember cdMember);
+    void update(CDMemberDTO cdMemberDto);
 
-    List<CDMember> getAllCDMembers();
+    List<CDMemberDTO> getAllCDMembers();
 
-    boolean isValidCdMember(CDMemberDTO cdMemberDTO);
+    boolean isValid(CDMemberDTO cdMemberDTO);
 }

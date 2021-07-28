@@ -6,8 +6,10 @@ import ro.societateahermes.backendservice.entities.cdMember.Role;
 import ro.societateahermes.backendservice.entities.dto.CDMemberDTO;
 import ro.societateahermes.backendservice.repository.CDMemberRepositoryInterface;
 import ro.societateahermes.backendservice.service.CDMemberServiceInterface;
+import ro.societateahermes.backendservice.utils.mapper.CDMemberMapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CDMemberServiceImplementation implements CDMemberServiceInterface {
@@ -19,35 +21,30 @@ public class CDMemberServiceImplementation implements CDMemberServiceInterface {
     }
 
     @Override
-    public void save(CDMember CDMember) {
-        cdMemberRepository.save(CDMember);
+    public void save(CDMemberDTO CDMemberDto) {
+        cdMemberRepository.save(CDMemberMapper.cdMemberDTOToCDMember(CDMemberDto));
     }
 
     @Override
-    public List<CDMember> getAllCDMembers() {
-        return cdMemberRepository.findAll();
+    public List<CDMemberDTO> getAllCDMembers() {
+        return cdMemberRepository.findAll().stream()
+                .map(CDMemberMapper::cdMemberToCDMemberDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void delete(Long CDMemberID) {
-        for (CDMember cdMember : getAllCDMembers())
+        for (CDMember cdMember : cdMemberRepository.findAll())
             if (CDMemberID.equals(cdMember.getCDMemberID()))
                 cdMemberRepository.delete(cdMember);
     }
 
     @Override
-    public void update(CDMember cdMember) {
-        CDMember updatedCDMember = cdMemberRepository.getOne(cdMember.getCDMemberID());
-        updatedCDMember.setImagePath(cdMember.getImagePath());
-        updatedCDMember.setFacebookLink(cdMember.getFacebookLink());
-        updatedCDMember.setDescription(cdMember.getDescription());
-        updatedCDMember.setName(cdMember.getName());
-        updatedCDMember.setDepartmentId(cdMember.getDepartmentId());
-        updatedCDMember.setRoleId(cdMember.getRoleId());
-        cdMemberRepository.save(updatedCDMember);
+    public void update(CDMemberDTO cdMemberDto) {
+        cdMemberRepository.save(CDMemberMapper.cdMemberDTOToCDMember(cdMemberDto));
     }
 
-    public boolean isValidCdMember(CDMemberDTO cdMemberDTO) {
+    public boolean isValid(CDMemberDTO cdMemberDTO) {
         if ((cdMemberDTO.getRoleType().equals(Role.VICE_PRESIDENT) || cdMemberDTO.getRoleType().equals(Role.MANAGER))
                 && cdMemberDTO.getDepartmentId() == null) {
             return false;
