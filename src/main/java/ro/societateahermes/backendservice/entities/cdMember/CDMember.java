@@ -1,4 +1,4 @@
-package ro.societateahermes.backendservice.entities;
+package ro.societateahermes.backendservice.entities.cdMember;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,5 +20,14 @@ public class CDMember {
     private String facebookLink;
     private String description;
     private String name;
-    private String position;
+    private Integer departmentId;
+    private Integer roleId;
+
+    public Department getDepartmentType() {
+        return Department.getDepartmentType(departmentId);
+    }
+
+    public Role getRoleType() {
+        return Role.getRoleType(roleId);
+    }
 }

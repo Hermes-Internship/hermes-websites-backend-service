@@ -1,5 +1,13 @@
 package ro.societateahermes.backendservice.service.serviceImplementation;
 
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import ro.societateahermes.backendservice.entities.Image;
+import ro.societateahermes.backendservice.entities.ImageType;
+import ro.societateahermes.backendservice.repository.ImageRepositoryInterface;
+import ro.societateahermes.backendservice.service.ImageServiceInterface;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,14 +18,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
-
-import org.apache.commons.io.FilenameUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import ro.societateahermes.backendservice.entities.Image;
-import ro.societateahermes.backendservice.entities.ImageType;
-import ro.societateahermes.backendservice.repository.ImageRepositoryInterface;
-import ro.societateahermes.backendservice.service.ImageServiceInterface;
 
 @Service
 public class ImageServiceImplementation implements ImageServiceInterface {
@@ -57,5 +57,9 @@ public class ImageServiceImplementation implements ImageServiceInterface {
     public void deleteImage(String imageName, ImageType imageType) throws IOException, URISyntaxException {
         URL res = getClass().getClassLoader().getResource("images/" + imageType.getFolderName() + "/" + imageName);
         Files.delete(Paths.get(res.toURI()));
+    }
+
+    public void deleteImage(String imagePath) throws IOException {
+        Files.delete(Path.of(imagePath));
     }
 }

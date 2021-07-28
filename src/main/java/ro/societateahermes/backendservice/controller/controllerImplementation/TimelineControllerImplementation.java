@@ -5,8 +5,11 @@ import org.springframework.web.bind.annotation.*;
 import ro.societateahermes.backendservice.controller.TimelineControllerInterface;
 import ro.societateahermes.backendservice.entities.dto.ActivityDTO;
 import ro.societateahermes.backendservice.entities.dto.TimelineDTO;
+import ro.societateahermes.backendservice.exceptions.UnathorizeException;
 import ro.societateahermes.backendservice.service.ActivityServiceInterface;
 import ro.societateahermes.backendservice.service.TimelineServiceInterface;
+import ro.societateahermes.backendservice.utils.PermissionChecker;
+import ro.societateahermes.backendservice.utils.RolesActiveUser;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -29,7 +32,11 @@ public class TimelineControllerImplementation implements TimelineControllerInter
 
     @PostMapping("/{IdEvent}")
     @Override
-    public void createActivityFromTimeline(@Valid @PathVariable("IdEvent") Long IdEvent, @Valid @RequestBody ActivityDTO activityDTO) {
+    public void createActivityFromTimeline(@Valid @PathVariable("IdEvent") Long IdEvent, @Valid @RequestBody ActivityDTO activityDTO) throws UnathorizeException {
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.check(IdEvent, roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
         activityService.save(activityDTO);
         TimelineDTO timelineDTO = timeLineService.createActivityFromTimeline(IdEvent, activityDTO);
         activityService.update(activityDTO, timelineDTO);
@@ -37,7 +44,11 @@ public class TimelineControllerImplementation implements TimelineControllerInter
 
     @PutMapping("/{IdEvent}")
     @Override
-    public void updateActivityFromTimeline(@Valid @PathVariable("IdEvent") Long IdEvent, @Valid @RequestBody ActivityDTO activityDTO) {
+    public void updateActivityFromTimeline(@Valid @PathVariable("IdEvent") Long IdEvent, @Valid @RequestBody ActivityDTO activityDTO) throws UnathorizeException {
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.check(IdEvent, roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
         activityService.save(activityDTO);
         TimelineDTO timelineDTO = timeLineService.updateActivityFromTimeline(IdEvent, activityDTO);
         activityService.update(activityDTO, timelineDTO);
@@ -45,7 +56,11 @@ public class TimelineControllerImplementation implements TimelineControllerInter
 
     @DeleteMapping("/{IdEvent}")
     @Override
-    public void deleteActivityFromTimeline(@Valid @PathVariable("IdEvent")  Long IdEvent, @Valid @RequestBody ActivityDTO activityDTO) {
+    public void deleteActivityFromTimeline(@Valid @PathVariable("IdEvent") Long IdEvent, @Valid @RequestBody ActivityDTO activityDTO) throws UnathorizeException {
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.check(IdEvent, roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
         activityService.delete(activityDTO);
         timeLineService.deleteActivityFromTimeline(IdEvent, activityDTO);
     }
@@ -65,7 +80,7 @@ public class TimelineControllerImplementation implements TimelineControllerInter
     @GetMapping("/{IdEvent}")
     @Override
     public List<ActivityDTO> getAllActivityFromTimelineOrderByDateAndTime(@Valid @PathVariable("IdEvent") Long IdEvent) {
-       return timeLineService.orderActivityByDateAndTimeFromTimeline(IdEvent);
+        return timeLineService.orderActivityByDateAndTimeFromTimeline(IdEvent);
     }
 }
 

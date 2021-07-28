@@ -7,10 +7,13 @@ import ro.societateahermes.backendservice.entities.dto.MySubmissionDTO;
 import ro.societateahermes.backendservice.entities.dto.UserDTO;
 import ro.societateahermes.backendservice.entities.Participation;
 import ro.societateahermes.backendservice.entities.User;
+import ro.societateahermes.backendservice.exceptions.UnathorizeException;
 import ro.societateahermes.backendservice.service.EventServiceInterface;
 import ro.societateahermes.backendservice.service.ParticipationServiceInterface;
 import ro.societateahermes.backendservice.service.SubmissionServiceInterface;
 import ro.societateahermes.backendservice.service.UserServiceInterface;
+import ro.societateahermes.backendservice.utils.PermissionChecker;
+import ro.societateahermes.backendservice.utils.RolesActiveUser;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -33,7 +36,11 @@ public class UserController implements UserControllerInterface {
 
 
     @GetMapping("/{eventId}")
-    public List<UserDTO> getAllEventParticipants(@PathVariable("eventId") long eventId) {
+    public List<UserDTO> getAllEventParticipants(@PathVariable("eventId") long eventId) throws UnathorizeException{
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.check(eventId, roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
         return participationService.getAllUsersFromEvent(eventId);
     }
 
