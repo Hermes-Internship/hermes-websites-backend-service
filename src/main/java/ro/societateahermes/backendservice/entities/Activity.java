@@ -21,5 +21,8 @@ public class Activity {
     private LocalDateTime activityEndDate;
     private int maximumNumberOfParticipants;
     private String activityLink;
-
+    private String activityLocation;
+    @ManyToOne
+    @JoinColumn(name = "timeline_id")
+    private Timeline timeline;
 }

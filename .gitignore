@@ -111,3 +111,7 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 .idea
+/src/main/resources/images/cd/*
+!/src/main/resources/images/cd/.gitkeep
+./hermes-websites-backend-service.iml
+
