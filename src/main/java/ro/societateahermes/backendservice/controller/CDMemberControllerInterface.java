@@ -9,9 +9,9 @@ import java.util.List;
 public interface CDMemberControllerInterface {
     ResponseEntity<String> saveCDMember(CDMemberDTO member);
 
-    void deleteCDMember(Long CDMemberID);
+    void deleteCDMember(Long CDMemberID) throws UnathorizeException;
 
-    void updateCDMember(CDMemberDTO cdMemberDTO);
+    void updateCDMember(CDMemberDTO cdMemberDTO) throws UnathorizeException;
 
     List<CDMemberDTO> getAllCDMembers();
 }

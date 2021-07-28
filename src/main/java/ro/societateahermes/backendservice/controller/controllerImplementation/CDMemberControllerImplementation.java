@@ -22,7 +22,12 @@ public class CDMemberControllerImplementation implements CDMemberControllerInter
     }
 
     @PostMapping
-    public ResponseEntity<String> saveCDMember(@Valid @RequestBody CDMemberDTO cdMemberDTO) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> saveCDMember(@Valid @RequestBody CDMemberDTO cdMemberDTO) throws UnathorizeException {
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.checkAdmin(roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
         if (cdMemberService.isValid(cdMemberDTO)) {
             cdMemberService.save(cdMemberDTO);
             return new ResponseEntity<>("", HttpStatus.CREATED);
@@ -39,7 +44,11 @@ public class CDMemberControllerImplementation implements CDMemberControllerInter
 
     @DeleteMapping("/{cd-id}")
     @Override
-    public void deleteCDMember(@PathVariable("cd-id") Long cdMemberID) {
+    public void deleteCDMember(@PathVariable("cd-id") Long cdMemberID) throws UnathorizeException {
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.checkAdmin(roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
         cdMemberService.delete(cdMemberID);
     }
 
@@ -47,7 +56,11 @@ public class CDMemberControllerImplementation implements CDMemberControllerInter
     @ResponseStatus(HttpStatus.OK)
     @Transactional
     @Override
-    public void updateCDMember(@Valid @RequestBody CDMemberDTO cdMemberDTO) {
+    public void updateCDMember(@Valid @RequestBody CDMemberDTO cdMemberDTO) throws UnathorizeException {
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.checkAdmin(roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
         cdMemberService.update(cdMemberDTO);
     }
 }
