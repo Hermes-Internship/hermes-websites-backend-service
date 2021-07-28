@@ -1,6 +1,6 @@
 package ro.societateahermes.backendservice.utils.mapper;
 
-import ro.societateahermes.backendservice.entities.CDMember;
+import ro.societateahermes.backendservice.entities.cdMember.CDMember;
 import ro.societateahermes.backendservice.entities.dto.CDMemberDTO;
 
 public class CDMemberMapper {
@@ -12,7 +12,8 @@ public class CDMemberMapper {
         cdMemberDTO.setFacebookLink(cdMember.getFacebookLink());
         cdMemberDTO.setName(cdMember.getName());
         cdMemberDTO.setDescription(cdMember.getDescription());
-        cdMemberDTO.setPosition(cdMember.getPosition());
+        cdMemberDTO.setDepartmentId(cdMember.getDepartmentId());
+        cdMemberDTO.setRoleId(cdMember.getRoleId());
         return cdMemberDTO;
     }
 
@@ -24,7 +25,8 @@ public class CDMemberMapper {
         cdMember.setFacebookLink(cdMemberDTO.getFacebookLink());
         cdMember.setName(cdMemberDTO.getName());
         cdMember.setDescription(cdMemberDTO.getDescription());
-        cdMember.setPosition(cdMemberDTO.getPosition());
+        cdMember.setDepartmentId(cdMemberDTO.getDepartmentId());
+        cdMember.setRoleId(cdMemberDTO.getRoleId());
         return cdMember;
     }
 }

@@ -1,12 +1,13 @@
 package ro.societateahermes.backendservice.controller;
 
 
+import org.springframework.http.ResponseEntity;
 import ro.societateahermes.backendservice.entities.dto.CDMemberDTO;
 
 import java.util.List;
 
 public interface CDMemberControllerInterface {
-    void saveCDMember(CDMemberDTO member);
+    ResponseEntity<String> saveCDMember(CDMemberDTO member);
 
     void deleteCDMember(Long CDMemberID);
 

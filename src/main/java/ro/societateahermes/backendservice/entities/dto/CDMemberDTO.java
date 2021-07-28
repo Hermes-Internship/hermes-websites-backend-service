@@ -1,12 +1,13 @@
 package ro.societateahermes.backendservice.entities.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ro.societateahermes.backendservice.entities.cdMember.Department;
+import ro.societateahermes.backendservice.entities.cdMember.Role;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
 
 @Data
 @NoArgsConstructor
@@ -21,6 +22,26 @@ public class CDMemberDTO {
     private String description;
     @NotEmpty(message = "Name is mandatory!")
     private String name;
-    @NotEmpty(message = "Position is mandatory!")
-    private String position;
+    private Integer departmentId;
+    @NotEmpty(message = "Role is mandatory!")
+    private Integer roleId;
+
+    public String getDepartmentName() {
+        Department departmentType = Department.getDepartmentType(departmentId);
+        return departmentType == null ? null : departmentType.getName();
+    }
+
+    public String getRoleName() {
+        return Role.getRoleType(roleId).getName();
+    }
+
+    @JsonIgnore
+    public Department getDepartmentType() {
+        return Department.getDepartmentType(departmentId);
+    }
+
+    @JsonIgnore
+    public Role getRoleType() {
+        return Role.getRoleType(roleId);
+    }
 }
