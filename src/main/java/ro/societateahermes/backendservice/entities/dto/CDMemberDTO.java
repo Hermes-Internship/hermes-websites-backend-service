@@ -8,6 +8,7 @@ import ro.societateahermes.backendservice.entities.cdMember.Department;
 import ro.societateahermes.backendservice.entities.cdMember.Role;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -23,7 +24,7 @@ public class CDMemberDTO {
     @NotEmpty(message = "Name is mandatory!")
     private String name;
     private Integer departmentId;
-    @NotEmpty(message = "Role is mandatory!")
+    @NotNull(message = "Role is mandatory!")
     private Integer roleId;
 
     public String getDepartmentName() {
