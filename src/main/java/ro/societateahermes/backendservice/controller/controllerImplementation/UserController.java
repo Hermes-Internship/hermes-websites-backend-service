@@ -35,12 +35,6 @@ public class UserController implements UserControllerInterface {
     private EventServiceInterface eventService;
 
 
-    @GetMapping
-    public List<UserDTO> getAll() {
-        return userService.getAllUsers();
-    }
-
-
     @GetMapping("/{eventId}")
     public List<UserDTO> getAllEventParticipants(@PathVariable("eventId") long eventId) throws UnathorizeException{
         List<String> roles = RolesActiveUser.getRoles();
@@ -51,6 +45,21 @@ public class UserController implements UserControllerInterface {
     }
 
 
+    @GetMapping
+    public List<UserDTO> getAll(){
+        return userService.getAllUsers();
+    }
+
+    @PutMapping("/update")
+    public void put(@RequestBody UserDTO user){
+        userService.update(user);
+    }
+
+    @DeleteMapping ("/{userId}")
+    public void delete(@PathVariable("userId") Long userId){
+        userService.delete(userId);
+    }
+
     @PostMapping
     public void submit(@RequestBody @Valid MySubmissionDTO submission) {
         submissionService.savefromDTO(submission);
@@ -58,8 +67,5 @@ public class UserController implements UserControllerInterface {
         Participation participation = participationService.savefromDTO(user, submission);
         userService.addParticipation(user, participation);
         eventService.addParticipation(submission.getEventId(), participation);
-
-
     }
-
 }

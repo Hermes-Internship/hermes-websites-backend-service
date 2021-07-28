@@ -14,6 +14,15 @@ import ro.societateahermes.backendservice.service.ActivityServiceInterface;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import org.springframework.stereotype.Service;
+import ro.societateahermes.backendservice.entities.Activity;
+import ro.societateahermes.backendservice.entities.dto.FullActivityDTO;
+import ro.societateahermes.backendservice.utils.mapper.ActivityMapper;
+import ro.societateahermes.backendservice.repository.ActivityRepositoryInterface;
+import ro.societateahermes.backendservice.service.ActivityServiceInterface;
+
+
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -32,10 +41,33 @@ public class ActivityServiceImplementation implements ActivityServiceInterface {
     public void save(ActivityDTO activityDTO) {
         activityRepository.save(activityMapper.convertToActivity(activityDTO));
     }
+    public void save(FullActivityDTO activityDTO) {
+        activityRepository.save(ActivityMapper.activityDTOtoActivity(activityDTO));
+    }
 
     @Override
     public void delete(ActivityDTO activityDTO) {
         activityRepository.delete(activityMapper.convertToActivity(activityDTO));
+    }
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        for(Activity activity  : activityRepository.findAll())
+        {
+            if (activity.getIdActivity() == id ){
+                activityRepository.delete(activity);
+                return;
+            }
+        }
+    }
+
+    @Override
+    @Transactional
+    public void update(FullActivityDTO activity) {
+        if (activity != null){
+            Activity updatedActivity = ActivityMapper.activityDTOtoActivity(activity);
+            activityRepository.save(updatedActivity);
+        }
     }
 
     @Override
@@ -71,4 +103,9 @@ public class ActivityServiceImplementation implements ActivityServiceInterface {
 
         activityRepository.save(activity);
     }
+    @Override
+    public List<FullActivityDTO> getAllActivities() {
+        return ActivityMapper.activitiesToActivitiesDTO(activityRepository.findAll());
+    }
+
 }
