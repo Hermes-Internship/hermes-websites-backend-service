@@ -1,5 +1,7 @@
 package ro.societateahermes.backendservice.service;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 import ro.societateahermes.backendservice.entities.ImageType;
 import ro.societateahermes.backendservice.exceptions.ImageException;
 import org.springframework.web.multipart.MultipartFile;

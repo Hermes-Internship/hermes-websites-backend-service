@@ -62,6 +62,14 @@ public class ImageControllerImplementation implements ImageControllerInterface {
     }
 
     @Override
+    @GetMapping(produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, value = "/events")
+    public ResponseEntity<?> getImageByPathForEvent(@RequestParam("name") String imageName) throws URISyntaxException, IOException {
+        File image = imageService.getImageByPath(imageName, ImageType.EVENTS);
+        byte[] imageContent = Files.readAllBytes(image.toPath());
+        return new ResponseEntity<>(imageContent, HttpStatus.OK);
+    }
+
+    @Override
     @DeleteMapping("/cd")
     public void deleteImage(@RequestParam("name") String imageName) throws IOException, URISyntaxException, UnathorizeException {
         List<String> roles = RolesActiveUser.getRoles();
