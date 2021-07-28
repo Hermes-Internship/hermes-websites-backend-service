@@ -50,7 +50,7 @@ public class ImageControllerImplementation implements ImageControllerInterface {
         if (!PermissionChecker.check(eventId, roles)) {
             throw new UnathorizeException("User is not authorized");
         }
-        return imageService.convertMultiPartToFile(multipartFile, ImageType.CD);
+        return imageService.convertMultiPartToFile(multipartFile, ImageType.EVENTS);
     }
 
     @Override
