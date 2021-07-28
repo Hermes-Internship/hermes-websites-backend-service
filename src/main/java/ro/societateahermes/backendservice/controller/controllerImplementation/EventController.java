@@ -1,4 +1,4 @@
-package ro.societateahermes.backendservice.controller;
+package ro.societateahermes.backendservice.controller.controllerImplementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
