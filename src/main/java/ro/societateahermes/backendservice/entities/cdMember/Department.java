@@ -15,14 +15,14 @@ public enum Department {
         this.name = name;
     }
 
-    public static String getName(Integer id) {
+    public static Department getDepartmentType(Integer id) {
         if (id == null) {
             return null;
         }
 
         for (Department department : Department.values()) {
             if (id.equals(department.getId())) {
-                return department.getName();
+                return department;
             }
         }
 

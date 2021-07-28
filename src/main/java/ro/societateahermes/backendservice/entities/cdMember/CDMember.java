@@ -26,11 +26,19 @@ public class CDMember {
 
     private Integer roleId;
 
+    public Department getDepartmentType() {
+        return Department.getDepartmentType(departmentId);
+    }
+
     public String getDepartmentName() {
-        return Department.getName(departmentId);
+        return Department.getDepartmentType(departmentId).getName();
+    }
+
+    public Role getRoleType() {
+        return Role.getRoleType(roleId);
     }
 
     public String getRoleName() {
-        return Role.getName(roleId);
+        return Role.getRoleType(roleId).getName();
     }
 }

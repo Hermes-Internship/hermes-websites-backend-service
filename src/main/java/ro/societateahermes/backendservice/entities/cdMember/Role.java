@@ -17,18 +17,18 @@ public enum Role {
         this.name = name;
     }
 
-    public static String getName(Integer id) {
+    public static Role getRoleType(Integer id) {
         if (id == null) {
             return null;
         }
 
         for (Role role : Role.values()) {
             if (id.equals(role.getId())) {
-                return role.getName();
+                return role;
             }
         }
 
-        throw new IllegalArgumentException("No matching role type for id " + id);
+        throw new IllegalArgumentException("No matching department type for id " + id);
     }
 
     public int getId() {
