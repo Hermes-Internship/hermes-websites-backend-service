@@ -2,7 +2,7 @@ package ro.societateahermes.backendservice.entities;
 
 public enum ImageType {
     CD("cd"),
-    EDITION("edition");
+    EVENTS("events");
 
     private String folderName;
 

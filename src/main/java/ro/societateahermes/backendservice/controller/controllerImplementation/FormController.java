@@ -2,7 +2,10 @@ package ro.societateahermes.backendservice.controller.controllerImplementation;
 
 import org.springframework.web.bind.annotation.*;
 import ro.societateahermes.backendservice.entities.dto.FormDto;
+import ro.societateahermes.backendservice.exceptions.UnathorizeException;
 import ro.societateahermes.backendservice.service.serviceImplementation.FormService;
+import ro.societateahermes.backendservice.utils.PermissionChecker;
+import ro.societateahermes.backendservice.utils.RolesActiveUser;
 
 import java.util.List;
 
@@ -20,14 +23,28 @@ public class FormController {
         return formService.getAll();
     }
 
-
-    @PostMapping
-    public void save(@RequestBody FormDto formDto) {
-        formService.save(formDto);
+    @GetMapping("/{eventId}")
+    public FormDto getForm(@PathVariable Long eventId) {
+        return formService.getForm(eventId);
     }
 
-    @DeleteMapping("/{formId}")
-    public void delete(@PathVariable("formId") Long formId) {
+    @PostMapping("/{eventId}")
+    public void save(@PathVariable Long eventId,
+                     @RequestBody FormDto formDto) throws UnathorizeException {
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.check(eventId, roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
+        formService.save(eventId, formDto);
+    }
+
+    @DeleteMapping("/{eventId}/{formId}")
+    public void delete(@PathVariable("eventId") long eventId, @PathVariable("formId") Long formId) throws UnathorizeException {
+
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.check(eventId, roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
         formService.delete(formId);
     }
 }

@@ -1,9 +1,11 @@
 package ro.societateahermes.backendservice.service;
 
-import org.springframework.web.multipart.MultipartFile;
-import ro.societateahermes.backendservice.entities.Image;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 import ro.societateahermes.backendservice.entities.ImageType;
 import ro.societateahermes.backendservice.exceptions.ImageException;
+import org.springframework.web.multipart.MultipartFile;
+import ro.societateahermes.backendservice.entities.Image;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,5 +22,4 @@ public interface ImageServiceInterface {
     void deleteImage(String path) throws IOException;
 
     List<Image> getAll();
-
 }
