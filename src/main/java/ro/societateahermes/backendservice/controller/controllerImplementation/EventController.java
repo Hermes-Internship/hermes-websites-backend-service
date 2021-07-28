@@ -24,5 +24,4 @@ public class EventController {
     public NotificationSwitchDTO getEventStatus(@PathVariable("eventName") String eventName) {
         return eventServiceInterface.getEventStatusByEventName(eventName);
     }
-
 }

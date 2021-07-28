@@ -13,13 +13,20 @@ public class FormMapper {
         List<QuestionDto> questionsDto = form.getQuestions().stream()
                 .map(QuestionMapper::convertToDto)
                 .collect(Collectors.toList());
-        return new FormDto(form.getId(), questionsDto);
+        return new FormDto(form.getId(), form.getEvent(), questionsDto);
     }
 
     public static Form convertToEntity(FormDto formDto) {
         List<Question> questions = formDto.getQuestions().stream()
                 .map(QuestionMapper::convertToEntity)
                 .collect(Collectors.toList());
-        return new Form(formDto.getId(), questions);
+        return new Form(formDto.getId(), formDto.getEvent(), questions);
+    }
+
+    public static FormDto convertToDtoWithQuestions(Form form) {
+        List<QuestionDto> questionsDto = form.getQuestions().stream()
+                .map(QuestionMapper::convertToDto)
+                .collect(Collectors.toList());
+        return new FormDto(form.getId(), questionsDto);
     }
 }

@@ -7,7 +7,9 @@ import java.util.List;
 public interface FormServiceInterface {
     List<FormDto> getAll();
 
-    void save(FormDto formDto);
+    void save(Long eventId, FormDto formDto);
 
     void delete(Long formId);
+
+    FormDto getForm(Long eventId);
 }
