@@ -15,7 +15,7 @@ public interface UserControllerInterface {
     List<UserDTO> getAllEventParticipants(long eventId);
 
 
-    void save(UserDTO user);
+   /// void save(UserDTO user);
 
     void delete (Long userId);
     void put(UserDTO user);

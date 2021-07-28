@@ -36,16 +36,13 @@ public class UserServiceImplementation implements UserServiceInterface {
 
         SubmissionMapper submissionMapper=new SubmissionMapper();
         User user = submissionMapper.convertToUser(submissionDTO);
-        return userRepository.save(user);
+        return userRepository.save(user);}
+
     public void save(UserDTO user) {
 
         userRepository.save(UserMapper.userDTOtoUser(user));
     }
 
-    @Override
-    public List<UserDTO> getAllUsers() {
-        return UserMapper.usersToUsersDTO(userRepository.findAll());
-    }
 
     @Override
     @Transactional
@@ -62,7 +59,7 @@ public class UserServiceImplementation implements UserServiceInterface {
         return userRepository.findAll().stream().map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
 
-
+    }
     @Transactional
     public void delete(Long id){
         for(User user : userRepository.findAll())
