@@ -9,5 +9,5 @@ public class OfferDTO {
     private String offerName;
     private String offerDescription;
     private String offerLink;
-    private SponsorDTO sponsor;
+    private long sponsorId;
 }
