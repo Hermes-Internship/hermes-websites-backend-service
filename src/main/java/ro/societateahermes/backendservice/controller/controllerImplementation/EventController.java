@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
 import ro.societateahermes.backendservice.service.EventServiceInterface;
 
-
 @RestController
 @RequestMapping("/event")
 public class EventController {

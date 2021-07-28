@@ -19,5 +19,7 @@ public interface ImageServiceInterface {
 
     void deleteImage(String canonicalImagePath, ImageType imageType) throws IOException, URISyntaxException;
 
+    void deleteImage(String path) throws IOException;
+
     List<Image> getAll();
 }

@@ -16,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Event {
-
     @Id
     @GeneratedValue
     private Long IdEvent;
@@ -30,9 +29,12 @@ public class Event {
     @OneToMany(mappedBy = "event")
     private List<Activity> listOfActivities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "event")
     private List<Participation> listOfParticipation = new ArrayList<>();
 
+    @JsonBackReference
+    @OneToMany(mappedBy = "event")
+    private List<Edition> editions = new ArrayList<>();
     @OneToMany(mappedBy = "event")
     private List<Sponsor> sponsorList;
 
