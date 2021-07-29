@@ -1,4 +1,5 @@
 package ro.societateahermes.backendservice.service.serviceImplementation;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
@@ -16,8 +17,9 @@ import java.util.stream.Collectors;
 @Service
 
 public class OfferServiceImplementation implements OfferServiceInterface {
-    private OfferMapper  offerMapper;
+    private OfferMapper offerMapper;
     private OfferRepositoryInterface offerRepository;
+
     @Autowired
     public OfferServiceImplementation(OfferRepositoryInterface offerRepository, OfferMapper offerMapper) {
         this.offerRepository = offerRepository;

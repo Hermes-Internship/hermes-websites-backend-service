@@ -1,6 +1,7 @@
 package ro.societateahermes.backendservice.controller.controllerImplementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ro.societateahermes.backendservice.controller.UserControllerInterface;
 import ro.societateahermes.backendservice.entities.dto.MySubmissionDTO;
@@ -36,7 +37,7 @@ public class UserController implements UserControllerInterface {
 
 
     @GetMapping("/{eventId}")
-    public List<UserDTO> getAllEventParticipants(@PathVariable("eventId") long eventId) throws UnathorizeException{
+    public List<UserDTO> getAllEventParticipants(@PathVariable("eventId") long eventId) throws UnathorizeException {
         List<String> roles = RolesActiveUser.getRoles();
         if (!PermissionChecker.check(eventId, roles)) {
             throw new UnathorizeException("User is not authorized");
@@ -46,17 +47,28 @@ public class UserController implements UserControllerInterface {
 
 
     @GetMapping
-    public List<UserDTO> getAll(){
+    public List<UserDTO> getAll() {
         return userService.getAllUsers();
     }
 
-    @PutMapping("/update")
-    public void put(@RequestBody UserDTO user){
+    @Transactional
+    @PutMapping("/{eventId}")
+    public void put(@PathVariable Long eventId, @RequestBody UserDTO user) throws UnathorizeException {
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.check(eventId, roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
         userService.update(user);
     }
 
-    @DeleteMapping ("/{userId}")
-    public void delete(@PathVariable("userId") Long userId){
+    @Transactional
+    @DeleteMapping("/{eventId}/{userId}")
+    public void delete(@PathVariable Long eventId, @PathVariable("userId") Long userId) throws UnathorizeException {
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.check(eventId, roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
+        participationService.deleteByUserId(userId);
         userService.delete(userId);
     }
 

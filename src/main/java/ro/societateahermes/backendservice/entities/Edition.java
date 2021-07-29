@@ -16,16 +16,16 @@ public class Edition {
     @GeneratedValue
     private Long id;
 
-    @JsonManagedReference
+    // @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
 
-    @JsonManagedReference
+    //    @JsonManagedReference
     @OneToMany(mappedBy = "edition", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EditionImage> images;
 
-    @JsonManagedReference
+    //    @JsonManagedReference
     @OneToMany(mappedBy = "edition", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EditionVideo> videos;
 

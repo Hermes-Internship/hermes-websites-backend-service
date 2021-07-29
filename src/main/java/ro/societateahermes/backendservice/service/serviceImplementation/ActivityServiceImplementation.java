@@ -14,6 +14,7 @@ import ro.societateahermes.backendservice.service.ActivityServiceInterface;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.Activity;
 import ro.societateahermes.backendservice.entities.dto.FullActivityDTO;
@@ -30,31 +31,34 @@ public class ActivityServiceImplementation implements ActivityServiceInterface {
 
     private final ActivityRepositoryInterface activityRepository;
     private final ActivityMapperInterface activityMapper;
+    private final ActivityMapper fullActivityMapper;
 
     @Autowired
-    public ActivityServiceImplementation(ActivityRepositoryInterface activityRepository, ActivityMapperInterface activityMapper) {
+    public ActivityServiceImplementation(ActivityRepositoryInterface activityRepository, ActivityMapperInterface activityMapper, ActivityMapper fullActivityMapper) {
         this.activityRepository = activityRepository;
         this.activityMapper = activityMapper;
+        this.fullActivityMapper = fullActivityMapper;
     }
 
     @Override
     public void save(ActivityDTO activityDTO) {
         activityRepository.save(activityMapper.convertToActivity(activityDTO));
     }
+
     public void save(FullActivityDTO activityDTO) {
-        activityRepository.save(ActivityMapper.activityDTOtoActivity(activityDTO));
+        activityRepository.save(fullActivityMapper.activityDTOtoActivity(activityDTO));
     }
 
     @Override
     public void delete(ActivityDTO activityDTO) {
         activityRepository.delete(activityMapper.convertToActivity(activityDTO));
     }
+
     @Override
     @Transactional
     public void delete(Long id) {
-        for(Activity activity  : activityRepository.findAll())
-        {
-            if (activity.getIdActivity() == id ){
+        for (Activity activity : activityRepository.findAll()) {
+            if (activity.getIdActivity() == id) {
                 activityRepository.delete(activity);
                 return;
             }
@@ -64,8 +68,8 @@ public class ActivityServiceImplementation implements ActivityServiceInterface {
     @Override
     @Transactional
     public void update(FullActivityDTO activity) {
-        if (activity != null){
-            Activity updatedActivity = ActivityMapper.activityDTOtoActivity(activity);
+        if (activity != null) {
+            Activity updatedActivity = fullActivityMapper.activityDTOtoActivity(activity);
             activityRepository.save(updatedActivity);
         }
     }
@@ -103,9 +107,10 @@ public class ActivityServiceImplementation implements ActivityServiceInterface {
 
         activityRepository.save(activity);
     }
+
     @Override
     public List<FullActivityDTO> getAllActivities() {
-        return ActivityMapper.activitiesToActivitiesDTO(activityRepository.findAll());
+        return fullActivityMapper.activitiesToActivitiesDTO(activityRepository.findAll());
     }
 
 }

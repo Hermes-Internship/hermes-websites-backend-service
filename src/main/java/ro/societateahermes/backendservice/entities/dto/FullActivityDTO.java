@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class FullActivityDTO {
     private Long IdActivity;
-    private Event event;
+    private Long IdEvent;
     private String activityName;
     private String activityDescription;
     private LocalDateTime activityStartDate;

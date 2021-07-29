@@ -33,13 +33,13 @@ public class Event {
     @OneToMany(mappedBy = "event")
     private List<Participation> listOfParticipation = new ArrayList<>();
 
-    @JsonBackReference
+    //    @JsonBackReference
     @OneToMany(mappedBy = "event")
     private List<Edition> editions = new ArrayList<>();
     @OneToMany(mappedBy = "event")
     private List<Sponsor> sponsorList;
 
-    @JsonManagedReference
+    //    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "form_id")
     private Form form;

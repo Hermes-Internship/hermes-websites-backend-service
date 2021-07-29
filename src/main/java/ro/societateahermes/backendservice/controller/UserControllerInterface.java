@@ -15,9 +15,7 @@ public interface UserControllerInterface {
 
     List<UserDTO> getAllEventParticipants(long eventId) throws UnathorizeException;
 
+    void delete(Long eventId, Long userId) throws UnathorizeException;
 
-   /// void save(UserDTO user);
-
-    void delete (Long userId);
-    void put(UserDTO user);
+    void put(Long eventId, UserDTO user) throws UnathorizeException;
 }
