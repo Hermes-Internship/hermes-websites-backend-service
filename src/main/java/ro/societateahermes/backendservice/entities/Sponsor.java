@@ -21,8 +21,9 @@ public class Sponsor {
     private String logo;
     @Enumerated(EnumType.ORDINAL)
     private PurchasedPackage purchasedPackage;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "event_id", referencedColumnName = "IdEvent")
+
+    @ManyToOne
+    @JoinColumn(name = "event_id")
     private Event event;
 
     @OneToMany(mappedBy = "sponsor")
