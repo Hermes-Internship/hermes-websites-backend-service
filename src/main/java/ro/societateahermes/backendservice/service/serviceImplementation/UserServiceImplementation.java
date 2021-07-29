@@ -3,11 +3,11 @@ package ro.societateahermes.backendservice.service.serviceImplementation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.societateahermes.backendservice.entities.dto.MySubmissionDTO;
-import ro.societateahermes.backendservice.entities.dto.UserDTO;
 import ro.societateahermes.backendservice.entities.Participation;
 import ro.societateahermes.backendservice.entities.dto.UserDTO;
 import ro.societateahermes.backendservice.entities.User;
+import ro.societateahermes.backendservice.entities.dto.MySubmissionDTO;
+import ro.societateahermes.backendservice.entities.dto.UserDTO;
 import ro.societateahermes.backendservice.repository.UserRepositoryInterface;
 import ro.societateahermes.backendservice.service.UserServiceInterface;
 import ro.societateahermes.backendservice.utils.mapper.SubmissionMapper;
@@ -39,10 +39,8 @@ public class UserServiceImplementation implements UserServiceInterface {
         return userRepository.save(user);}
 
     public void save(UserDTO user) {
-
         userRepository.save(UserMapper.userDTOtoUser(user));
     }
-
 
     @Override
     @Transactional
@@ -50,9 +48,8 @@ public class UserServiceImplementation implements UserServiceInterface {
         List<Participation> participationList = user.getListOfParticipation();
         participationList.add(participation);
         user.setListOfParticipation(participationList);
-
+        userRepository.save(user);
     }
-
 
     @Override
     public List<UserDTO> getAllUsers() {
@@ -60,6 +57,7 @@ public class UserServiceImplementation implements UserServiceInterface {
                 .collect(Collectors.toList());
 
     }
+
     @Transactional
     public void delete(Long id){
         for(User user : userRepository.findAll())
@@ -71,7 +69,6 @@ public class UserServiceImplementation implements UserServiceInterface {
         }
         /// throw exception user not found ?
     }
-
 
     @Override
     @Transactional
