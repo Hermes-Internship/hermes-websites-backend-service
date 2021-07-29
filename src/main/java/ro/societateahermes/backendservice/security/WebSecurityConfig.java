@@ -62,6 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/cd-member").permitAll()
                 .antMatchers(HttpMethod.GET, "/timeline/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/activity").permitAll()
+                .antMatchers(HttpMethod.GET, "/event/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/user").permitAll()
                 .antMatchers(HttpMethod.GET, "/user").permitAll()
                 .antMatchers(HttpMethod.GET, "/sponsor/**").permitAll()
