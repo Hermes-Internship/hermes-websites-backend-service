@@ -7,14 +7,8 @@ import ro.societateahermes.backendservice.entities.Participation;
 import ro.societateahermes.backendservice.entities.User;
 import ro.societateahermes.backendservice.entities.dto.MySubmissionDTO;
 import ro.societateahermes.backendservice.entities.dto.UserDTO;
-import ro.societateahermes.backendservice.service.*;
-import ro.societateahermes.backendservice.entities.Participation;
-import ro.societateahermes.backendservice.entities.User;
 import ro.societateahermes.backendservice.exceptions.UnathorizeException;
-import ro.societateahermes.backendservice.service.EventServiceInterface;
-import ro.societateahermes.backendservice.service.ParticipationServiceInterface;
-import ro.societateahermes.backendservice.service.SubmissionServiceInterface;
-import ro.societateahermes.backendservice.service.UserServiceInterface;
+import ro.societateahermes.backendservice.service.*;
 import ro.societateahermes.backendservice.utils.PermissionChecker;
 import ro.societateahermes.backendservice.utils.RolesActiveUser;
 
@@ -56,10 +50,6 @@ public class UserController implements UserControllerInterface {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{eventId}")
-    public List<UserDTO> getAllEventParticipants(@PathVariable("eventId") long eventId) {
-        return participationService.getAllUsersFromEvent(eventId);
-    }
 
     @PutMapping("/update")
     public void put(@RequestBody UserDTO user){

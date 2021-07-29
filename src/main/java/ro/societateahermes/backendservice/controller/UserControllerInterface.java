@@ -12,7 +12,6 @@ public interface UserControllerInterface {
 
     void submit(MySubmissionDTO submission) throws IOException;
 
-    List<UserDTO> getAllEventParticipants(long eventId);
     List<UserDTO> getAllEventParticipants(long eventId) throws UnathorizeException;
 
     void delete (Long userId);
