@@ -3,16 +3,15 @@ package ro.societateahermes.backendservice.service.serviceImplementation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.societateahermes.backendservice.entities.dto.MySubmissionDTO;
-import ro.societateahermes.backendservice.entities.dto.UserDTO;
 import ro.societateahermes.backendservice.entities.Event;
 import ro.societateahermes.backendservice.entities.Participation;
 import ro.societateahermes.backendservice.entities.User;
+import ro.societateahermes.backendservice.entities.dto.MySubmissionDTO;
+import ro.societateahermes.backendservice.entities.dto.UserDTO;
 import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
 import ro.societateahermes.backendservice.repository.ParticipationRepositoryInterface;
 import ro.societateahermes.backendservice.repository.UserRepositoryInterface;
 import ro.societateahermes.backendservice.service.ParticipationServiceInterface;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +50,7 @@ public class ParticipationServiceImplementation implements ParticipationServiceI
         List<UserDTO> users = new ArrayList<>();
 
         for (Participation participation : participationRepository.findAll()) {
-            if (participation.getEvent().getIdEvent() == eventId)
+            if (participation.getEvent().getId() == eventId)
                 users.add(modelMapper.map(participation.getUser(), UserDTO.class));
 
         }

@@ -6,24 +6,17 @@ import ro.societateahermes.backendservice.entities.Activity;
 import ro.societateahermes.backendservice.entities.Event;
 import ro.societateahermes.backendservice.entities.Timeline;
 import ro.societateahermes.backendservice.entities.dto.ActivityDTO;
+import ro.societateahermes.backendservice.entities.dto.FullActivityDTO;
 import ro.societateahermes.backendservice.entities.dto.TimelineDTO;
-import ro.societateahermes.backendservice.utils.mapper.ActivityMapperInterface;
 import ro.societateahermes.backendservice.repository.ActivityRepositoryInterface;
 import ro.societateahermes.backendservice.service.ActivityServiceInterface;
+import ro.societateahermes.backendservice.utils.mapper.ActivityMapper;
+import ro.societateahermes.backendservice.utils.mapper.ActivityMapperInterface;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-
-import org.springframework.stereotype.Service;
-import ro.societateahermes.backendservice.entities.Activity;
-import ro.societateahermes.backendservice.entities.dto.FullActivityDTO;
-import ro.societateahermes.backendservice.utils.mapper.ActivityMapper;
-import ro.societateahermes.backendservice.repository.ActivityRepositoryInterface;
-import ro.societateahermes.backendservice.service.ActivityServiceInterface;
-
-
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -97,7 +90,7 @@ public class ActivityServiceImplementation implements ActivityServiceInterface {
         Activity activity = activityMapper.convertToActivity(activityDTO);
 
         Event event = new Event();
-        event.setIdEvent(timelineDTO.getIdEvent());
+        event.setId(timelineDTO.getIdEvent());
 
         Timeline timeline = new Timeline();
         timeline.setIdTimeline(timelineDTO.getIdTimeline());

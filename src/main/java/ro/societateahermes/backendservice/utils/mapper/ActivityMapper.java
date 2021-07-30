@@ -43,7 +43,7 @@ public class ActivityMapper {
         fullActivityDTO.setActivityStartDate(activity.getActivityStartDate());
         fullActivityDTO.setActivityEstimatedTime(activity.getActivityEstimatedTime());
         fullActivityDTO.setMaximumNumberOfParticipants(activity.getMaximumNumberOfParticipants());
-        fullActivityDTO.setIdEvent(activity.getEvent().getIdEvent());
+        fullActivityDTO.setIdEvent(activity.getEvent().getId());
         return fullActivityDTO;
     }
 }
