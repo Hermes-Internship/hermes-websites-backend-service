@@ -33,6 +33,10 @@ public class EmailServiceImplementation implements EmailServiceInterface {
 
     @Scheduled(cron = "0 0 7 * * *")
     public void sendAppropriateEmails() {
+        if (FROM.equals("")) {
+            return;
+        }
+
         for (Event event : eventService.getAll()) {
             if (eventService.isDaysBeforeEvent(event, 3)) {
                 this.configureAndSendReminderMessageBeforeEvent(event, 3);
@@ -85,6 +89,10 @@ public class EmailServiceImplementation implements EmailServiceInterface {
     }
 
     public void configureAndSendConfirmationEmail(Participation participation) {
+        if (FROM.equals("")) {
+            return;
+        }
+
         User user = participation.getUser();
         Event event = participation.getEvent();
 
