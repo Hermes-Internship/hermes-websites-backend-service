@@ -59,7 +59,7 @@ public class EditionControllerImplementation implements EditionControllerInterfa
     public void deleteEdition(@PathVariable("editionId") Long editionId) throws IOException, UnathorizeException {
         Event event = editionService.getEditionById(editionId).getEvent();
         List<String> roles = RolesActiveUser.getRoles();
-        if (!PermissionChecker.check(event.getIdEvent(), roles)) {
+        if (!PermissionChecker.check(event.getId(), roles)) {
             throw new UnathorizeException("User is not authorized");
         }
 
@@ -78,7 +78,7 @@ public class EditionControllerImplementation implements EditionControllerInterfa
                                                     @ModelAttribute EditionMediaUpload editionMediaUpload) throws UnathorizeException {
         Event event = editionService.getEditionById(editionId).getEvent();
         List<String> roles = RolesActiveUser.getRoles();
-        if (!PermissionChecker.check(event.getIdEvent(), roles)) {
+        if (!PermissionChecker.check(event.getId(), roles)) {
             throw new UnathorizeException("User is not authorized");
         }
 
@@ -105,7 +105,7 @@ public class EditionControllerImplementation implements EditionControllerInterfa
                                                          @RequestBody EditionMediaDeletion editionMediaDeletion) throws IOException, UnathorizeException {
         Event event = editionService.getEditionById(editionId).getEvent();
         List<String> roles = RolesActiveUser.getRoles();
-        if (!PermissionChecker.check(event.getIdEvent(), roles)) {
+        if (!PermissionChecker.check(event.getId(), roles)) {
             throw new UnathorizeException("User is not authorized");
         }
 
