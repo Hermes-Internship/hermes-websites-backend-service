@@ -45,11 +45,11 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    public static final String ROLE_A = "admin";
-    public static final String ROLE_B = "cariereIT";
-    public static final String ROLE_C = "guideDays";
-    public static final String ROLE_D = "hackathon";
-    public static final String ROLE_E = "destresiune";
+    public static final String ROLE_ADMIN = "admin";
+    public static final String ROLE_CARIERE = "cariereIT";
+    public static final String ROLE_GUIDE_DAYS = "guideDays";
+    public static final String ROLE_HACKATHON = "hackathon";
+    public static final String ROLE_DESTRESIUNE = "destresiune";
 
 
     @PostMapping("/signin")
@@ -107,31 +107,31 @@ public class AuthController {
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case ROLE_A:
+                    case ROLE_ADMIN:
                         Role adminRole = roleRepository.findByName(BoardRole.ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
 
                         break;
-                    case ROLE_B:
+                    case ROLE_CARIERE:
                         Role cariereRole = roleRepository.findByName(BoardRole.PROJECT_MANAGER_CARIEREIT)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(cariereRole);
 
                         break;
-                    case ROLE_C:
+                    case ROLE_GUIDE_DAYS:
                         Role guideRole = roleRepository.findByName(BoardRole.PROJECT_MANAGER_GUIDEDAYS)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(guideRole);
 
                         break;
-                    case ROLE_D:
+                    case ROLE_HACKATHON:
                         Role hackathonRole = roleRepository.findByName(BoardRole.PROJECT_MANAGER_HACKATHON)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(hackathonRole);
 
                         break;
-                    case ROLE_E:
+                    case ROLE_DESTRESIUNE:
                         Role destresiuneRole = roleRepository.findByName(BoardRole.PROJECT_MANAGER_DESTRESIUNE)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(destresiuneRole);
