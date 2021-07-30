@@ -1,6 +1,5 @@
 package ro.societateahermes.backendservice.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,13 +32,13 @@ public class Event {
     @OneToMany(mappedBy = "event")
     private List<Participation> listOfParticipation = new ArrayList<>();
 
-    //    @JsonBackReference
+    @JsonManagedReference
     @OneToMany(mappedBy = "event")
     private List<Edition> editions = new ArrayList<>();
     @OneToMany(mappedBy = "event")
     private List<Sponsor> sponsorList;
 
-    //    @JsonManagedReference
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "form_id")
     private Form form;
