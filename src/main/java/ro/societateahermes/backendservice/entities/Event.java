@@ -17,8 +17,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Event {
     @Id
-    @GeneratedValue
-    private Long IdEvent;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String eventName;
     private String eventDescription;
     private LocalDateTime eventStartDate;

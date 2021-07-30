@@ -15,7 +15,7 @@ public class SponsorMapper {
     public SponsorDTO convertToDTO(Sponsor sponsor) {
         SponsorDTO sponsorDTO = new SponsorDTO();
         sponsorDTO.setId(sponsor.getId());
-        sponsorDTO.setEventId(sponsor.getEvent().getIdEvent());
+        sponsorDTO.setEventId(sponsor.getEvent().getId());
         sponsorDTO.setLogo(sponsor.getLogo());
         sponsorDTO.setName(sponsor.getName());
         sponsorDTO.setPurchasedPackage(sponsor.getPurchasedPackage());
