@@ -40,7 +40,6 @@ public class EventServiceImplementation implements EventServiceInterface {
         List<Participation> participationList = event.getListOfParticipation();
         participationList.add(participation);
         event.setListOfParticipation(participationList);
-        eventRepository.save(event);
     }
 
     public List<Participation> getParticipationsOfEvent(Event event) {
