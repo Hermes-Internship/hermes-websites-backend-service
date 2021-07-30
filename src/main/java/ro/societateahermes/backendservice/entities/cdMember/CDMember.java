@@ -27,7 +27,7 @@ public class CDMember {
         return Department.getDepartmentType(departmentId);
     }
 
-    public Role getRoleType() {
-        return Role.getRoleType(roleId);
+    public DepartmentRole getRoleType() {
+        return DepartmentRole.getRoleType(roleId);
     }
 }

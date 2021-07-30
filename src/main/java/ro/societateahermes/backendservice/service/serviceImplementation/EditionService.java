@@ -36,6 +36,10 @@ public class EditionService implements EditionServiceInterface {
         this.imageService = imageService;
     }
 
+    public Edition getEditionById(Long editionId) {
+        return editionRepository.findById(editionId).orElseThrow();
+    }
+
     public List<EditionDto> getAll() {
         List<Edition> editions = editionRepository.findAll();
         return editions.stream()

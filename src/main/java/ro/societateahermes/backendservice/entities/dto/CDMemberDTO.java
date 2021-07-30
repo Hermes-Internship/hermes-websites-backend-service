@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ro.societateahermes.backendservice.entities.cdMember.Department;
-import ro.societateahermes.backendservice.entities.cdMember.Role;
+import ro.societateahermes.backendservice.entities.cdMember.DepartmentRole;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -33,7 +33,7 @@ public class CDMemberDTO {
     }
 
     public String getRoleName() {
-        return Role.getRoleType(roleId).getName();
+        return DepartmentRole.getRoleType(roleId).getName();
     }
 
     @JsonIgnore
@@ -42,7 +42,7 @@ public class CDMemberDTO {
     }
 
     @JsonIgnore
-    public Role getRoleType() {
-        return Role.getRoleType(roleId);
+    public DepartmentRole getRoleType() {
+        return DepartmentRole.getRoleType(roleId);
     }
 }

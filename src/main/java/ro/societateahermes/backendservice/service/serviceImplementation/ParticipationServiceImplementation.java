@@ -58,4 +58,10 @@ public class ParticipationServiceImplementation implements ParticipationServiceI
         return users;
 
     }
+
+    @Override
+    public void deleteByUserId(Long userId) {
+        Participation participation = participationRepository.findByUserID(userId);
+        participationRepository.delete(participation);
+    }
 }

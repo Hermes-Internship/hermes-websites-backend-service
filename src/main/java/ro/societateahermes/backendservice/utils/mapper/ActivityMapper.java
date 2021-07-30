@@ -1,13 +1,20 @@
 package ro.societateahermes.backendservice.utils.mapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ro.societateahermes.backendservice.entities.Activity;
 import ro.societateahermes.backendservice.entities.dto.FullActivityDTO;
+import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class ActivityMapper {
-    public static Activity activityDTOtoActivity(FullActivityDTO activity){
+    @Autowired
+    private EventRepositoryInterface eventRepository;
+
+    public Activity activityDTOtoActivity(FullActivityDTO activity) {
         Activity activityFromDTO = new Activity();
         activityFromDTO.setIdActivity(activity.getIdActivity());
         activityFromDTO.setActivityLink(activity.getActivityLink());
@@ -17,15 +24,16 @@ public class ActivityMapper {
         activityFromDTO.setActivityStartDate(activity.getActivityStartDate());
         activityFromDTO.setActivityEstimatedTime(activity.getActivityEstimatedTime());
         activityFromDTO.setMaximumNumberOfParticipants(activity.getMaximumNumberOfParticipants());
-        activityFromDTO.setEvent(activity.getEvent());
+        activityFromDTO.setEvent(eventRepository.findById(activity.getIdEvent()).orElseThrow());
         return activityFromDTO;
     }
-    public static List<FullActivityDTO> activitiesToActivitiesDTO(List<Activity> activities){
 
-         return activities.stream().map(ActivityMapper::activityToActivityDTO).collect(Collectors.toList());
+    public List<FullActivityDTO> activitiesToActivitiesDTO(List<Activity> activities) {
+
+        return activities.stream().map(activity -> activityToActivityDTO(activity)).collect(Collectors.toList());
     }
 
-    public static FullActivityDTO activityToActivityDTO(Activity activity){
+    public FullActivityDTO activityToActivityDTO(Activity activity) {
         FullActivityDTO fullActivityDTO = new FullActivityDTO();
         fullActivityDTO.setIdActivity(activity.getIdActivity());
         fullActivityDTO.setActivityLink(activity.getActivityLink());
@@ -35,7 +43,7 @@ public class ActivityMapper {
         fullActivityDTO.setActivityStartDate(activity.getActivityStartDate());
         fullActivityDTO.setActivityEstimatedTime(activity.getActivityEstimatedTime());
         fullActivityDTO.setMaximumNumberOfParticipants(activity.getMaximumNumberOfParticipants());
-        fullActivityDTO.setEvent(activity.getEvent());
+        fullActivityDTO.setIdEvent(activity.getEvent().getIdEvent());
         return fullActivityDTO;
     }
 }

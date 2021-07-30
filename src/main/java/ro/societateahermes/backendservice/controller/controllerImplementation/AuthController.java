@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ro.societateahermes.backendservice.entities.Admin;
-import ro.societateahermes.backendservice.entities.ERole;
+import ro.societateahermes.backendservice.entities.BoardRole;
 import ro.societateahermes.backendservice.entities.Role;
 import ro.societateahermes.backendservice.payload.request.LoginRequest;
 import ro.societateahermes.backendservice.payload.request.SignupRequest;
@@ -45,11 +45,11 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    public static final String ROLE_A = "admin";
-    public static final String ROLE_B = "cariereIT";
-    public static final String ROLE_C = "guideDays";
-    public static final String ROLE_D = "hackathon";
-    public static final String ROLE_E = "destresiune";
+    public static final String ROLE_ADMIN = "admin";
+    public static final String ROLE_CARIERE = "cariereIT";
+    public static final String ROLE_GUIDE_DAYS = "guideDays";
+    public static final String ROLE_HACKATHON = "hackathon";
+    public static final String ROLE_DESTRESIUNE = "destresiune";
 
 
     @PostMapping("/signin")
@@ -101,44 +101,44 @@ public class AuthController {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+            Role userRole = roleRepository.findByName(BoardRole.USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case ROLE_A:
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                    case ROLE_ADMIN:
+                        Role adminRole = roleRepository.findByName(BoardRole.ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
 
                         break;
-                    case ROLE_B:
-                        Role cariereRole = roleRepository.findByName(ERole.ROLE_PROJECT_MANAGER_CARIEREIT)
+                    case ROLE_CARIERE:
+                        Role cariereRole = roleRepository.findByName(BoardRole.PROJECT_MANAGER_CARIEREIT)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(cariereRole);
 
                         break;
-                    case ROLE_C:
-                        Role guideRole = roleRepository.findByName(ERole.ROLE_PROJECT_MANAGER_GUIDEDAYS)
+                    case ROLE_GUIDE_DAYS:
+                        Role guideRole = roleRepository.findByName(BoardRole.PROJECT_MANAGER_GUIDEDAYS)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(guideRole);
 
                         break;
-                    case ROLE_D:
-                        Role hackathonRole = roleRepository.findByName(ERole.ROLE_PROJECT_MANAGER_HACKATHON)
+                    case ROLE_HACKATHON:
+                        Role hackathonRole = roleRepository.findByName(BoardRole.PROJECT_MANAGER_HACKATHON)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(hackathonRole);
 
                         break;
-                    case ROLE_E:
-                        Role destresiuneRole = roleRepository.findByName(ERole.ROLE_PROJECT_MANAGER_DESTRESIUNE)
+                    case ROLE_DESTRESIUNE:
+                        Role destresiuneRole = roleRepository.findByName(BoardRole.PROJECT_MANAGER_DESTRESIUNE)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(destresiuneRole);
 
                         break;
                     default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                        Role userRole = roleRepository.findByName(BoardRole.USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(userRole);
                 }
