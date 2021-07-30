@@ -68,8 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/sponsor/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/edition").permitAll()
                 .antMatchers(HttpMethod.GET, "/edition/image/**").permitAll()
-                .antMatchers("/edition/**/media").permitAll()
-                .antMatchers("/form").permitAll()
+                .antMatchers(HttpMethod.GET, "/form").permitAll()
                 .antMatchers(HttpMethod.GET, "/images/**").permitAll()
                 .antMatchers("/news").permitAll()
                 .antMatchers("/offer/**").permitAll()
@@ -79,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**");
     }
 }

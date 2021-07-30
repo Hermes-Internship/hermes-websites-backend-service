@@ -9,8 +9,12 @@ import ro.societateahermes.backendservice.controller.EditionControllerInterface;
 import ro.societateahermes.backendservice.entities.EditionImage;
 import ro.societateahermes.backendservice.entities.EditionMediaDeletion;
 import ro.societateahermes.backendservice.entities.EditionMediaUpload;
+import ro.societateahermes.backendservice.entities.Event;
 import ro.societateahermes.backendservice.entities.dto.EditionDto;
+import ro.societateahermes.backendservice.exceptions.UnathorizeException;
 import ro.societateahermes.backendservice.service.serviceImplementation.EditionService;
+import ro.societateahermes.backendservice.utils.PermissionChecker;
+import ro.societateahermes.backendservice.utils.RolesActiveUser;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,7 +37,12 @@ public class EditionControllerImplementation implements EditionControllerInterfa
 
     @PostMapping("/{eventId}")
     public void saveNewEditionWithMedia(@PathVariable Long eventId,
-                                        @ModelAttribute EditionMediaUpload editionMediaUpload) {
+                                        @ModelAttribute EditionMediaUpload editionMediaUpload) throws UnathorizeException {
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.check(eventId, roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
+
         List<MultipartFile> images = editionMediaUpload.getImages();
         List<MultipartFile> videos = editionMediaUpload.getVideos();
 
@@ -47,7 +56,13 @@ public class EditionControllerImplementation implements EditionControllerInterfa
     }
 
     @DeleteMapping("/{editionId}")
-    public void deleteEdition(@PathVariable("editionId") Long editionId) throws IOException {
+    public void deleteEdition(@PathVariable("editionId") Long editionId) throws IOException, UnathorizeException {
+        Event event = editionService.getEditionById(editionId).getEvent();
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.check(event.getIdEvent(), roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
+
         editionService.deleteEdition(editionId);
     }
 
@@ -60,7 +75,13 @@ public class EditionControllerImplementation implements EditionControllerInterfa
 
     @PostMapping("/{editionId}/media")
     public ResponseEntity<Object> addMediaToEdition(@PathVariable("editionId") Long editionId,
-                                                    @ModelAttribute EditionMediaUpload editionMediaUpload) {
+                                                    @ModelAttribute EditionMediaUpload editionMediaUpload) throws UnathorizeException {
+        Event event = editionService.getEditionById(editionId).getEvent();
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.check(event.getIdEvent(), roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
+
         List<MultipartFile> images = editionMediaUpload.getImages();
         List<MultipartFile> videos = editionMediaUpload.getVideos();
 
@@ -81,7 +102,13 @@ public class EditionControllerImplementation implements EditionControllerInterfa
 
     @DeleteMapping("/{editionId}/media")
     public ResponseEntity<Object> deleteMediaFromEdition(@PathVariable("editionId") Long editionId,
-                                                         @RequestBody EditionMediaDeletion editionMediaDeletion) throws IOException {
+                                                         @RequestBody EditionMediaDeletion editionMediaDeletion) throws IOException, UnathorizeException {
+        Event event = editionService.getEditionById(editionId).getEvent();
+        List<String> roles = RolesActiveUser.getRoles();
+        if (!PermissionChecker.check(event.getIdEvent(), roles)) {
+            throw new UnathorizeException("User is not authorized");
+        }
+
         List<Long> imagesIds = editionMediaDeletion.getImagesIds();
         List<Long> videosIds = editionMediaDeletion.getVideosIds();
 
