@@ -31,7 +31,7 @@ public class EmailServiceImplementation implements EmailServiceInterface {
     @Autowired
     private EventServiceInterface eventService;
 
-    @Scheduled(cron = "0 52 13 * * *")
+    @Scheduled(cron = "0 0 7 * * *")
     public void sendAppropriateEmails() {
         for (Event event : eventService.getAll()) {
             if (eventService.isDaysBeforeEvent(event, 3)) {
