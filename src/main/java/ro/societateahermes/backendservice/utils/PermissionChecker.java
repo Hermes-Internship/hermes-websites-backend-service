@@ -15,20 +15,20 @@ public class PermissionChecker {
     public static boolean check(long eventId, List<String> roles) {
         switch (String.valueOf(eventId)) {
             case EVENT_A:
-                return roles.contains("ROLE_ADMIN") || roles.contains("ROLE_PROJECT_MANAGER_DESTRESIUNE");
+                return roles.contains("ADMIN") || roles.contains("PROJECT_MANAGER_DESTRESIUNE");
             case EVENT_B:
-                return roles.contains("ROLE_ADMIN") || roles.contains("ROLE_PROJECT_MANAGER_CARIEREIT");
+                return roles.contains("ADMIN") || roles.contains("PROJECT_MANAGER_CARIEREIT");
             case EVENT_C:
-                return roles.contains("ROLE_ADMIN") || roles.contains("ROLE_PROJECT_MANAGER_GUIDEDAYS");
+                return roles.contains("ADMIN") || roles.contains("PROJECT_MANAGER_GUIDEDAYS");
             case EVENT_D:
-                return roles.contains("ROLE_ADMIN") || roles.contains("ROLE_PROJECT_MANAGER_HACKATHON");
+                return roles.contains("ADMIN") || roles.contains("PROJECT_MANAGER_HACKATHON");
             default:
                 return false;
         }
     }
 
     public static boolean checkAdmin(List<String> roles) {
-        return (roles.contains("ROLE_ADMIN"));
+        return (roles.contains("ADMIN"));
 
     }
 

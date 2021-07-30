@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import ro.societateahermes.backendservice.entities.Admin;
-import ro.societateahermes.backendservice.entities.ERole;
+import ro.societateahermes.backendservice.entities.BoardRole;
 import ro.societateahermes.backendservice.entities.Role;
 import ro.societateahermes.backendservice.payload.request.LoginRequest;
 import ro.societateahermes.backendservice.payload.request.SignupRequest;
@@ -101,44 +101,44 @@ public class AuthController {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+            Role userRole = roleRepository.findByName(BoardRole.USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case ROLE_A:
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                        Role adminRole = roleRepository.findByName(BoardRole.ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
 
                         break;
                     case ROLE_B:
-                        Role cariereRole = roleRepository.findByName(ERole.ROLE_PROJECT_MANAGER_CARIEREIT)
+                        Role cariereRole = roleRepository.findByName(BoardRole.PROJECT_MANAGER_CARIEREIT)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(cariereRole);
 
                         break;
                     case ROLE_C:
-                        Role guideRole = roleRepository.findByName(ERole.ROLE_PROJECT_MANAGER_GUIDEDAYS)
+                        Role guideRole = roleRepository.findByName(BoardRole.PROJECT_MANAGER_GUIDEDAYS)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(guideRole);
 
                         break;
                     case ROLE_D:
-                        Role hackathonRole = roleRepository.findByName(ERole.ROLE_PROJECT_MANAGER_HACKATHON)
+                        Role hackathonRole = roleRepository.findByName(BoardRole.PROJECT_MANAGER_HACKATHON)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(hackathonRole);
 
                         break;
                     case ROLE_E:
-                        Role destresiuneRole = roleRepository.findByName(ERole.ROLE_PROJECT_MANAGER_DESTRESIUNE)
+                        Role destresiuneRole = roleRepository.findByName(BoardRole.PROJECT_MANAGER_DESTRESIUNE)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(destresiuneRole);
 
                         break;
                     default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                        Role userRole = roleRepository.findByName(BoardRole.USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(userRole);
                 }

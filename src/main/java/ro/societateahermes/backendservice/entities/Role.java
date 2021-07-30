@@ -17,5 +17,5 @@ public class Role {
 	private Integer id;
 
 	@Enumerated(EnumType.STRING)
-	private ERole name;
+	private BoardRole name;
 }

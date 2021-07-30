@@ -1,6 +1,6 @@
 package ro.societateahermes.backendservice.entities.cdMember;
 
-public enum Role {
+public enum DepartmentRole {
     PRESIDENT(1, "PREȘEDINTE"),
     VICE_PRESIDENT(2, "VICEPREȘEDINTE"),
     MANAGER(3, "MANAGER"),
@@ -13,19 +13,19 @@ public enum Role {
     private final int id;
     private final String name;
 
-    Role(int id, String name) {
+    DepartmentRole(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public static Role getRoleType(Integer id) {
+    public static DepartmentRole getRoleType(Integer id) {
         if (id == null) {
             return null;
         }
 
-        for (Role role : Role.values()) {
-            if (id.equals(role.getId())) {
-                return role;
+        for (DepartmentRole departmentRole : DepartmentRole.values()) {
+            if (id.equals(departmentRole.getId())) {
+                return departmentRole;
             }
         }
 
