@@ -4,19 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ro.societateahermes.backendservice.controller.UserControllerInterface;
-import ro.societateahermes.backendservice.entities.dto.MySubmissionDTO;
-import ro.societateahermes.backendservice.entities.dto.UserDTO;
 import ro.societateahermes.backendservice.entities.Participation;
 import ro.societateahermes.backendservice.entities.User;
+import ro.societateahermes.backendservice.entities.dto.MySubmissionDTO;
+import ro.societateahermes.backendservice.entities.dto.UserDTO;
 import ro.societateahermes.backendservice.exceptions.UnathorizeException;
-import ro.societateahermes.backendservice.service.EventServiceInterface;
-import ro.societateahermes.backendservice.service.ParticipationServiceInterface;
-import ro.societateahermes.backendservice.service.SubmissionServiceInterface;
-import ro.societateahermes.backendservice.service.UserServiceInterface;
+import ro.societateahermes.backendservice.service.*;
 import ro.societateahermes.backendservice.utils.PermissionChecker;
 import ro.societateahermes.backendservice.utils.RolesActiveUser;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -35,6 +33,8 @@ public class UserController implements UserControllerInterface {
     @Autowired
     private EventServiceInterface eventService;
 
+    @Autowired
+    private EmailServiceInterface emailService;
 
     @GetMapping("/{eventId}")
     public List<UserDTO> getAllEventParticipants(@PathVariable("eventId") long eventId) throws UnathorizeException {
@@ -73,11 +73,13 @@ public class UserController implements UserControllerInterface {
     }
 
     @PostMapping
-    public void submit(@RequestBody @Valid MySubmissionDTO submission) {
+    public void submit(@RequestBody @Valid MySubmissionDTO submission) throws IOException {
         submissionService.savefromDTO(submission);
         User user = userService.saveUserFromDTO(submission);
         Participation participation = participationService.savefromDTO(user, submission);
         userService.addParticipation(user, participation);
         eventService.addParticipation(submission.getEventId(), participation);
+
+        emailService.configureAndSendConfirmationEmail(participation);
     }
 }

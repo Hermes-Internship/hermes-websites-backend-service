@@ -19,7 +19,7 @@ public class Sponsor {
     private long id;
     private String name;
     private String logo;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private PurchasedPackage purchasedPackage;
 
     @ManyToOne
