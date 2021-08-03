@@ -10,6 +10,7 @@ public class GoodToGoController {
 
     @GetMapping
     public String goodToGo() {
-        return "OK";
+        System.out.println("OK-MERGE");
+        return "OK, merge";
     }
 }
