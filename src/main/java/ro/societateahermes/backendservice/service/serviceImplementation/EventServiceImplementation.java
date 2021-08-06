@@ -4,17 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.societateahermes.backendservice.entities.Event;
 import ro.societateahermes.backendservice.entities.Participation;
+import ro.societateahermes.backendservice.entities.dto.EventDTO;
 import ro.societateahermes.backendservice.entities.dto.NotificationSwitchDTO;
 import ro.societateahermes.backendservice.repository.EventRepositoryInterface;
 import ro.societateahermes.backendservice.repository.ParticipationRepositoryInterface;
 import ro.societateahermes.backendservice.service.EventServiceInterface;
+import ro.societateahermes.backendservice.utils.mapper.EventMapper;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
 
 
 @Service
@@ -29,6 +31,9 @@ public class EventServiceImplementation implements EventServiceInterface {
 
     @Autowired
     private ParticipationRepositoryInterface participationRepository;
+
+    @Autowired
+    private EventMapper eventMapper;
 
     public List<Event> getAll() {
         return eventRepository.findAll();
@@ -71,5 +76,20 @@ public class EventServiceImplementation implements EventServiceInterface {
     public boolean isDuringEvent(Event event) {
         LocalDateTime now = LocalDateTime.now();
         return event.getEventStartDate().isBefore(now) && event.getEventEndDate().isAfter(now);
+    }
+
+    @Override
+    public EventDTO getOne(String eventName) {
+        return eventMapper.convertToDTO(eventRepository.findByEventName(eventName).orElseThrow());
+    }
+
+    @Override
+    public List<EventDTO> getAllEvents() {
+        return eventRepository.findAll().stream().map(event -> eventMapper.convertToDTO(event)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void update(EventDTO eventDTO) {
+        eventRepository.save(eventMapper.convertToEvent(eventDTO));
     }
 }
