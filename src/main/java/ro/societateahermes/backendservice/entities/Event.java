@@ -6,7 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ro.societateahermes.backendservice.entities.form.Form;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +45,6 @@ public class Event {
     private List<Sponsor> sponsorList;
 
     @JsonManagedReference
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "form_id")
+    @OneToOne(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private Form form;
 }

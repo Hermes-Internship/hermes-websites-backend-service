@@ -7,7 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ro.societateahermes.backendservice.entities.Event;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.List;
 
 @Data
@@ -20,7 +26,8 @@ public class Form {
     private Long id;
 
     @JsonBackReference
-    @OneToOne(mappedBy = "form")
+    @OneToOne
+    @JoinColumn(name = "event_id")
     private Event event;
 
     @JsonManagedReference
